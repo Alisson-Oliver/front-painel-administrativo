@@ -1,0 +1,134 @@
+<%- include("../partials/header.ejs") %>
+<body>
+    <%- include("../partials/navbar.ejs") %>
+
+    <div class="container mt-5">
+        <!-- Título da Página -->
+        <div class="text-center mb-4">
+            <hr>
+            <br>
+            <h3 class="text-primary">INFORMAÇÕES DO MIGRANTE</h3>
+            <hr class="my-4" style="width: 50%; margin: 0 auto;">
+        </div>
+
+        <!-- Seção de Informações do Migrante -->
+        <div class="bg-light p-4 shadow rounded pb-2 mb-4">
+            <div class="row">
+                <!-- Coluna 1 -->
+                <div class="col-md-6">
+                    <p><strong>Nome Completo:</strong> <%= migrant.full_name %></p>
+                    <p><strong>Nome Social:</strong> <%= migrant.social_name ? migrant.social_name : 'Não disponível' %></p>
+                    <p><strong>Email:</strong> <%= migrant.email %></p>
+                    <p><strong>Telefone:</strong> <%= migrant.phone ? migrant.phone : 'Não disponível' %></p>
+                    <p><strong>WhatsApp:</strong> <%= migrant.whatsapp_number ? 'Sim' : 'Não' %></p>
+                    <p><strong>Documento:</strong>
+                        <%= migrant.MigrantDocument && migrant.MigrantDocument.document_type ? migrant.MigrantDocument.document_type : '' %> |   
+                        <%= migrant.MigrantDocument && migrant.MigrantDocument.document_identification ? migrant.MigrantDocument.document_identification : 'Não disponível' %>
+                    </p>
+                    <p><strong>Data de Nascimento:</strong> <span id="birthDate">Carregando...</span></p>
+                </div>
+
+                <!-- Coluna 2 -->
+                <div class="col-md-6">
+                    <p><strong>Idioma preferido:</strong> <%= migrant.preferred_language ? migrant.preferred_language : 'Não disponível' %></p>
+                    <p><strong>Data de Entrada no Brasil:</strong> <span id="entryDate">Carregando...</span></p>
+                    <p><strong>Razão de Imigração:</strong> <%= migrant.migrant_reason ? migrant.migrant_reason : 'Não disponível' %></p>
+                    <p><strong>Gênero:</strong> <%= migrant.gender ? migrant.gender : 'Não disponível' %></p>
+                    <p><strong>Nacionalidade:</strong> <%= migrant.nationality ? migrant.nationality : 'Não disponível' %></p>
+                    <p><strong>Estado Civil:</strong> <%= migrant.marital_status ? migrant.marital_status : 'Não disponível' %></p>
+                    <p><strong>Escolaridade:</strong> <%= migrant.education_level ? migrant.education_level : 'Não disponível' %></p>
+                </div>
+            </div>
+
+            <hr class="my-4">
+            <!-- Seção de Endereço -->
+            <div class="row">
+                <div class="col pt-3">
+                    <p><strong>Endereço:</strong> <%= migrant.Address.street %>, <%= migrant.Address.neighborhood %>, 
+                        <%= migrant.Address.city %> - <%= migrant.Address.state %>, nº <%= migrant.address_number %> 
+                        <%= migrant.address_complement ? ', ' + migrant.address_complement : '' %>, CEP: <%= migrant.Address.cep %>
+                    </p>
+                </div>
+            </div>
+            
+            <hr class="my-4">
+            <!-- Outras Informações -->
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Programas do Governo:</strong> <%= migrant.social_program_access ? migrant.social_program_access : 'Não disponível' %></p>
+                    <p><strong>Status Migratório:</strong> <%= migrant.status_migratory ? migrant.status_migratory : 'Não disponível' %></p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>PcD (Pessoa com Deficiência):</strong> <%= migrant.is_pcd ? 'Sim' : 'Não' %></p>
+                </div>
+            </div>
+
+            <!-- Botões de Ação alinhados à esquerda -->
+            <div class="text-left mt-4">
+                <a href="/admin/migrants/edit/<%= migrant.id %>" class="btn btn-warning mr-2">Editar</a>
+                <button class="btn btn-danger mr-2" data-toggle="modal" data-target="#deleteModal">Deletar</button>
+                <a href="/admin/migrants" class="btn btn-primary">Voltar</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmação de Deleção -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirmação de Deleção</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Você tem certeza que deseja deletar o migrante <strong id="migrantName"></strong>? Para confirmar, digite "Deletar Migrante".
+                    <input type="text" id="confirmText" class="form-control mt-2" placeholder="Digite 'Deletar Migrante'">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <form method="POST" id="deleteForm" action="/admin/migrants/delete/<%= migrant.id %>">
+                        <input type="hidden" name="_method" value="delete">
+                        <button type="submit" class="btn btn-danger" id="confirmDeleteButton">Deletar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include("../partials/footer.ejs") %>
+
+    <script>
+        function confirmDelete(name) {
+            document.getElementById('migrantName').textContent = name;
+            document.getElementById('confirmText').value = ''; 
+        }
+
+        // Aplicar formatação da data de nascimento
+        document.addEventListener("DOMContentLoaded", function() {
+            const birthDateElement = document.getElementById("birthDate");
+            const dateStr = "<%= migrant.date_birth %>";
+            if (dateStr) {
+                birthDateElement.textContent = formatDate(dateStr);
+            } else {
+                birthDateElement.textContent = 'Não disponível';
+            }
+
+            const entryDateElement = document.getElementById("entryDate");
+            const entryDateStr = "<%= migrant.entry_date %>"; 
+            if (entryDateStr) {
+                entryDateElement.textContent = formatDate(entryDateStr);
+            } else {
+                entryDateElement.textContent = 'Não disponível';
+            }
+        });
+
+        function formatDate(dateStr) {
+            const date = new Date(dateStr + 'Z'); 
+            date.setHours(date.getHours() + 3);
+            return date.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric" });
+        }
+
+    </script>
+</body>

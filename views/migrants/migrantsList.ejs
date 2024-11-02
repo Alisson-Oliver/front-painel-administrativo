@@ -1,0 +1,98 @@
+<%- include("../partials/header.ejs") %>
+<body>
+    <%- include("../partials/navbar.ejs") %>
+    <div class="container mt-4">
+        <hr class="mb-5">
+        <h1 class="mt-5">Migrantes Cadastrados</h1>
+        <hr>
+        <a href="/admin/migrant/register" class="btn btn-primary mb-3">Cadastrar Migrante</a>
+
+        <!-- Formulário de Busca -->
+        <form action="/admin/migrants/search" method="GET" class="mb-4">
+            <div class="input-group">
+                <input type="text" class="form-control" name="query" placeholder="Buscar por email, telefone ou documento" aria-label="Buscar" required>
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Contador de Registros e Paginação -->
+        <div class="d-flex justify-content-between">
+            <span id="contador"></span>
+            <div>
+                <button id="prevPage" class="btn btn-secondary btn-sm" disabled>Anterior</button>
+                <button id="nextPage" class="btn btn-secondary btn-sm">Próximo</button>
+            </div>
+        </div>
+
+        <!-- Tabela para exibir os migrantes -->
+        <table class="table table-striped mt-3">
+            <thead>
+                <tr>
+                    <th scope="col">Nome Completo</th>
+                    <th scope="col">Nome Social</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Telefone</th>
+                    <th scope="col">Documento</th>
+                    <th scope="col">Ações</th>
+                </tr>
+            </thead>
+            <tbody id="migrantTable">
+                <!-- Aqui o JavaScript insere as linhas da tabela com base na página atual -->
+            </tbody>
+        </table>
+    </div>
+
+    <%- include("../partials/footer.ejs") %>
+</body>
+<script>
+    // Variáveis para controle da página e limites
+    const migrants = <%- JSON.stringify(migrants) %>;
+    const limit = 50; // Número de migrantes por página
+    let currentPage = 1;
+
+    function renderTable() {
+        const start = (currentPage - 1) * limit;
+        const end = start + limit;
+        const pageMigrants = migrants.slice(start, end);
+
+        const tableBody = document.getElementById('migrantTable');
+        tableBody.innerHTML = '';
+
+        pageMigrants.forEach(migrant => {
+            const row = `
+                <tr>
+                    <td>${migrant.full_name}</td>
+                    <td>${migrant.social_name || 'Não disponível'}</td>
+                    <td>${migrant.email}</td>
+                    <td>${migrant.phone || 'Não disponível'}</td>
+                    <td>${migrant.MigrantDocument?.document_identification || 'Não disponível'}</td>
+                    <td><a href="/admin/migrants/details/${migrant.id}" class="btn btn-info btn-sm">Detalhes</a></td>
+                </tr>`;
+            tableBody.insertAdjacentHTML('beforeend', row);
+        });
+
+        document.getElementById('contador').textContent = `Exibindo ${start + 1} a ${Math.min(end, migrants.length)} de ${migrants.length} migrantes`;
+
+        document.getElementById('prevPage').disabled = currentPage === 1;
+        document.getElementById('nextPage').disabled = end >= migrants.length;
+    }
+
+    document.getElementById('prevPage').addEventListener('click', () => {
+        if (currentPage > 1) {
+            currentPage--;
+            renderTable();
+        }
+    });
+
+    document.getElementById('nextPage').addEventListener('click', () => {
+        if (currentPage * limit < migrants.length) {
+            currentPage++;
+            renderTable();
+        }
+    });
+
+    // Renderizar a primeira página ao carregar
+    renderTable();
+</script>

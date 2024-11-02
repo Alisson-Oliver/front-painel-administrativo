@@ -1,0 +1,123 @@
+<%- include("../partials/header.ejs") %>
+<body>
+    <%- include("../partials/navbar.ejs") %>
+
+    <div class="container mt-5 mb-4">
+        <h1 class="mt-4 mb-3">Editar Migrante</h1>
+
+        <!-- Alerta para validação -->
+        <div id="alert" class="alert alert-danger d-none" role="alert"></div>
+
+        <form action="/admin/migrants/update/<%= migrant.id %>" method="POST" novalidate>
+            <input type="hidden" name="_method" value="PUT">
+
+            <% const fields = [
+                { label: 'Nome Completo*', name: 'full_name', type: 'text', required: true, value: migrant.full_name },
+                { label: 'Nome Social', name: 'social_name', type: 'text', value: migrant.social_name },
+                { label: 'Email*', name: 'email', type: 'email', required: true, pattern: '[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$', value: migrant.email },
+                { label: 'Telefone', name: 'phone', type: 'text', maxlength: '15', value: migrant.phone },
+                { label: 'Número do WhatsApp*', name: 'whatsapp_number', type: 'select', options: [{value: 'true', text: 'Sim'}, {value: 'false', text: 'Não'}], selected: migrant.whatsapp_number },
+                { label: 'Tipo de Documento*', name: 'document_type', type: 'text', required: true, value: migrant.MigrantDocument.document_type },
+                { label: 'Número do Documento*', name: 'document_identification', type: 'text', required: true, value: migrant.MigrantDocument.document_identification },
+                { label: 'Data de Nascimento*', name: 'date_birth', type: 'date', required: true, value: migrant.date_birth },
+                { label: 'Idioma Preferido*', name: 'preferred_language', type: 'text', required: true, value: migrant.preferred_language },
+                { label: 'Data de Entrada no Brasil*', name: 'entry_date', type: 'date', required: true, value: migrant.entry_date },
+                { label: 'Razão de Imigração*', name: 'migrant_reason', type: 'text', required: true, value: migrant.migrant_reason },
+                { label: 'Gênero*', name: 'gender', type: 'text', required: true, value: migrant.gender },
+                { label: 'Nacionalidade*', name: 'nationality', type: 'text', required: true, value: migrant.nationality },
+                { label: 'Estado Civil*', name: 'marital_status', type: 'text', required: true, value: migrant.marital_status },
+                { label: 'Escolaridade', name: 'education_level', type: 'text', value: migrant.education_level },
+                { label: 'Programas Sociais', name: 'social_program_access', type: 'text', value: migrant.social_program_access },
+                { label: 'Status Migratório', name: 'status_migratory', type: 'text', value: migrant.status_migratory },
+                { label: 'PcD (Pessoa com Deficiência)*', name: 'is_pcd', type: 'select', options: [{value: 'true', text: 'Sim'}, {value: 'false', text: 'Não'}], selected: migrant.is_pcd },
+            ]; %>
+
+            <% fields.forEach(field => { %>
+                <div class="form-group">
+                    <label for="<%= field.name %>"><%= field.label %></label>
+                    <% if (field.type === 'select') { %>
+                        <select class="form-control" id="<%= field.name %>" name="<%= field.name %>" <%= field.required ? 'required' : '' %> >
+                            <option value="" disabled <%= !field.selected ? 'selected' : '' %>>Selecione uma opção</option>
+                            <% field.options.forEach(option => { %>
+                                <option value="<%= option.value %>" <%= option.value === String(field.selected) ? 'selected' : '' %>><%= option.text %></option>
+                            <% }) %>
+                        </select>
+                    <% } else { %>
+                        <input type="<%= field.type %>" class="form-control" id="<%= field.name %>" name="<%= field.name %>" 
+                               value="<%= field.value || '' %>" <%= field.required ? 'required' : '' %> 
+                               <%= field.pattern ? 'pattern="' + field.pattern + '"' : '' %> 
+                               <%= field.maxlength ? 'maxlength="' + field.maxlength + '"' : '' %> 
+                               placeholder="<%= field.label %>">
+                    <% } %>
+                </div>
+            <% }); %>
+
+            <!-- Seção de Endereço -->
+            <h3 class="mt-4">Endereço</h3>
+            <div class="form-group">
+                <label for="cep">CEP*</label>
+                <input type="text" class="form-control" id="cep" name="cep" required value="<%= migrant.Address && migrant.Address.cep %>" placeholder="Digite o CEP">
+                <button type="button" id="btnBuscarEndereco" class="btn btn-primary mt-2">Buscar Endereço</button>
+            </div>
+
+            <div class="form-group">
+                <label for="street">Logradouro*</label>
+                <input type="text" class="form-control" id="street" name="street" value="<%= migrant.Address && migrant.Address.street %>" placeholder="Digite o Logradouro">
+            </div>
+            <div class="form-group">
+                <label for="neighborhood">Bairro*</label>
+                <input type="text" class="form-control" id="neighborhood" name="neighborhood" value="<%= migrant.Address && migrant.Address.neighborhood %>" placeholder="Digite o Bairro">
+            </div>
+            <div class="form-group">
+                <label for="city">Cidade*</label>
+                <input type="text" class="form-control" id="city" name="city" value="<%= migrant.Address && migrant.Address.city %>" placeholder="Digite a Cidade">
+            </div>
+            <div class="form-group">
+                <label for="state">Estado*</label>
+                <input type="text" class="form-control" id="state" name="state" value="<%= migrant.Address && migrant.Address.state %>" placeholder="Digite o Estado">
+            </div>
+            <div class="form-group">
+                <label for="numero">Número do Endereço*</label>
+                <input type="text" class="form-control" id="numero" name="numero" required value="<%= migrant.Address && migrant.address_number %>" placeholder="Digite o Número">
+            </div>
+            <div class="form-group">
+                <label for="complemento">Complemento (opcional)</label>
+                <input type="text" class="form-control" id="complemento" name="complemento" value="<%= migrant.Address && migrant.address_complement %>" placeholder="Digite o Complemento">
+            </div>
+
+            <div class="alert alert-warning" role="alert">
+                Caso a busca pelo endereço não retorne resultados, preencha os campos acima manualmente.
+            </div>
+
+            <button type="submit" class="btn btn-success">Salvar Alterações</button>
+            <a href="/admin/migrants" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+       document.getElementById('btnBuscarEndereco').addEventListener('click', function() {
+            const cep = document.getElementById('cep').value.replace(/\D/g, '');
+            if (cep.length === 8) {
+                fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (!data.erro) {
+                            document.getElementById('street').value = data.logradouro;
+                            document.getElementById('neighborhood').value = data.bairro;
+                            document.getElementById('city').value = data.localidade;
+                            document.getElementById('state').value = data.estado;
+                        } else {
+                            alert('CEP não encontrado!');
+                        }
+                    })
+                    .catch(() => {
+                        alert('Erro ao buscar o CEP!');
+                    });
+            } else {
+                alert('CEP inválido!');
+            }
+        });
+    </script>
+</body>
+<%- include("../partials/footer.ejs") %>
