@@ -13,13 +13,13 @@
 
             <% const fields = [
                 { label: 'Nome da Instituição*', name: 'name', type: 'text', required: true },
-                { label: 'CNPJ*', name: 'cnpj', type: 'text', required: true, pattern: '\\d{14}'},
+                { label: 'CNPJ*', name: 'cnpj', type: 'text', required: true, pattern: '\\d{17}', oninput: "formatCNPJ(this)"},
                 { label: 'Email*', name: 'email', type: 'email', required: true, pattern: '[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$'},
                 { label: 'Telefone Principal*', name: 'main_phone', type: 'text', oninput: "formatPhone(this)"},
                 { label: 'Telefone Secundário', name: 'secondary_phone', type: 'text', oninput: "formatPhone(this)"},
                 { label: 'Site', name: 'website', type: 'text'},
                 { label: 'Categoria*', name: 'institution_category', type: 'text', required: true },
-                { label: 'Instagram', name: 'instagram', type: 'text', required: true },
+                { label: 'Instagram', name: 'instagram', type: 'text', required: true, oninput: "formatInstagramUsername(this)" },
                 { label: 'Idioma Principal*', name: 'main_language', type: 'text', required: true },
                 { label: 'Idioma Secundário*', name: 'second_language', type: 'text', required: true},
                 { label: 'Link do Maps:', name: 'link_maps', type: 'text', required: true}
@@ -43,7 +43,7 @@
                                <%= field.pattern ? 'pattern="' + field.pattern + '"' : '' %> 
                                <%= field.maxlength ? 'maxlength="' + field.maxlength + '"' : '' %> 
                             <% if (field.oninput) { %> oninput="<%= field.oninput %>" <% } %> 
-                            placeholder="<%= field.label %> ">
+                                placeholder="<%= field.label %> ">
 
                     <% } %>
                 </div>
@@ -167,7 +167,7 @@
             <h3 class="mt-4">Endereço</h3>
             <div class="form-group">
                 <label for="cep">CEP*</label>
-                <input type="text" class="form-control" id="cep" name="cep" required placeholder="Digite o CEP">
+                <input type="text" class="form-control" id="cep" name="cep" oninput="formatCEP(this)" placeholder="Digite o CEP">
                 <button type="button" id="btnBuscarEndereco" class="btn btn-primary mt-2">Buscar Endereço</button>
             </div>
 
