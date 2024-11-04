@@ -1,10 +1,10 @@
 <%- include("../partials/header.ejs") %>
 <body>
     <%- include("../partials/navbar.ejs") %>
-
+    <br>
+    
     <div class="container mt-5 mb-4">
         <h1 class="mt-4 mb-3">Editar Migrante</h1>
-
         <!-- Alerta para validação -->
         <div id="alert" class="alert alert-danger d-none" role="alert"></div>
 
@@ -95,29 +95,7 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-       document.getElementById('btnBuscarEndereco').addEventListener('click', function() {
-            const cep = document.getElementById('cep').value.replace(/\D/g, '');
-            if (cep.length === 8) {
-                fetch(`https://viacep.com.br/ws/${cep}/json/`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (!data.erro) {
-                            document.getElementById('street').value = data.logradouro;
-                            document.getElementById('neighborhood').value = data.bairro;
-                            document.getElementById('city').value = data.localidade;
-                            document.getElementById('state').value = data.estado;
-                        } else {
-                            alert('CEP não encontrado!');
-                        }
-                    })
-                    .catch(() => {
-                        alert('Erro ao buscar o CEP!');
-                    });
-            } else {
-                alert('CEP inválido!');
-            }
-        });
-    </script>
+    <script src="/js/scriptMigrantEdit.js"></script>
+
 </body>
 <%- include("../partials/footer.ejs") %>

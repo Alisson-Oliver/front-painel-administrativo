@@ -3,14 +3,14 @@
     <%- include("../partials/navbar.ejs") %>
     <div class="container mt-4">
         <hr class="mb-5">
-        <h1 class="mt-5">Migrantes Cadastrados</h1>
+        <h1 class="mt-5">Instituições Cadastradas</h1>
         <hr>
-        <a href="/admin/migrant/register" class="btn btn-primary mb-3">Cadastrar Migrante</a>
+        <a href="/admin/institutions/register" class="btn btn-primary mb-3">Cadastrar Instituição</a>
 
         <!-- Formulário de Busca -->
-        <form action="/admin/migrants/search" method="GET" class="mb-4">
+        <form action="/admin/institutions/search" method="GET" class="mb-4">
             <div class="input-group">
-                <input type="text" class="form-control" name="query" placeholder="Buscar por email, telefone ou documento" aria-label="Buscar" required>
+                <input type="text" class="form-control" name="query" placeholder="Buscar por email, telefone ou CNPJ" aria-label="Buscar" required>
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="submit">Buscar</button>
                 </div>
@@ -26,19 +26,18 @@
             </div>
         </div>
 
-        <!-- Tabela para exibir os migrantes -->
+        <!-- Tabela para exibir os instituições -->
         <table class="table table-striped mt-3">
             <thead>
                 <tr>
-                    <th scope="col">Nome Completo</th>
-                    <th scope="col">Nome Social</th>
+                    <th scope="col">Nome da Instituição</th>
+                    <th scope="col">CNPJ</th>
                     <th scope="col">Email</th>
-                    <th scope="col">Telefone</th>
-                    <th scope="col">Documento</th>
+                    <th scope="col">Telefone Principal</th>
                     <th scope="col">Ações</th>
                 </tr>
             </thead>
-            <tbody id="migrantTable">
+            <tbody id="institutionTable">
                 <!-- Aqui o JavaScript insere as linhas da tabela com base na página atual -->
             </tbody>
         </table>
@@ -47,8 +46,8 @@
     <%- include("../partials/footer.ejs") %>
 </body>
 <script>
-    // Defina a variável `migrants` usando EJS
-    const migrants = <%- JSON.stringify(migrants) %>;
+    // Variáveis para controle da página e limites
+    const institutions = <%- JSON.stringify(institutions) %>;
 </script>
-<script src="/js/scriptMigrantsList.js"></script>
+<script src="/js/scriptInstitutionList.js"></script>
 

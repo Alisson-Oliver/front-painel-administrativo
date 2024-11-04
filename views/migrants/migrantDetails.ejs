@@ -12,7 +12,9 @@
         </div>
 
         <!-- Seção de Informações do Migrante -->
-        <div class="bg-light p-4 shadow rounded pb-2 mb-4">
+        <div class="bg-light p-4 shadow rounded pb-2 mb-3">
+            <h4>Principais Informações</h4>
+            <br>
             <div class="row">
                 <!-- Coluna 1 -->
                 <div class="col-md-6">
@@ -44,7 +46,9 @@
             <!-- Seção de Endereço -->
             <div class="row">
                 <div class="col pt-3">
-                    <p><strong>Endereço:</strong> <%= migrant.Address.street %>, <%= migrant.Address.neighborhood %>, 
+                    <h4>Endereço</h4>
+                    <br>
+                    <p><%= migrant.Address.street %>, <%= migrant.Address.neighborhood %>, 
                         <%= migrant.Address.city %> - <%= migrant.Address.state %>, nº <%= migrant.address_number %> 
                         <%= migrant.address_complement ? ', ' + migrant.address_complement : '' %>, CEP: <%= migrant.Address.cep %>
                     </p>
@@ -53,7 +57,10 @@
             
             <hr class="my-4">
             <!-- Outras Informações -->
+            <h4>Outras Informações</h4>
+            <br>
             <div class="row">
+                
                 <div class="col-md-6">
                     <p><strong>Programas do Governo:</strong> <%= migrant.social_program_access ? migrant.social_program_access : 'Não disponível' %></p>
                     <p><strong>Status Migratório:</strong> <%= migrant.status_migratory ? migrant.status_migratory : 'Não disponível' %></p>
@@ -64,10 +71,10 @@
             </div>
 
             <!-- Botões de Ação alinhados à esquerda -->
-            <div class="text-left mt-4">
-                <a href="/admin/migrants/edit/<%= migrant.id %>" class="btn btn-warning mr-2">Editar</a>
-                <button class="btn btn-danger mr-2" data-toggle="modal" data-target="#deleteModal">Deletar</button>
-                <a href="/admin/migrants" class="btn btn-primary">Voltar</a>
+            <div class="text-left mt-3">
+                <a href="/admin/migrants" class="btn btn-primary mr-2">Voltar</a>
+                <a href="/admin/migrants/edit/<%= migrant.id %>" class="btn btn-primary mr-2">Editar</a>
+                <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Deletar</button>
             </div>
         </div>
     </div>

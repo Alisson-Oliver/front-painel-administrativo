@@ -1,0 +1,52 @@
+body {
+    background: linear-gradient(to right, #2575fc, #4d84e4);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.card {
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.card-title {
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+
+.form-control {
+    border-radius: 10px;
+    height: 40px; /* Aumentando a altura do campo */
+}
+
+.btn-primary {
+    border-radius: 10px;
+    background-color: #007bff;
+    border-color: #007bff;
+    transition: background-color 0.3s;
+    height: 40px; /* Aumentando a altura do botão */
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.forgot-password {
+    color: #ffffff;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 576px) {
+    .card {
+        margin: 0 20px;
+    }
+}

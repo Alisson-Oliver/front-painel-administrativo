@@ -1,0 +1,124 @@
+<%- include("../partials/header.ejs") %>
+<body>
+    <%- include("../partials/navbar.ejs") %>
+
+    <div class="container mt-5">
+        <!-- Título da Página -->
+        <div class="text-center mb-4">
+            <hr>
+            <br>
+            <h3 class="text-primary">INFORMAÇÕES DA INSTITUIÇÃO</h3>
+            <hr class="my-4" style="width: 50%; margin: 0 auto;">
+        </div>
+
+        <!-- Seção de Informações da Instituição -->
+        <div class="bg-light p-4 shadow rounded pb-2 mb-3">
+            <h4>Principais Informações</h4>
+            <br>
+            <div class="row">
+                <!-- Coluna 1 -->
+                <div class="col-md-6">
+                    <p><strong>Nome:</strong> <%= institution.name %></p>
+                    <p><strong>CNPJ:</strong> <%= institution.cnpj %></p>
+                    <p><strong>Email:</strong> <%= institution.email %></p>
+                    <p><strong>Telefone Principal:</strong> <%= institution.main_phone %></p>
+                    <p><strong>Telefone Secundário:</strong> <%= institution.secondary_phone ? institution.secondary_phone : 'Não disponível' %></p>
+                    <p><strong>Idioma Principal:</strong> <%= institution.main_language %></p>
+                    <p><strong>Idioma Secundário:</strong> <%= institution.second_language ? institution.second_language : 'Não disponível' %></p>
+                </div>
+
+                <!-- Coluna 2 -->
+                <div class="col-md-6">
+                    <p><strong>Site:</strong> <a href="<%= institution.site %>" target="_blank"><%= institution.site %></a></p>
+                    <p><strong>Instagram:</strong> <%= institution.instagram %></a></p>
+                    <p><strong>Link do Maps:</strong> <a href="<%= institution.link_maps %>" target="_blank"><%= institution.link_maps %></a></p>
+                    <p><strong>Categoria:</strong> <%= institution.Category.category_pt %></p>
+                </div>
+            </div>
+
+            <hr class="my-4">
+            <!-- Seção de Endereço -->
+            <div class="row">
+                
+                <div class="col pt-3">
+                    <h4>Endereço</h4>
+                    <br>
+                    <p> <%= institution.Address.street %>, <%= institution.Address.neighborhood %>, 
+                        <%= institution.Address.city %> - <%= institution.Address.state %>, nº <%= institution.address_number %> 
+                        <%= institution.address_complement ? ', ' + institution.address_complement : '' %>, CEP: <%= institution.Address.cep %>
+                    </p>
+                </div>
+            </div>
+
+            <hr class="my-4">
+            <!-- Seção outros dados -->
+            <div class="row">
+                <div class="col pt-3">
+                    <h4>Outras Informações</h4>
+                    <br>
+                    <p><strong>Descrição:</strong> <%= institution.InstitutionDescription.description_pt %></p>
+                    <p><strong>Dias e Horários de Funcionamento:</strong> <%= institution.ServiceHour.service_hours_pt %></p>
+                    <p><strong>População Alvo:</strong> <%= institution.TargetPopulation.target_populations_pt %></p>
+                    <p><strong>Requisitos e Restrições:</strong> <%= institution.RequirementRestriction.requirements_restrictions_pt %></p>
+                    <p><strong>Serviços Oferecidos:</strong> <%= institution.ServicesOffered.services_offered_pt %></p>
+                    <p><strong>Custo dos Serviços:</strong> <%= institution.ServiceCost.services_costs_pt %></p>
+                </div>
+            </div>
+
+            <hr class="my-4">
+            <div class="row">
+                <div class="col pt-3">
+                    <h4>Responsável pelo cadastro</h4>
+                    <br>
+                    <p><strong>Nome:</strong> <%= institution.ResponsibleUser.name %></p>
+                    <p><strong>Posição:</strong> <%= institution.ResponsibleUser.position %></p>
+                    <p><strong>Setor:</strong> <%= institution.ResponsibleUser.sector %></p>
+                    <p><strong>Função:</strong> <%= institution.ResponsibleUser.role %></p>
+                </div>
+            </div>
+            
+            <!-- Botões de Ação alinhados à esquerda -->
+            <div class="text-left mt-3">
+                <a href="/admin/institutions" class="btn btn-primary mr-2">Voltar</a>
+
+                <!-- Botão Deletar para abrir o modal de confirmação -->
+                 <!-- Botão Editar como Formulário para enviar o ID no body -->
+                <form action="/admin/institutions/edit" method="POST" style="display: inline;">
+                    <input type="hidden" name="institution_id" value="<%= institution.id %>">
+                    <button type="submit" class="btn btn-primary mr-2">Editar</button>
+                </form>
+                <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" onclick="confirmDelete('<%= institution.name %>', '<%= institution.id %>')">Deletar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmação de Deleção -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirmação de Deleção</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Você tem certeza que deseja deletar a instituição <strong id="institutionName"></strong>? Para confirmar, digite "Deletar Instituição".
+                    <input type="text" id="confirmText" class="form-control mt-2" placeholder="Digite 'Deletar Instituição'">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <form method="POST" id="deleteForm" action="/admin/institutions/delete">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="institution_id" id="institution_id">
+                        <button type="submit" class="btn btn-danger" id="confirmDeleteButton">Deletar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <%- include("../partials/footer.ejs") %>
+<script src="/js/scriptInstitutionDetails.js"></script>
+</body>
