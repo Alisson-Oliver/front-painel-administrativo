@@ -28,6 +28,9 @@ router.post('/institutions/edit', institutionController.getEditInstitutionForm);
 router.post('/institutions/update/:id', institutionController.updateInstitution); 
 router.post('/institutions/delete', institutionController.deleteInstitution);
 
+router.post('/institution/create', institutionController.createInstitution);
+router.get('/institution/register', institutionController.getRegisterInstitution);
+
 // Rotas admin
 router.get('/login', adminController.getLoginAdmin);
 

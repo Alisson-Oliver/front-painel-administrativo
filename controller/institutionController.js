@@ -12,6 +12,168 @@ const getInstitutions = async (req, res) => {
     }
 };
 
+const createInstitution = async (req, res) => {
+    const {
+        name,
+        cnpj,
+        email,
+        main_phone,
+        secondary_phone,
+        website,
+        institution_category,
+        instagram,
+        main_language,
+        second_language,
+        link_maps,
+        description_pt,
+        description_en,
+        description_fr,
+        description_es,
+        service_hours_pt,
+        service_hours_en,
+        service_hours_fr,
+        service_hours_es,
+        target_populations_pt,
+        target_populations_en,
+        target_populations_fr,
+        target_populations_es,
+        requirements_restrictions_pt,
+        requirements_restrictions_en,
+        requirements_restrictions_fr,
+        requirements_restrictions_es,
+        services_offered_pt,
+        services_offered_en,
+        services_offered_fr,
+        services_offered_es,
+        service_costs_pt,
+        service_costs_en,
+        service_costs_fr,
+        service_costs_es,
+        cep,
+        street,
+        neighborhood,
+        city,
+        state,
+        numero,
+        complemento,
+        authorized,
+        responsible_role,
+        responsible_sector,
+        responsible_position,
+        responsible_name,
+    } = req.body;
+
+    // Função para garantir que os campos sejam null se não forem informados
+    const ensureNull = (value) => (value === undefined || value === null || value === '') ? null : value;
+
+    // Cria um objeto instituição, substituindo valores não informados por null
+    const institution = {
+        name: ensureNull(name),
+        cnpj: ensureNull(cnpj),
+        email: ensureNull(email),
+        main_phone: ensureNull(main_phone),
+        secondary_phone: ensureNull(secondary_phone),
+        site: ensureNull(website),
+        instagram: ensureNull(instagram),
+        main_language: ensureNull(main_language),
+        second_language: ensureNull(second_language),
+        link_maps: ensureNull(link_maps),
+        address_number: ensureNull(numero),
+        address_complement: ensureNull(complemento),
+        category_id: ensureNull(institution_category),
+        authorized: authorized === "on" ? true : false,
+    };
+
+    const institution_descriptions = {
+        description_pt: ensureNull(description_pt),
+        description_en: ensureNull(description_en),
+        description_fr: ensureNull(description_fr),
+        description_es: ensureNull(description_es),
+    }
+
+    const service_hours = {
+        service_hours_pt: ensureNull(service_hours_pt),
+        service_hours_en: ensureNull(service_hours_en),
+        service_hours_fr: ensureNull(service_hours_fr),
+        service_hours_es: ensureNull(service_hours_es),
+    }
+
+    const target_population = {
+        target_populations_pt: ensureNull(target_populations_pt),
+        target_populations_en: ensureNull(target_populations_en),
+        target_populations_fr: ensureNull(target_populations_fr),
+        target_populations_es: ensureNull(target_populations_es),
+    }
+
+    const requirements_restrictions = {
+        requirements_restrictions_pt: ensureNull(requirements_restrictions_pt),
+        requirements_restrictions_en: ensureNull(requirements_restrictions_en),
+        requirements_restrictions_fr: ensureNull(requirements_restrictions_fr),
+        requirements_restrictions_es: ensureNull(requirements_restrictions_es),
+    }
+
+    const services_offered = {
+        services_offered_pt: ensureNull(services_offered_pt),
+        services_offered_en: ensureNull(services_offered_en),
+        services_offered_fr: ensureNull(services_offered_fr),
+        services_offered_es: ensureNull(services_offered_es),
+    }
+
+    const service_cost = {
+        services_costs_pt: ensureNull(service_costs_pt),
+        services_costs_en: ensureNull(service_costs_en),
+        services_costs_fr: ensureNull(service_costs_fr),
+        services_costs_es: ensureNull(service_costs_es),
+    }
+
+    const address = {
+        cep: ensureNull(cep),
+        street: ensureNull(street),
+        neighborhood: ensureNull(neighborhood),
+        city: ensureNull(city),
+        state: ensureNull(state),
+    };
+
+    const responsible_user = {
+        name: ensureNull(responsible_name),
+        position: ensureNull(responsible_position),
+        sector: ensureNull(responsible_sector),
+        role: ensureNull(responsible_role),
+    }
+
+    const newData = {
+        institution,
+        address,
+        institution_descriptions,
+        service_hours,
+        target_population,
+        requirements_restrictions,
+        services_offered,
+        service_cost,
+        responsible_user
+    };
+
+
+    try {
+        // Faz a requisição para criar instituição na API
+        const { data } = await api.post(`/institutions`, newData); 
+        const institutionId = data.institution.id
+
+        // Renderiza uma página que contém um formulário para redirecionar
+        res.render('institutions/redirect', { institutionId });
+    } catch (error) {
+        console.error(error);
+
+        // Verifica se há um erro específico retornado pela API
+        if (error.response && error.response.data) {
+            return res.status(400).send({ message: error.response.data.message });
+        }
+
+        // Em caso de erro desconhecido, retorna um erro genérico
+        res.status(500).send({ message: 'Erro ao criar a instituição.' });
+    }
+};
+
 const searchInstitutions = async (req, res) => {
     try {
         const query = req.query.query; 
@@ -91,7 +253,7 @@ const updateInstitution = async (req, res) => {
         institution_category,
         instagram,
         main_language,
-        secondary_language,
+        second_language,
         link_maps,
         description_pt,
         description_en,
@@ -124,7 +286,11 @@ const updateInstitution = async (req, res) => {
         state,
         numero,
         complemento,
-        category_name
+        category_name,
+        responsible_name,
+        responsible_position,
+        responsible_sector,
+        responsible_role,
     } = req.body;
 
     // Função para garantir que os campos sejam null se não forem informados
@@ -141,10 +307,11 @@ const updateInstitution = async (req, res) => {
         institution_category: ensureNull(institution_category),
         instagram: ensureNull(instagram),
         main_language: ensureNull(main_language),
-        secondary_language: ensureNull(secondary_language),
+        second_language: ensureNull(second_language),
         link_maps: ensureNull(link_maps),
         address_number: ensureNull(numero),
         address_complement: ensureNull(complemento),
+        category_id: ensureNull(institution_category),
     };
 
     const InstitutionDescription = {
@@ -205,7 +372,7 @@ const updateInstitution = async (req, res) => {
         TargetPopulation,
         RequirementRestriction,
         ServicesOffered,
-        ServiceCost
+        ServiceCost,
     };
 
 
@@ -216,7 +383,7 @@ const updateInstitution = async (req, res) => {
         // Redireciona para a página de detalhes do migrante recém-atualizado
        
        // Renderiza uma página que contém um formulário para redirecionar
-       res.render('institutions/redirect', { institutionId});
+       res.render('institutions/redirect', { institutionId });
     } catch (error) {
         console.error(error);
 
@@ -243,11 +410,25 @@ const deleteInstitution = async (req, res) => {
     }
 };
 
+
+const getRegisterInstitution = async (req, res) => {
+    try {
+        const responseCategories = await api.get('/categories');
+        const categories = responseCategories.data.categories;
+        res.render('institutions/institutionCreate', {categories}); 
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({ message: 'Erro no servidor.' });
+    }
+}
+
 export default {
     getInstitutions,
     searchInstitutions,
     getInstitutionById,
     getEditInstitutionForm,
     updateInstitution,
-    deleteInstitution
+    deleteInstitution,
+    getRegisterInstitution,
+    createInstitution,
 }

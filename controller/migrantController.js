@@ -102,7 +102,7 @@ const createMigrant = async (req, res) => {
         address_complement: ensureNull(complemento),
         is_pcd: ensureNull(is_pcd) || false,  // Assume false se não for informado,
         password: ensureNull(password),
-        authorized: "on" ? true : false 
+        authorized: authorized === "on" ? true : false
     };
 
     const address = {
