@@ -10,7 +10,7 @@
 
         <form action="/admin/institution/create" method="POST" novalidate>
             <input type="hidden" name="_method" value="PUT">
-
+x
             <% const fields = [
                 { label: 'Nome da Instituição*', name: 'name', type: 'text', required: true },
                 { label: 'CNPJ*', name: 'cnpj', type: 'text', required: true, pattern: '\\d{17}', oninput: "formatCNPJ(this)"},
