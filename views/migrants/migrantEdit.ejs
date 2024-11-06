@@ -2,55 +2,129 @@
 <body>
     <%- include("../partials/navbar.ejs") %>
     <br>
-    
     <div class="container mt-5 mb-4">
         <h1 class="mt-4 mb-3">Editar Migrante</h1>
         <!-- Alerta para validação -->
         <div id="alert" class="alert alert-danger d-none" role="alert"></div>
-
+        
         <form action="/admin/migrants/update" method="POST" novalidate>
             <input type="hidden" name="_method" value="PUT">
+            
+            <!-- Campos do Migrante -->
+            <div class="form-group">
+                <label for="full_name">Nome Completo*</label>
+                <input type="text" class="form-control" id="full_name" name="full_name" required value="<%= migrant.full_name %>" placeholder="Digite o Nome Completo">
+            </div>
+            <div class="form-group">
+                <label for="social_name">Nome Social</label>
+                <input type="text" class="form-control" id="social_name" name="social_name" value="<%= migrant.social_name %>" placeholder="Digite o Nome Social">
+            </div>
+            <div class="form-group">
+                <label for="gender">Gênero*</label>
+                <select class="form-control" id="gender" name="gender" required onchange="toggleOtherGenderInput()">
+                    <option value="" disabled <%= !migrant.gender ? 'selected' : '' %>>Selecione uma opção</option>
+                    <option value="Masculino" <%= migrant.gender === 'Masculino' ? 'selected' : '' %>>Masculino</option>
+                    <option value="Feminino" <%= migrant.gender === 'Feminino' ? 'selected' : '' %>>Feminino</option>
+                    <option value="Não-binário" <%= migrant.gender === 'Não-Binário' ? 'selected' : '' %>>Não-Binário</option>
+                    <option value="Transfeminino" <%= migrant.gender === 'Transfeminino' ? 'selected' : '' %>>Transfeminino</option>
+                    <option value="Transmasculino" <%= migrant.gender === 'Transmasculino' ? 'selected' : '' %>>Transmasculino</option>
+                    <option value="Agênero" <%= migrant.gender === 'Agênero' ? 'selected' : '' %>>Agênero</option>
+                    <option value="Gênero Fluido" <%= migrant.gender === 'Gênero Fluido' ? 'selected' : '' %>>Gênero Fluido</option>
+                    <option value="Prefiro não informar" <%= migrant.gender === 'Prefiro não informar' ? 'selected' : '' %>>Prefiro não informar</option>
+                    <option value="Outro" <%= migrant.gender === 'Outro' ? 'selected' : '' %>>Outro</option>
+                </select>
+                <input type="text" class="form-control <%= migrant.gender === 'Outro' ? '' : 'd-none' %>" id="other_gender" name="other_gender" value="<%= migrant.gender || '' %>" placeholder="Especifique o gênero" aria-label="Especifique o gênero">
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email*</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="<%= migrant.email %>" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                <div id="emailFeedback"></div>
+            </div>
+            <div class="form-group">
+                <label for="phone">Telefone</label>
+                <input type="text" class="form-control" id="phone" name="phone" maxlength="15" value="<%= migrant.phone %>" placeholder="Digite o Telefone">
+            </div>
+            <div class="form-group">
+                <label for="whatsapp_number">Número do WhatsApp?*</label>
+                <select class="form-control" id="whatsapp_number" name="whatsapp_number" required>
+                    <option value="" disabled <%= !migrant.whatsapp_number ? 'selected' : '' %>>Selecione uma opção</option>
+                    <option value="true" <%= migrant.whatsapp_number === 'true' ? 'selected' : '' %>>Sim</option>
+                    <option value="false" <%= migrant.whatsapp_number === 'false' ? 'selected' : '' %>>Não</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="document_type">Tipo de Documento*</label>
+                <input type="text" class="form-control" id="document_type" name="document_type" required value="<%= migrant.MigrantDocument.document_type %>" placeholder="Digite o Tipo de Documento">
+            </div>
+            <div class="form-group">
+                <label for="document_identification">Número do Documento*</label>
+                <input type="text" class="form-control" id="document_identification" name="document_identification" required value="<%= migrant.MigrantDocument.document_identification %>" placeholder="Digite o Número do Documento">
+            </div>
+            <div class="form-group">
+                <label for="date_birth">Data de Nascimento*</label>
+                <input type="date" class="form-control" id="date_birth" name="date_birth" required value="<%= migrant.date_birth %>">
+            </div>
+            <div class="form-group">
+                <label for="preferred_language">Idioma Preferido*</label>
+                <input type="text" class="form-control" id="preferred_language" name="preferred_language" required value="<%= migrant.preferred_language %>" placeholder="Digite o Idioma Preferido">
+            </div>
+            <div class="form-group">
+                <label for="entry_date">Data de Entrada no Brasil*</label>
+                <input type="date" class="form-control" id="entry_date" name="entry_date" required value="<%= migrant.entry_date %>">
+            </div>
+            <div class="form-group">
+                <label for="migrant_reason">Razão de Imigração*</label>
+                <input type="text" class="form-control" id="migrant_reason" name="migrant_reason" required value="<%= migrant.migrant_reason %>" placeholder="Digite a Razão de Imigração">
+            </div>
+            <div class="form-group">
+                <label for="nationality">Nacionalidade*</label>
+                <input type="text" class="form-control" id="nationality" name="nationality" required value="<%= migrant.nationality %>" placeholder="Digite a Nacionalidade">
+            </div>
+            <div class="form-group">
+                <label for="marital_status">Estado Civil*</label>
+                <select class="form-control" id="marital_status" name="marital_status" required>
+                    <option value="" disabled <%= !migrant.marital_status ? 'selected' : '' %>>Selecione uma opção</option>
+                    <option value="Solteiro" <%= migrant.marital_status === 'Solteiro' ? 'selected' : '' %>>Solteiro</option>
+                    <option value="Casado" <%= migrant.marital_status === 'Casado' ? 'selected' : '' %>>Casado</option>
+                    <option value="Separado" <%= migrant.marital_status === 'Separado' ? 'selected' : '' %>>Separado</option>
+                    <option value="Divorciado" <%= migrant.marital_status === 'Divorciado' ? 'selected' : '' %>>Divorciado</option>
+                    <option value="Viúvo" <%= migrant.marital_status === 'Viúvo' ? 'selected' : '' %>>Viúvo</option>
+                    <option value="Prefiro não informar" <%= migrant.marital_status === 'Prefiro não informar' ? 'selected' : '' %>>Prefiro não informar</option>
+                </select>
+            </div>
 
-            <% const fields = [
-                { label: 'Nome Completo*', name: 'full_name', type: 'text', required: true, value: migrant.full_name },
-                { label: 'Nome Social', name: 'social_name', type: 'text', value: migrant.social_name },
-                { label: 'Email*', name: 'email', type: 'email', required: true, pattern: '[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$', value: migrant.email },
-                { label: 'Telefone', name: 'phone', type: 'text', maxlength: '15', value: migrant.phone },
-                { label: 'Número do WhatsApp*', name: 'whatsapp_number', type: 'select', options: [{value: 'true', text: 'Sim'}, {value: 'false', text: 'Não'}], selected: migrant.whatsapp_number },
-                { label: 'Tipo de Documento*', name: 'document_type', type: 'text', required: true, value: migrant.MigrantDocument.document_type },
-                { label: 'Número do Documento*', name: 'document_identification', type: 'text', required: true, value: migrant.MigrantDocument.document_identification },
-                { label: 'Data de Nascimento*', name: 'date_birth', type: 'date', required: true, value: migrant.date_birth },
-                { label: 'Idioma Preferido*', name: 'preferred_language', type: 'text', required: true, value: migrant.preferred_language },
-                { label: 'Data de Entrada no Brasil*', name: 'entry_date', type: 'date', required: true, value: migrant.entry_date },
-                { label: 'Razão de Imigração*', name: 'migrant_reason', type: 'text', required: true, value: migrant.migrant_reason },
-                { label: 'Gênero*', name: 'gender', type: 'text', required: true, value: migrant.gender },
-                { label: 'Nacionalidade*', name: 'nationality', type: 'text', required: true, value: migrant.nationality },
-                { label: 'Estado Civil*', name: 'marital_status', type: 'text', required: true, value: migrant.marital_status },
-                { label: 'Escolaridade', name: 'education_level', type: 'text', value: migrant.education_level },
-                { label: 'Programas Sociais', name: 'social_program_access', type: 'text', value: migrant.social_program_access },
-                { label: 'Status Migratório', name: 'status_migratory', type: 'text', value: migrant.status_migratory },
-                { label: 'PcD (Pessoa com Deficiência)*', name: 'is_pcd', type: 'select', options: [{value: 'true', text: 'Sim'}, {value: 'false', text: 'Não'}], selected: migrant.is_pcd },
-            ]; %>
-
-            <% fields.forEach(field => { %>
-                <div class="form-group">
-                    <label for="<%= field.name %>"><%= field.label %></label>
-                    <% if (field.type === 'select') { %>
-                        <select class="form-control" id="<%= field.name %>" name="<%= field.name %>" <%= field.required ? 'required' : '' %> >
-                            <option value="" disabled <%= !field.selected ? 'selected' : '' %>>Selecione uma opção</option>
-                            <% field.options.forEach(option => { %>
-                                <option value="<%= option.value %>" <%= option.value === String(field.selected) ? 'selected' : '' %>><%= option.text %></option>
-                            <% }) %>
-                        </select>
-                    <% } else { %>
-                        <input type="<%= field.type %>" class="form-control" id="<%= field.name %>" name="<%= field.name %>" 
-                               value="<%= field.value || '' %>" <%= field.required ? 'required' : '' %> 
-                               <%= field.pattern ? 'pattern="' + field.pattern + '"' : '' %> 
-                               <%= field.maxlength ? 'maxlength="' + field.maxlength + '"' : '' %> 
-                               placeholder="<%= field.label %>">
-                    <% } %>
-                </div>
-            <% }); %>
+            <div class="form-group">
+                <label for="education_level">Escolaridade</label>
+                <select class="form-control" name="education_level" id="education_level" required>
+                    <option value="" disabled <%= !migrant.education_level ? 'selected' : '' %>>Selecione uma opção</option>
+                    <option value="Ensino fundamental completo" <%= migrant.education_level === 'Ensino fundamental completo' ? 'selected' : '' %>>Ensino fundamental completo</option>
+                    <option value="Ensino médio completo" <%= migrant.education_level === 'Ensino médio completo' ? 'selected' : '' %>>Ensino médio completo</option>
+                    <option value="Superior completo" <%= migrant.education_level === 'Superior completo' ? 'selected' : '' %>>Superior completo</option>
+                    <option value="Pós-graduação" <%= migrant.education_level === 'Pós-graduação' ? 'selected' : '' %>>Pós-graduação</option>
+                    <option value="Mestrado" <%= migrant.education_level === 'Mestrado' ? 'selected' : '' %>>Mestrado</option>
+                    <option value="Doutorado" <%= migrant.education_level === 'Doutorado' ? 'selected' : '' %>>Doutorado</option>
+                    <option value="Pós-Doutorado" <%= migrant.education_level === 'Pós-Doutorado' ? 'selected' : '' %>>Pós-Doutorado</option>
+                    <option value="Não informado" <%= migrant.education_level === 'Não informado' ? 'selected' : '' %>>Não informado</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="social_program_access">Acesso a Programas Sociais oferecidos pelo Governo Brasileiro:</label>
+                <input type="text" class="form-control" id="social_program_access" name="social_program_access" value="<%= migrant.social_program_access %>" placeholder="Programas Sociais oferecidos pelo Governo Brasileiro">
+            </div>
+            <div class="form-group">
+                <label for="status_migratory">Status Migratório</label>
+                <input type="text" class="form-control" id="status_migratory" name="status_migratory" value="<%= migrant.status_migratory %>" placeholder="Digite o Status Migratório">
+            </div>
+            <div class="form-group">
+                <label for="is_pcd">PcD (Pessoa com Deficiência)*</label>
+                <select class="form-control" id="is_pcd" name="is_pcd" required>
+                    <option value="" disabled <%= !migrant.is_pcd ? 'selected' : '' %>>Selecione uma opção</option>
+                    <option value="true" <%= migrant.is_pcd === 'true' ? 'selected' : '' %>>Sim</option>
+                    <option value="false" <%= migrant.is_pcd === 'false' ? 'selected' : '' %>>Não</option>
+                </select>
+            </div>
 
             <!-- Seção de Endereço -->
             <h3 class="mt-4">Endereço</h3>

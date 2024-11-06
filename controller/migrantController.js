@@ -77,7 +77,6 @@ const createMigrant = async (req, res) => {
         complemento,
         password,
         authorized,
-        other_social_program_access
     } = req.body;
 
     // Função para garantir que os campos sejam null se não forem informados
@@ -188,6 +187,7 @@ const updateMigrant = async (req, res) => {
         entry_date,
         migrant_reason,
         gender,
+        other_gender,
         nationality,
         marital_status,
         education_level,
@@ -201,6 +201,8 @@ const updateMigrant = async (req, res) => {
         state,
         numero,
         complemento,
+        password,
+        authorized,
     } = req.body;
 
     // Função para garantir que os campos sejam null se não forem informados
@@ -217,7 +219,7 @@ const updateMigrant = async (req, res) => {
         entry_date: ensureNull(entry_date),
         preferred_language: ensureNull(preferred_language),
         migrant_reason: ensureNull(migrant_reason),
-        gender: ensureNull(gender),
+        gender: gender === 'Outro' ? other_gender : gender,
         nationality: ensureNull(nationality),
         marital_status: ensureNull(marital_status),
         education_level: ensureNull(education_level),
@@ -225,7 +227,7 @@ const updateMigrant = async (req, res) => {
         status_migratory: ensureNull(status_migratory),
         address_number: ensureNull(numero),
         address_complement: ensureNull(complemento),
-        is_pcd: ensureNull(is_pcd) || false,  // Assume false se não for informado
+        is_pcd: ensureNull(is_pcd) || false,  // Assume false se não for informado,
     };
 
     const address = {
