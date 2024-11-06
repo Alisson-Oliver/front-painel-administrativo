@@ -45,91 +45,33 @@ document.getElementById('btnBuscarEndereco').addEventListener('click', function(
     }
 });
 
-function validateForm() {
-const requiredFields = [
-    'full_name',
-    'email',
-    'phone',
-    'whatsapp_number',
-    'document_type',
-    'document_identification',
-    'date_birth',
-    'preferred_language',
-    'entry_date',
-    'migrant_reason',
-    'gender',
-    'nationality',
-    'marital_status',
-    'is_pcd',
-    'cep',
-    'street',
-    'neighborhood',
-    'city',
-    'state',
-    'numero',
-    'password',
-    'confirm_password'
-];
+// Função para validar a senha
+function validatePasswords() {
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirm_password').value;
+    const alertDiv = document.getElementById('alert');
 
-let isValid = true;
-let errorMessage = '';
+    // Verifica se as senhas são iguais e têm mais de 6 caracteres
+    if (password !== confirmPassword) {
+        alertDiv.textContent = 'As senhas não coincidem!';
+        alertDiv.classList.remove('d-none');
+        return false;
+    } else if (password.length < 6) {
+        alertDiv.textContent = 'A senha deve ter pelo menos 6 caracteres!';
+        alertDiv.classList.remove('d-none');
+        return false;
+    } else {
+        alertDiv.classList.add('d-none');
+        return true;
+    }
+}
 
-
-// Verifica se todos os campos obrigatórios estão preenchidos
-requiredFields.forEach(field => {
-    const input = document.getElementById(field);
-    if (input && !input.value.trim()) {
-        isValid = false;
-        errorMessage += `O campo "${input.previousElementSibling.innerText}" é obrigatório. Por favor, preencha-o.\n`;
+// Adiciona o evento de validação ao enviar o formulário
+document.querySelector('form').addEventListener('submit', function(event) {
+    if (!validatePasswords()) {
+        event.preventDefault(); // Impede o envio do formulário se a validação falhar
     }
 });
-
-  // Validação do campo "gender"
-  const genderSelect = document.getElementById('gender');
-  const otherGenderInput = document.getElementById('other_gender'); // Supondo que o input manual tenha id 'other_gender'
-
-  if (genderSelect && genderSelect.value === 'Outro') {  // Verifica se o usuário escolheu "outro"
-      // Se escolheu "outro", o campo manual deve ser preenchido
-      if (!otherGenderInput || !otherGenderInput.value.trim()) {
-          isValid = false;
-          errorMessage += `Por favor, preencha o campo de gênero se você escolheu a opção "Outro".\n`;
-      }
-  }
-
-// Verifica se as senhas são iguais
-const password = document.getElementById('password').value;
-const confirmPassword = document.getElementById('confirm_password').value;
-
-if (password !== confirmPassword) {
-    isValid = false;
-    errorMessage += 'As senhas não coincidem. Por favor, verifique.\n';
-}
-
-if(password.length < 6){
-    isValid = false;
-    errorMessage += 'A senha deve conter 6 dígitos ou mais. \n'
-}
-
-// Verifica se o checkbox está marcado
-const checkbox = document.getElementById('terms'); // Altere para o ID correto
-if (!checkbox.checked) {
-    isValid = false;
-    errorMessage += 'O migrante deve aceitar os termos e condições.\n';
-}
-
-if (!isValid) {
-    const alertBox = document.getElementById('alert');
-    alertBox.classList.remove('d-none');
-    alertBox.innerText = errorMessage;
-
-    // Rola a página até o alerta
-    alertBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    
-    return false; // Não submeter o formulário
-}
-
-return true; // Submeter o formulário
-};
 
 function toggleOtherGenderInput() {
     const genderSelect = document.getElementById('gender');
@@ -226,3 +168,33 @@ const handleEmailError = (error) => {
     feedbackElement.textContent = 'Erro ao verificar o email.';
     feedbackElement.style.color = 'orange';
 };
+
+// Alternar visibilidade da senha
+document.getElementById("togglePassword").addEventListener("click", function() {
+    const passwordField = document.getElementById("password");
+    const eyeIcon = document.getElementById("eyeIcon");
+    if (passwordField.type === "password") {
+        passwordField.type = "text"; // Torna a senha visível
+        eyeIcon.classList.remove("bi-eye-slash");
+        eyeIcon.classList.add("bi-eye");
+    } else {
+        passwordField.type = "password"; // Torna a senha oculta
+        eyeIcon.classList.remove("bi-eye");
+        eyeIcon.classList.add("bi-eye-slash");
+    }
+});
+
+// Alternar visibilidade da confirmação da senha
+document.getElementById("toggleConfirmPassword").addEventListener("click", function() {
+    const confirmPasswordField = document.getElementById("confirm_password");
+    const eyeIconConfirm = document.getElementById("eyeIconConfirm");
+    if (confirmPasswordField.type === "password") {
+        confirmPasswordField.type = "text"; // Torna a confirmação visível
+        eyeIconConfirm.classList.remove("bi-eye-slash");
+        eyeIconConfirm.classList.add("bi-eye");
+    } else {
+        confirmPasswordField.type = "password"; // Torna a confirmação oculta
+        eyeIconConfirm.classList.remove("bi-eye");
+        eyeIconConfirm.classList.add("bi-eye-slash");
+    }
+});

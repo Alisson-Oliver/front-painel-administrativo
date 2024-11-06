@@ -3,10 +3,8 @@
     <%- include("../partials/navbar.ejs") %>
     <div class="container mt-5 mb-4">
         <br>
-        <h1 class="mt-4 mb-3">Cadastrar Migrante</h1>
-
-
-        <form action="/admin/migrant/create" method="POST" novalidate onsubmit="return validateForm()">
+        <h1 class="mt-4 mb-3 text-primary">Cadastrar Migrante</h1>
+        <form action="/admin/migrant/create" method="POST" >
             <input type="hidden" name="_method" value="POST">
 
             <div class="form-group">
@@ -124,7 +122,9 @@
 
             <br>
             <hr>
-            <h3 class="mt-5 mb-3">Endereço</h3>
+            <h3 class="mt-5 mb-3 text-primary">
+                <i class="bi bi-geo-alt"></i> Endereço
+            </h3>
             <div class="form-group">
                 <label for="cep">CEP*</label>
                 <input 
@@ -163,30 +163,49 @@
                 <input type="text" class="form-control" id="complemento" name="complemento" placeholder="Complemento" aria-label="Complemento">
             </div>
             <div class="alert alert-warning" role="alert">
-                Caso a busca pelo endereço não retorne resultados, preencha os campos acima manualmente.
+                <i class="bi bi-exclamation-circle"></i> Caso a busca pelo endereço não retorne resultados, preencha os campos acima manualmente.
             </div>
 
             <br>
             <hr>
-            <h3 class="mt-5 mb-3">Senha do migrante</h3>
-            <p>Esta senha será usada juntamente com o e-mail cadastrado para acessar o aplicativo <strong>RAMB  </strong>.</p>
+            <h3 class="mt-5 mb-3 text-primary">
+                <i class="bi bi-lock"></i> Senha do migrante
+            </h3>
+            <p>Esta senha será usada juntamente com o e-mail cadastrado para acessar o aplicativo <strong>RAMB</strong>.</p>
+            
             <div class="form-group">
                 <label for="password">Senha*</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="Senha" required>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Senha" required>
+                    <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                        <i class="bi bi-eye-slash" id="eyeIcon"></i>
+                    </button>
+                </div>
             </div>
             <div class="form-group">
                 <label for="confirm_password">Confirme a Senha*</label>
-                <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirme a Senha" required>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirme a Senha" required>
+                    <button class="btn btn-outline-secondary" type="button" id="toggleConfirmPassword">
+                        <i class="bi bi-eye-slash" id="eyeIconConfirm"></i>
+                    </button>
+                </div>
             </div>
+            
             <div class="form-group form-check">
                 <input type="checkbox" class="form-check-input" id="terms" name="authorized" required>
-                <label class="form-check-label" for="terms"> O migrante aceita os <a href="">Termos e Condições</a></label>
+                <label class="form-check-label" for="terms"> O migrante aceita os <a target="_blank" href="/terms/migrante">Termos e Condições</a></label>
             </div>
 
             
         <!-- Alerta para validação -->
         <div id="alert" class="alert alert-danger d-none" role="alert"></div>
-            <button type="submit" class="btn btn-success">Cadastrar Migrante</button>
+            <button type="submit" class="btn btn-success">
+                <i class="bi bi-person"></i> Cadastrar Migrante
+            </button> 
+            <a href="/admin/migrants" class="btn btn-secondary">
+                <i class="bi bi-x-lg"></i> Cancelar
+            </a>
         </form>
     </div>
     <script src="/js/scriptMigrantCreate.js"></script>

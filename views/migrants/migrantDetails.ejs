@@ -2,123 +2,134 @@
 <body>
     <%- include("../partials/navbar.ejs") %>
 
-    <div class="container mt-5">
-        <!-- Título da Página -->
+    <div class="container mt-5 mb-3">
+       <!-- Título da Página -->
         <div class="text-center mb-4">
-            <hr>
             <br>
-            <h3 class="text-primary">INFORMAÇÕES DO MIGRANTE</h3>
+            <!-- Adicionando um ícone antes do título -->
+            <h3 class="text-primary text-uppercase">
+                <i class="bi bi-person-circle me-2"></i><strong> Informações do Migrante</strong>
+            </h3>
             <hr class="my-4" style="width: 50%; margin: 0 auto;">
         </div>
 
-        <!-- Seção de Informações do Migrante -->
-        <div class="bg-light p-4 shadow rounded pb-2 mb-3">
-            <h4>Principais Informações</h4>
-            <br>
-            <div class="row">
-                <!-- Coluna 1 -->
-                <div class="col-md-6">
-                    <p><strong>Nome Completo:</strong> <%= migrant.full_name %></p>
-                    <p><strong>Nome Social:</strong> <%= migrant.social_name ? migrant.social_name : 'Não disponível' %></p>
-                    <p><strong>Email:</strong> <%= migrant.email %></p>
-                    <p><strong>Telefone:</strong> <%= migrant.phone ? migrant.phone : 'Não disponível' %></p>
-                    <p><strong>WhatsApp:</strong> <%= migrant.whatsapp_number ? 'Sim' : 'Não' %></p>
-                    <p><strong>Documento:</strong>
-                        <%= migrant.MigrantDocument && migrant.MigrantDocument.document_type ? migrant.MigrantDocument.document_type : '' %> |   
-                        <%= migrant.MigrantDocument && migrant.MigrantDocument.document_identification ? migrant.MigrantDocument.document_identification : 'Não disponível' %>
-                    </p>
-                    <p><strong>Data de Nascimento:</strong> <span id="birthDate">Carregando...</span></p>
-                </div>
 
-                <!-- Coluna 2 -->
-                <div class="col-md-6">
-                    <p><strong>Idioma preferido:</strong> <%= migrant.preferred_language ? migrant.preferred_language : 'Não disponível' %></p>
-                    <p><strong>Data de Entrada no Brasil:</strong> <span id="entryDate">Carregando...</span></p>
-                    <p><strong>Razão de Imigração:</strong> <%= migrant.migrant_reason ? migrant.migrant_reason : 'Não disponível' %></p>
-                    <p><strong>Gênero:</strong> <%= migrant.gender ? migrant.gender : 'Não disponível' %></p>
-                    <p><strong>Nacionalidade:</strong> <%= migrant.nationality ? migrant.nationality : 'Não disponível' %></p>
-                    <p><strong>Estado Civil:</strong> <%= migrant.marital_status ? migrant.marital_status : 'Não disponível' %></p>
-                    <p><strong>Escolaridade:</strong> <%= migrant.education_level ? migrant.education_level : 'Não disponível' %></p>
+        <!-- Card para Principais Informações -->
+        <div class="card shadow rounded mb-4">
+            <div class="card-header bg-primary text-white">
+                <i class="bi bi-card-checklist me-2"></i><strong> Principais Informações</strong>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Nome Completo:</strong> <%= migrant.full_name %></p>
+                        <p><strong>Nome Social:</strong> <%= migrant.social_name || 'Não disponível' %></p>
+                        <p><strong>Email:</strong> <%= migrant.email %></p>
+                        <p><strong>Telefone:</strong> <%= migrant.phone || 'Não disponível' %></p>
+                        <p><strong>WhatsApp:</strong> <%= migrant.whatsapp_number ? 'Sim' : 'Não' %></p>
+                        <p><strong>Documento:</strong> <%= migrant.MigrantDocument?.document_type || 'Não disponível' %> | <%= migrant.MigrantDocument?.document_identification || 'Não disponível' %></p>
+                        <p><strong>Data de Nascimento:</strong> <span id="birthDate">Carregando...</span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Idioma preferido:</strong> <%= migrant.preferred_language || 'Não disponível' %></p>
+                        <p><strong>Data de Entrada no Brasil:</strong> <span id="entryDate">Carregando...</span></p>
+                        <p><strong>Razão de Imigração:</strong> <%= migrant.migrant_reason || 'Não disponível' %></p>
+                        <p><strong>Gênero:</strong> <%= migrant.gender || 'Não disponível' %></p>
+                        <p><strong>Nacionalidade:</strong> <%= migrant.nationality || 'Não disponível' %></p>
+                        <p><strong>Estado Civil:</strong> <%= migrant.marital_status || 'Não disponível' %></p>
+                        <p><strong>Escolaridade:</strong> <%= migrant.education_level || 'Não disponível' %></p>
+                    </div>
                 </div>
             </div>
-
-            <hr class="my-4">
-            <!-- Seção de Endereço -->
-            <div class="row">
-                <div class="col pt-3">
-                    <h4>Endereço</h4>
-                    <br>
-                    <p><%= migrant.Address.street %>, <%= migrant.Address.neighborhood %>, 
-                        <%= migrant.Address.city %> - <%= migrant.Address.state %>, nº <%= migrant.address_number %> 
-                        <%= migrant.address_complement ? ', ' + migrant.address_complement : '' %>, CEP: <%= migrant.Address.cep %>
-                    </p>
-                </div>
-            </div>
-            
-            <hr class="my-4">
-            <!-- Outras Informações -->
-            <h4>Outras Informações</h4>
-            <br>
-            <div class="row">
-                
-                <div class="col-md-6">
-                    <p><strong>Programas do Governo:</strong> <%= migrant.social_program_access ? migrant.social_program_access : 'Não disponível' %></p>
-                    <p><strong>Status Migratório:</strong> <%= migrant.status_migratory ? migrant.status_migratory : 'Não disponível' %></p>
-                </div>
-                <div class="col-md-6">
-                    <p><strong>PcD (Pessoa com Deficiência):</strong> <%= migrant.is_pcd ? 'Sim' : 'Não' %></p>
-                </div>
-            </div>
-
-             <!-- Botões de Ação alinhados à esquerda -->
-             <div class="text-left mt-3">
-                <a href="/admin/migrants" class="btn btn-primary mr-2">Voltar</a>
-
-                <!-- Botão Editar como Formulário para enviar o ID no body -->
-                <form action="/admin/migrants/edit" method="POST" style="display: inline;">
-                    <input type="hidden" name="migrant_id" value="<%= migrant.id %>">
-                    <button type="submit" class="btn btn-primary mr-2">Editar</button>
-                </form>
-
-                <form action="/admin/migrants/change-password" method="POST" style="display: inline;">
-                    <input type="hidden" name="migrant" value='<%= JSON.stringify(migrant) %>'>
-                    <button type="submit" class="btn btn-success mr-2">Atualizar Senha</button>
-                </form>
-
-                <!-- Botão Deletar para abrir o modal de confirmação -->
-                <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" onclick="confirmDelete('<%= migrant.full_name  %>', '<%= migrant.id %>')">Deletar</button>
         </div>
-    </div>
 
-   <!-- Modal de Confirmação de Deleção -->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Confirmação de Deleção</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+        <!-- Card para Endereço -->
+        <div class="card shadow rounded mb-4">
+            <div class="card-header bg-primary text-white">
+                <i class="bi bi-geo-alt me-2"></i><strong> Endereço</strong>
+            </div>
+            <div class="card-body mt-3">
+                <p><%= migrant.Address.street %>, <%= migrant.Address.neighborhood %>, <%= migrant.Address.city %> - <%= migrant.Address.state %>, nº <%= migrant.address_number %> <%= migrant.address_complement ? ', ' + migrant.address_complement : '' %>, CEP: <%= migrant.Address.cep %></p>
+                <a href="https://www.google.com/maps?q=<%= encodeURIComponent(migrant.Address.street + ', ' + migrant.Address.neighborhood + ', ' + migrant.Address.city + ', ' + migrant.Address.state + ', ' + migrant.Address.cep) %>" 
+                   target="_blank" 
+                   class="btn btn-outline-primary">
+                    <i class="bi bi-map"></i> Ver no Mapa
+                </a>
+            </div>
+             <!-- Botão de "Ver no Mapa" -->
+        </div>
+
+        <!-- Card para Outras Informações -->
+        <div class="card shadow rounded mb-4">
+            <div class="card-header bg-primary text-white">
+                <i class="bi bi-info-circle me-2"></i><strong> Outras Informações</strong>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Programas do Governo:</strong> <%= migrant.social_program_access || 'Não disponível' %></p>
+                        <p><strong>Status Migratório:</strong> <%= migrant.status_migratory || 'Não disponível' %></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>PcD (Pessoa com Deficiência):</strong> <%= migrant.is_pcd ? 'Sim' : 'Não' %></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botões de Ação -->
+        <div class="d-flex justify-content-start mt-3">
+            <a href="/admin/migrants" class="btn btn-secondary me-2 mr-2">
+                <i class="bi bi-arrow-left"></i> Voltar
+            </a>
+            <form action="/admin/migrants/edit" method="POST" class="me-2">
+                <input type="hidden" name="migrant_id" value="<%= migrant.id %>">
+                <button type="submit" class="btn btn-primary mr-2">
+                    <i class="bi bi-pencil"></i> Editar
                 </button>
-            </div>
-            <div class="modal-body">
-                Você tem certeza que deseja deletar o migrante <strong id="migrantName"></strong>?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <form method="POST" id="deleteForm" action="/admin/migrants/delete">
-                    <input type="hidden" name="_method" value="delete">
-                    <input type="hidden" name="migrant_id" id="migrant_id">
-                    <button type="submit" class="btn btn-danger" id="confirmDeleteButton">Deletar</button>
-                </form>
+            </form>
+            <form action="/admin/migrants/change-password" method="POST" class="me-2">
+                <input type="hidden" name="migrant" value='<%= JSON.stringify(migrant) %>'>
+                <button type="submit" class="btn btn-success mr-2">
+                    <i class="bi bi-lock"></i> Atualizar Senha
+                </button>
+            </form>
+            <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" onclick="confirmDelete('<%= migrant.full_name  %>', '<%= migrant.id %>')">
+                <i class="bi bi-trash"></i> Deletar
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmação de Deleção -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirmação de Deleção</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Você tem certeza que deseja deletar o migrante <strong id="migrantName"></strong>?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <form method="POST" id="deleteForm" action="/admin/migrants/delete">
+                        <input type="hidden" name="_method" value="delete">
+                        <input type="hidden" name="migrant_id" id="migrant_id">
+                        <button type="submit" class="btn btn-danger" id="confirmDeleteButton">Deletar</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<%- include("../partials/footer.ejs") %>
-<script>
-    const migrantBirthDate = "<%= migrant.date_birth %>";
-    const migrantEntryDate = "<%= migrant.entry_date %>";
-</script>
-<script src="/js/scriptMigrantDetails.js"></script>
 
+    <%- include("../partials/footer.ejs") %>
+
+    <script>
+        const migrantBirthDate = "<%= migrant.date_birth %>";
+        const migrantEntryDate = "<%= migrant.entry_date %>";
+    </script>
+    <script src="/js/scriptMigrantDetails.js"></script>
 </body>

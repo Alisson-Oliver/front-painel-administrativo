@@ -2,6 +2,7 @@ import { Router } from "express";
 import adminController from '../controller/adminController.js';
 import migrantController from '../controller/migrantController.js';
 import institutionController from '../controller/institutionController.js'
+import termController from "../controller/termController.js";
 import checkAuth from "../middlewares/checkAuth.js";
 
 const router = Router();
@@ -31,6 +32,17 @@ router.post('/institutions/update', checkAuth.auth, institutionController.update
 router.post('/institutions/delete', checkAuth.auth, institutionController.deleteInstitution);
 router.post('/institution/create', checkAuth.auth, institutionController.createInstitution);
 router.get('/institution/register', checkAuth.auth, institutionController.getRegisterInstitution);
+
+
+// Rotas Termos
+
+// Rota para exibir a página de edição dos termos
+router.get('/edit-terms/:type', termController.editTermsPage);
+
+router.get('/terms/:type', termController.getTermsPage);
+
+// Rota para salvar ou atualizar os termos
+router.post('/save-terms', termController.saveTermsPage);
 
 // Rotas admin
 router.post('/login', adminController.login);

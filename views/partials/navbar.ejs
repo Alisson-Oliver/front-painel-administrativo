@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
     <a class="navbar-brand" href="/admin">
-        <img src="/img/logo-navbar.svg" height="23px" style="margin-bottom: 4.5px;" class="mr-1">RAMB
+        <img src="/img/logo-navbar.svg" height="23px" style="margin-bottom: 4.5px;" class="mr-1">NomeApp
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -9,19 +9,66 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/admin/institutions">Instituições</a>
+                <a class="nav-link" href="/admin/institutions">
+                    Instituições
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/admin/migrants">Migrantes</a>
+                <a class="nav-link" href="/admin/migrants">
+                     Migrantes
+                </a>
             </li>
+            
         </ul>
         <ul class="navbar-nav">
-            <li class="nav-item">
-                <button class="btn btn-link nav-link" data-toggle="modal" data-target="#logoutModal" style="color: white; text-decoration: none; padding: 0;">Sair</button>
+            <!-- Botão "Minha Conta" -->
+            <li class="nav-item mr-2">
+                <button class="btn btn-outline-light rounded-pill d-flex align-items-center me-3" data-toggle="modal" data-target="#accountModal">
+                    <i class="bi bi-person-circle ms-3 mr-2"></i> Minha Conta
+                </button>
             </li>
+            <li class="nav-item">
+                <button class="btn btn-outline-light rounded-pill d-flex align-items-center" data-toggle="modal" data-target="#logoutModal">
+                    <i class="bi bi-box-arrow-right ms-3 mr-2"></i>  Sair
+                </button>
+            </li>
+            
         </ul>
     </div>
 </nav>
+
+<!-- Modal de Dados da Conta -->
+<div class="modal fade" id="accountModal" tabindex="-1" role="dialog" aria-labelledby="accountModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="accountModalLabel">Dados da Conta</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Informações da Conta -->
+                <div class="account-info">
+                    <p><strong>Nome:</strong> Usuário Logado</p>
+                    <p><strong>Email:</strong> usuario@dominio.com</p>
+                    <p><strong>Função:</strong> Administrador</p>
+                </div>
+
+                <!-- Aviso sobre alterações ou exclusão -->
+                <div class="alert alert-warning mt-4" role="alert">
+                    <strong>Atenção!</strong> Para alterar ou excluir os dados, contate o responsável pelos usuários administradores.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 
 <!-- Modal de Confirmação de Logout -->
 <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
@@ -53,7 +100,7 @@
 </script>
 
 <style>
-    /* Remove o sublinhado dos links de navegação */
+    /* Estilização do botão de logout */
     .navbar-nav .nav-link {
         text-decoration: none; /* Remover sublinhado no estado normal */
         color: white; /* Cor do texto padrão */
@@ -61,6 +108,18 @@
 
     .navbar-nav .nav-link:hover {
         text-decoration: none; /* Remover sublinhado no estado hover */
-        color: #fff; /* Cor do texto ao passar o mouse (opcional) */
+        color: #fff; /* Cor do texto ao passar o mouse */
+    }
+
+    /* Estilização adicional do botão de logout */
+    .btn-outline-light {
+        border-radius: 50px; /* Borda arredondada */
+        padding: 8px 20px; /* Espaçamento interno */
+        border: 2px solid white; /* Borda branca */
+    }
+
+    .btn-outline-light:hover {
+        background-color: #fff; /* Cor de fundo ao passar o mouse */
+        color: #007bff; /* Cor do texto ao passar o mouse */
     }
 </style>

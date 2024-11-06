@@ -13,7 +13,6 @@ const getMigrants = async (req, res) => {
 
 const deleteMigrant = async (req, res) => {
     const migrantId = req.body.migrant_id; // Obtém o ID do migrante da rota
-    console.log(req.body);
     
     try {
         // Busca e deleta o migrante pelo ID
@@ -127,12 +126,11 @@ const createMigrant = async (req, res) => {
 
     try {
         // Faz a requisição para criar o novo migrante na API
-        const response = await api.post('/migrants', newData);
-        const migrant = response.data.migrant;
-        console.log(response);
+        const { data } = await api.post('/migrants', newData);
+        const migrantId = data.migrant.id
 
         // Redireciona para a página de detalhes do migrante recém-criado
-        res.redirect(`/admin/migrants/${migrant.id}`);
+        res.render('migrants/redirect', { migrantId });
     } catch (error) {
         console.error(error);
         // Verifica se há um erro específico retornado pela API

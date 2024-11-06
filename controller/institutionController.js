@@ -1,4 +1,3 @@
-import { name } from 'ejs';
 import { api } from '../config/config.js';
 
 const getInstitutions = async (req, res) => {
