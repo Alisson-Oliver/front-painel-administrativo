@@ -8,7 +8,7 @@
         <!-- Alerta para validação -->
         <div id="alert" class="alert alert-danger d-none" role="alert"></div>
 
-        <form action="/admin/migrants/update/<%= migrant.id %>" method="POST" novalidate>
+        <form action="/admin/migrants/update" method="POST" novalidate>
             <input type="hidden" name="_method" value="PUT">
 
             <% const fields = [
@@ -89,6 +89,7 @@
                 Caso a busca pelo endereço não retorne resultados, preencha os campos acima manualmente.
             </div>
 
+            <input type="hidden" name="migrant_id" value="<%= migrant.id %>">
             <button type="submit" class="btn btn-success">Salvar Alterações</button>
             <a href="/admin/migrants" class="btn btn-secondary">Cancelar</a>
         </form>

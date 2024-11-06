@@ -1,6 +1,7 @@
- // Função para configurar o nome e o ID da instituição no modal de deleção
- function confirmDelete(name, id) {
+function confirmDelete(name, id) {
+    // Preenche o nome da instituição no modal
     document.getElementById('institutionName').textContent = name;
-    document.getElementById('confirmText').value = ''; 
-    document.getElementById('institution_id').value = id; // Define o ID no formulário de deleção
+    
+    // Define o ID da instituição no formulário para que seja enviado corretamente
+    document.getElementById('institution_id').value = id;
 }

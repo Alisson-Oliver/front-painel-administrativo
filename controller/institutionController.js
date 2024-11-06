@@ -200,7 +200,6 @@ const getInstitutionById = async (req, res) => {
 
     try {
         const response = await api.get(`/institutions/${institutionId}`);
-        console.log('Resposta da API:', response.data);
 
         const institution = response.data.institution;
         if (!institution) {
@@ -241,7 +240,7 @@ const getEditInstitutionForm = async (req, res) => {
 
 const updateInstitution = async (req, res) => {
     // Extrai os dados do migrante do corpo da requisição
-    const institutionId = req.params.id
+    const institutionId = req.body.institution_id
 
     const {
         name,
@@ -364,6 +363,13 @@ const updateInstitution = async (req, res) => {
         state: ensureNull(state),
     };
 
+    const ResponsibleUser = {
+        name: ensureNull(responsible_name),
+        position: ensureNull(responsible_position),
+        sector: ensureNull(responsible_sector),
+        role: ensureNull(responsible_role)
+    };
+
     const newData = {
         institution,
         address,
@@ -373,6 +379,7 @@ const updateInstitution = async (req, res) => {
         RequirementRestriction,
         ServicesOffered,
         ServiceCost,
+        ResponsibleUser
     };
 
 

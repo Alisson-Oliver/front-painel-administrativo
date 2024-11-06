@@ -8,7 +8,7 @@
         <!-- Alerta para validação -->
         <div id="alert" class="alert alert-danger d-none" role="alert"></div>
 
-        <form action="/admin/institutions/update/<%= institution.id %>" method="POST" novalidate>
+        <form action="/admin/institutions/update" method="POST" novalidate>
             <input type="hidden" name="_method" value="PUT">
 
             <% const fields = [
@@ -198,6 +198,30 @@
                 Caso a busca pelo endereço não retorne resultados, preencha os campos acima manualmente.
             </div>
 
+            <!-- Seção de Responsável -->
+            <h3 class="mt-4">Responsável Pelo Cadastro</h3>
+            <div class="form-group">
+                <label for="responsible_name">Nome do Responsável*</label>
+                <input type="text" class="form-control" id="responsible_name" value="<%= institution.ResponsibleUser && institution.ResponsibleUser.name %>" name="responsible_name" required placeholder="Digite o nome do responsável">
+            </div>
+
+            <div class="form-group">
+                <label for="responsible_position">Posição*</label>
+                <input type="text" class="form-control" id="responsible_position" value="<%= institution.ResponsibleUser && institution.ResponsibleUser.position %>" name="responsible_position" placeholder="Digite a posição do responsável">
+            </div>
+
+            <div class="form-group">
+                <label for="responsible_sector">Setor*</label>
+                <input type="text" class="form-control" id="responsible_sector" value="<%= institution.ResponsibleUser && institution.ResponsibleUser.sector %>" name="responsible_sector" placeholder="Digite o setor do responsável">
+            </div>
+
+            <div class="form-group">
+                <label for="responsible_role">Função*</label>
+                <input type="text" class="form-control" id="responsible_role" value="<%= institution.ResponsibleUser && institution.ResponsibleUser.role%>" name="responsible_role" placeholder="Digite a função do responsável">
+            </div>
+
+
+            <input type="hidden" name="institution_id" value="<%= institution.id %>">
             <button type="submit" class="btn btn-success">Salvar Alterações</button>
             <a href="/admin/institutions" class="btn btn-secondary">Cancelar</a>
         </form>

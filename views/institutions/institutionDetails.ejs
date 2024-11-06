@@ -109,31 +109,31 @@
         </div>
     </div>
 
-    <!-- Modal de Confirmação de Deleção -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Confirmação de Deleção</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Você tem certeza que deseja deletar a instituição <strong id="institutionName"></strong>? Para confirmar, digite "Deletar Instituição".
-                    <input type="text" id="confirmText" class="form-control mt-2" placeholder="Digite 'Deletar Instituição'">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <form method="POST" id="deleteForm" action="/admin/institutions/delete">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <input type="hidden" name="institution_id" id="institution_id">
-                        <button type="submit" class="btn btn-danger" id="confirmDeleteButton">Deletar</button>
-                    </form>
-                </div>
+   <!-- Modal de Confirmação de Deleção -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirmação de Deleção</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Você tem certeza que deseja deletar a instituição <strong id="institutionName"></strong>?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <form method="POST" id="deleteForm" action="/admin/institutions/delete">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="institution_id" id="institution_id">
+                    <button type="submit" class="btn btn-danger" id="confirmDeleteButton">Deletar</button>
+                </form>
             </div>
         </div>
     </div>
+</div>
+
 
     <%- include("../partials/footer.ejs") %>
 <script src="/js/scriptInstitutionDetails.js"></script>

@@ -1,9 +1,10 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
-    <a class="navbar-brand" href="/admin"> <img src="/img/logo-navbar.svg" height="23px" style="margin-bottom: 4.5px;" class="mr-1">RAMB</a>
+    <a class="navbar-brand" href="/admin">
+        <img src="/img/logo-navbar.svg" height="23px" style="margin-bottom: 4.5px;" class="mr-1">RAMB
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
- 
 
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mr-auto">
@@ -16,8 +17,50 @@
         </ul>
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="/logout">Sair</a>
+                <button class="btn btn-link nav-link" data-toggle="modal" data-target="#logoutModal" style="color: white; text-decoration: none; padding: 0;">Sair</button>
             </li>
         </ul>
     </div>
 </nav>
+
+<!-- Modal de Confirmação de Logout -->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="logoutModalLabel">Confirmação de Logout</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Você realmente deseja sair?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button id="confirmLogout" class="btn btn-primary" onclick="logout()">Sair</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Script para logout -->
+<script>
+    function logout() {
+        // Redireciona para a rota de logout
+        window.location.href = "/logout";
+    }
+</script>
+
+<style>
+    /* Remove o sublinhado dos links de navegação */
+    .navbar-nav .nav-link {
+        text-decoration: none; /* Remover sublinhado no estado normal */
+        color: white; /* Cor do texto padrão */
+    }
+
+    .navbar-nav .nav-link:hover {
+        text-decoration: none; /* Remover sublinhado no estado hover */
+        color: #fff; /* Cor do texto ao passar o mouse (opcional) */
+    }
+</style>

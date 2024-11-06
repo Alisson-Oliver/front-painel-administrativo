@@ -12,8 +12,9 @@ const getMigrants = async (req, res) => {
 };
 
 const deleteMigrant = async (req, res) => {
-    const migrantId = req.params.id; // Obtém o ID do migrante da rota
-
+    const migrantId = req.body.migrant_id; // Obtém o ID do migrante da rota
+    console.log(req.body);
+    
     try {
         // Busca e deleta o migrante pelo ID
         await api.delete(`/migrants/${migrantId}`);
@@ -27,7 +28,7 @@ const deleteMigrant = async (req, res) => {
 };
 
 const getMigrantById = async (req, res) => {
-    const migrantId = req.params.id; // Obtém o ID do migrante da rota
+    const migrantId = req.body.migrant_id; // Obtém o ID do migrante da rota
 
     try {
         // Busca o migrante pelo ID
@@ -47,7 +48,6 @@ const getMigrantById = async (req, res) => {
 };
 
 const createMigrant = async (req, res) => {
-    // Extrai os dados do migrante do corpo da requisição
     const {
         full_name,
         social_name,
@@ -61,6 +61,7 @@ const createMigrant = async (req, res) => {
         entry_date,
         migrant_reason,
         gender,
+        other_gender,
         nationality,
         marital_status,
         education_level,
@@ -76,6 +77,7 @@ const createMigrant = async (req, res) => {
         complemento,
         password,
         authorized,
+        other_social_program_access
     } = req.body;
 
     // Função para garantir que os campos sejam null se não forem informados
@@ -92,7 +94,7 @@ const createMigrant = async (req, res) => {
         entry_date: ensureNull(entry_date),
         preferred_language: ensureNull(preferred_language),
         migrant_reason: ensureNull(migrant_reason),
-        gender: ensureNull(gender),
+        gender: gender === 'Outro' ? other_gender : gender,
         nationality: ensureNull(nationality),
         marital_status: ensureNull(marital_status),
         education_level: ensureNull(education_level),
@@ -134,7 +136,6 @@ const createMigrant = async (req, res) => {
         res.redirect(`/admin/migrants/${migrant.id}`);
     } catch (error) {
         console.error(error);
-
         // Verifica se há um erro específico retornado pela API
         if (error.response && error.response.data) {
             return res.status(400).send({ message: error.response.data.message });
@@ -147,7 +148,7 @@ const createMigrant = async (req, res) => {
 
 
 const getEditMigrantForm = async (req, res) => {
-    const migrantId = req.params.id; // Obtém o ID do migrante da rota
+    const migrantId = req.body.migrant_id; 
 
     try {
         // Busca o migrante pelo ID
@@ -172,7 +173,7 @@ const getRegisterMigrant = async (req, res) => {
 
 const updateMigrant = async (req, res) => {
     // Extrai os dados do migrante do corpo da requisição
-    const migrantId = req.params.id
+    const migrantId = req.body.migrant_id
 
     const {
         full_name,
@@ -251,7 +252,7 @@ const updateMigrant = async (req, res) => {
         await api.put(`/migrants/${migrantId}`, newData); // Corrigido para enviar o id no URL
 
         // Redireciona para a página de detalhes do migrante recém-atualizado
-        res.redirect(`/admin/migrants/${migrantId}`);
+        res.render('migrants/redirect', { migrantId });
     } catch (error) {
         console.error(error);
 
@@ -278,6 +279,45 @@ const searchMigrant = async (req, res) => {
     }
 };
 
+const checkEmail = async (req, res) => {
+    try {
+        const email = req.body.email;
+        
+        // Enviar o email no corpo da requisição para a API
+        const emailExistResponse = await api.post('/migrants/check-email', { email });
+
+        const exists = emailExistResponse.data.exists;
+        
+        if (exists) {
+            return res.status(200).json({ exists: true });
+        } else {
+            return res.status(200).json({ exists: false });
+        }
+    } catch (error) {
+        console.error(error); 
+        return res.status(500).json({ message: "Erro interno no servidor. Tente novamente mais tarde." });
+    }
+}
+
+const getUpdatePassword = async (req, res) => {
+    const migrantData = req.body.migrant;
+    const migrant = JSON.parse(migrantData); 
+    res.render('migrants/migrantUpdatePassword', { migrant });
+};
+
+
+const updatePassword = async (req, res) => {
+    try {
+        const { confirmPassword } = req.body;
+        const migrantId = req.body.migrant_id;
+        const response = api.patch(`/migrants/change-password/${migrantId}`, {password: confirmPassword} );
+        res.render('migrants/migrantUpdatePassword', { success: 'Senha atualizada com sucesso.'});
+    } catch (error) {
+        console.error('Erro ao buscar alterar senhar:', error);
+        return res.render('migrants/migrantUpdatePassword', { error: 'Erro ao atualizar senha do migrante.' });
+    }
+};
+
 export default {
     getMigrants,
     getMigrantById,
@@ -287,4 +327,7 @@ export default {
     searchMigrant,
     getEditMigrantForm,
     getRegisterMigrant,
+    checkEmail,
+    getUpdatePassword,
+    updatePassword,
 }

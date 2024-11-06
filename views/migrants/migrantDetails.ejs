@@ -70,72 +70,55 @@
                 </div>
             </div>
 
-            <!-- Botões de Ação alinhados à esquerda -->
-            <div class="text-left mt-3">
+             <!-- Botões de Ação alinhados à esquerda -->
+             <div class="text-left mt-3">
                 <a href="/admin/migrants" class="btn btn-primary mr-2">Voltar</a>
-                <a href="/admin/migrants/edit/<%= migrant.id %>" class="btn btn-primary mr-2">Editar</a>
-                <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Deletar</button>
-            </div>
+
+                <!-- Botão Editar como Formulário para enviar o ID no body -->
+                <form action="/admin/migrants/edit" method="POST" style="display: inline;">
+                    <input type="hidden" name="migrant_id" value="<%= migrant.id %>">
+                    <button type="submit" class="btn btn-primary mr-2">Editar</button>
+                </form>
+
+                <form action="/admin/migrants/change-password" method="POST" style="display: inline;">
+                    <input type="hidden" name="migrant" value='<%= JSON.stringify(migrant) %>'>
+                    <button type="submit" class="btn btn-success mr-2">Atualizar Senha</button>
+                </form>
+
+                <!-- Botão Deletar para abrir o modal de confirmação -->
+                <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" onclick="confirmDelete('<%= migrant.full_name  %>', '<%= migrant.id %>')">Deletar</button>
         </div>
     </div>
 
-    <!-- Modal de Confirmação de Deleção -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Confirmação de Deleção</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Você tem certeza que deseja deletar o migrante <strong id="migrantName"></strong>? Para confirmar, digite "Deletar Migrante".
-                    <input type="text" id="confirmText" class="form-control mt-2" placeholder="Digite 'Deletar Migrante'">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <form method="POST" id="deleteForm" action="/admin/migrants/delete/<%= migrant.id %>">
-                        <input type="hidden" name="_method" value="delete">
-                        <button type="submit" class="btn btn-danger" id="confirmDeleteButton">Deletar</button>
-                    </form>
-                </div>
+   <!-- Modal de Confirmação de Deleção -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirmação de Deleção</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Você tem certeza que deseja deletar o migrante <strong id="migrantName"></strong>?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <form method="POST" id="deleteForm" action="/admin/migrants/delete">
+                    <input type="hidden" name="_method" value="delete">
+                    <input type="hidden" name="migrant_id" id="migrant_id">
+                    <button type="submit" class="btn btn-danger" id="confirmDeleteButton">Deletar</button>
+                </form>
             </div>
         </div>
     </div>
+</div>
+<%- include("../partials/footer.ejs") %>
+<script>
+    const migrantBirthDate = "<%= migrant.date_birth %>";
+    const migrantEntryDate = "<%= migrant.entry_date %>";
+</script>
+<script src="/js/scriptMigrantDetails.js"></script>
 
-    <%- include("../partials/footer.ejs") %>
-
-    <script>
-        function confirmDelete(name) {
-            document.getElementById('migrantName').textContent = name;
-            document.getElementById('confirmText').value = ''; 
-        }
-
-        // Aplicar formatação da data de nascimento
-        document.addEventListener("DOMContentLoaded", function() {
-            const birthDateElement = document.getElementById("birthDate");
-            const dateStr = "<%= migrant.date_birth %>";
-            if (dateStr) {
-                birthDateElement.textContent = formatDate(dateStr);
-            } else {
-                birthDateElement.textContent = 'Não disponível';
-            }
-
-            const entryDateElement = document.getElementById("entryDate");
-            const entryDateStr = "<%= migrant.entry_date %>"; 
-            if (entryDateStr) {
-                entryDateElement.textContent = formatDate(entryDateStr);
-            } else {
-                entryDateElement.textContent = 'Não disponível';
-            }
-        });
-
-        function formatDate(dateStr) {
-            const date = new Date(dateStr + 'Z'); 
-            date.setHours(date.getHours() + 3);
-            return date.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric" });
-        }
-
-    </script>
 </body>

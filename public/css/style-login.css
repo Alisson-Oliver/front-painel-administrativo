@@ -1,52 +1,69 @@
 body {
-    background: linear-gradient(to right, #2575fc, #4d84e4);
+    position: relative;
+    background: #06203c; 
     height: 100vh;
-    display: flex;
+    display: flex; 
     justify-content: center;
-    align-items: center;
-    color: white;
-    font-family: Arial, sans-serif;
+    align-items: center; 
+    margin: 0;
+    overflow: hidden;
 }
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('/img/backgroundLogin.png') no-repeat center center fixed; 
+    background-size: cover; 
+    opacity: 0.15; 
+    z-index: -1; 
+    filter: brightness(70%) blur(4px);
+}
+
 
 .card {
+    background-color: whitesmoke;
+    border: none;
     border-radius: 15px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
-
 .card-title {
-    font-weight: bold;
-    margin-bottom: 1.5rem;
+    font-weight: bold; 
+    color: #007bff;
 }
-
+.alert {
+    margin-bottom: 20px; 
+}
+.input-group-text {
+    background-color: #007bff; 
+    color: white;
+    border: none; 
+}
 .form-control {
     border-radius: 10px;
-    height: 40px; /* Aumentando a altura do campo */
+    border: 1px solid #007bff; 
+    transition: border-color 0.3s; 
 }
-
-.btn-primary {
-    border-radius: 10px;
-    background-color: #007bff;
-    border-color: #007bff;
-    transition: background-color 0.3s;
-    height: 40px; /* Aumentando a altura do botão */
-}
-
-.btn-primary:hover {
-    background-color: #0056b3;
+.form-control:focus {
     border-color: #0056b3;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); 
 }
-
+.btn {
+    background-color: #007bff; 
+    color: white;
+    border-radius: 10px; 
+}
+.btn:hover {
+    background-color: #0c73e1 
+}
 .forgot-password {
-    color: #ffffff;
+    color: #007bff; 
 }
-
 .forgot-password:hover {
-    text-decoration: underline;
-}
+    color: #007bff;
+    
 
-@media (max-width: 576px) {
-    .card {
-        margin: 0 20px;
-    }
 }

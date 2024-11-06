@@ -29,7 +29,12 @@ function renderTable() {
                 <td>${migrant.email}</td> <!-- Email do migrante -->
                 <td>${migrant.phone || 'Não disponível'}</td> <!-- Telefone, se existir -->
                 <td>${migrant.MigrantDocument?.document_identification || 'Não disponível'}</td> <!-- Documento de identificação, se existir -->
-                <td><a href="/admin/migrants/details/${migrant.id}" class="btn btn-info btn-sm">Detalhes</a></td> <!-- Link para detalhes -->
+                <td>
+                    <form action="/admin/migrants/details" method="POST">
+                        <input type="hidden" name="migrant_id" value="${migrant.id}">
+                        <button type="submit" class="btn btn-info btn-sm">Detalhes</button>
+                    </form>
+                </td>
             </tr>`;
         // Insere a linha na tabela
         tableBody.insertAdjacentHTML('beforeend', row);

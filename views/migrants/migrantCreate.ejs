@@ -4,56 +4,114 @@
     <div class="container mt-5 mb-4">
         <br>
         <h1 class="mt-4 mb-3">Cadastrar Migrante</h1>
-        
-        <!-- Alerta para validação -->
-        <div id="alert" class="alert alert-danger d-none" role="alert"></div>
+
 
         <form action="/admin/migrant/create" method="POST" novalidate onsubmit="return validateForm()">
             <input type="hidden" name="_method" value="POST">
-            <% const fields = [
-                { label: 'Nome Completo*', name: 'full_name', type: 'text', required: true },
-                { label: 'Nome Social', name: 'social_name', type: 'text' },
-                { label: 'Email*', name: 'email', type: 'email', required: true, pattern: '[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$' },
-                { label: 'Telefone*', name: 'phone', type: 'text', maxlength: '15', required: true, oninput: "formatPhone(this)" },
-                { label: 'WhatsApp*', name: 'whatsapp', type: 'select', required: true },  
-                { label: 'Tipo de Documento*', name: 'document_type', type: 'text', required: true },
-                { label: 'Número do Documento*', name: 'document_identification', type: 'text', required: true },
-                { label: 'Data de Nascimento*', name: 'date_birth', type: 'date', required: true },
-                { label: 'Idioma Preferido*', name: 'preferred_language', type: 'text', required: true },
-                { label: 'Data de Entrada no Brasil*', name: 'entry_date', type: 'date', required: true },
-                { label: 'Razão de Imigração*', name: 'migrant_reason', type: 'text', required: true },
-                { label: 'Gênero*', name: 'gender', type: 'text', required: true },
-                { label: 'Nacionalidade*', name: 'nationality', type: 'text', required: true },
-                { label: 'Estado Civil*', name: 'marital_status', type: 'text', required: true },
-                { label: 'Escolaridade', name: 'education_level', type: 'text' },
-                { label: 'Programas do Governo:', name: 'social_program_access', type: 'text' },
-                { label: 'Status Migratório', name: 'status_migratory', type: 'text' },
-            ]; %>
 
-            <% fields.forEach(field => { %>
-                <div class="form-group">
-                    <label for="<%= field.name %>"><%= field.label %></label>
-                    <% if (field.type === 'select') { %>
-                        <select class="form-control" id="<%= field.name %>" name="<%= field.name %>" required>
-                            <option value="" disabled selected>Selecione uma opção</option>
-                            <option value="true">Sim</option>
-                            <option value="false">Não</option>
-                        </select>
-                    <% } else { %>
-                        <input 
-                            type="<%= field.type %>"
-                            class="form-control"
-                            id="<%= field.name %>"
-                            name="<%= field.name %>"
-                            <% if (field.required) { %> required <% } %>
-                            <% if (field.maxlength) { %> maxlength="<%= field.maxlength %>" <% } %>
-                            placeholder="<%= field.label %>"
-                            aria-required="<%= field.required ? 'true' : 'false' %>"
-                            <% if (field.oninput) { %> oninput="<%= field.oninput %>" <% } %> 
-                        />
-                    <% } %>
-                </div>
-            <% }); %>
+            <div class="form-group">
+                <label for="full_name">Nome Completo*</label>
+                <input type="text" class="form-control" id="full_name" name="full_name" placeholder="Nome Completo" required>
+            </div>
+            <div class="form-group">
+                <label for="social_name">Nome Social</label>
+                <input type="text" class="form-control" id="social_name" name="social_name" placeholder="Nome Social">
+            </div>
+            <div class="form-group">
+                <label for="gender">Gênero*</label>
+                <select class="form-control" id="gender" name="gender" required onchange="toggleOtherGenderInput()">
+                    <option value="" disabled selected>Selecione uma opção</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Feminino">Feminino</option>
+                    <option value="Não-binário">Não-binário</option>
+                    <option value="Transfeminino">Transfeminino</option>
+                    <option value="Transmasculino">Transmasculino</option>
+                    <option value="Agênero">Agênero</option>
+                    <option value="Gênero Fluido">Gênero Fluido</option>
+                    <option value="Prefiro não informar">Prefiro não informar</option>
+                    <option value="Outro">Outro</option>
+                </select>
+                <input type="text" class="form-control d-none" id="other_gender" name="other_gender" placeholder="Especifique o gênero" aria-label="Especifique o gênero">
+            </div>
+            <div class="form-group">
+                <label for="email">Email*</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                <div id="emailFeedback"></div>
+            </div>
+            <div class="form-group">
+                <label for="phone">Telefone*</label>
+                <input type="text" class="form-control" id="phone" name="phone" maxlength="15" required oninput="formatPhone(this)" placeholder="Telefone">
+            </div>
+            <div class="form-group">
+                <label for="whatsapp_number">WhatsApp?*</label>
+                <select class="form-control" id="whatsapp_number" name="whatsapp_number" required>
+                    <option value="" disabled selected>Selecione uma opção</option>
+                    <option value="true">Sim</option>
+                    <option value="false">Não</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="document_type">Tipo de Documento*</label>
+                <input type="text" class="form-control" id="document_type" name="document_type" placeholder="Tipo de Documento" required>
+            </div>
+            <div class="form-group">
+                <label for="document_identification">Número do Documento*</label>
+                <input type="text" class="form-control" id="document_identification" name="document_identification" placeholder="Número do Documento" required>
+            </div>
+            <div class="form-group">
+                <label for="date_birth">Data de Nascimento*</label>
+                <input type="date" class="form-control" id="date_birth" name="date_birth" required>
+            </div>
+            <div class="form-group">
+                <label for="preferred_language">Idioma Preferido*</label>
+                <input type="text" class="form-control" id="preferred_language" name="preferred_language" placeholder="Idioma Preferido" required>
+            </div>
+            <div class="form-group">
+                <label for="entry_date">Data de Entrada no Brasil*</label>
+                <input type="date" class="form-control" id="entry_date" name="entry_date" required>
+            </div>
+            <div class="form-group">
+                <label for="migrant_reason">Razão de Imigração*</label>
+                <input type="text" class="form-control" id="migrant_reason" name="migrant_reason" placeholder="Razão de Imigração" required>
+            </div>
+            <div class="form-group">
+                <label for="nationality">Nacionalidade*</label>
+                <input type="text" class="form-control" id="nationality" name="nationality" placeholder="Nacionalidade" required>
+            </div>
+            <div class="form-group">
+                <label for="gender">Estado Civil*</label>
+                <select class="form-control" id="marital_status" name="marital_status" required>
+                    <option value="" disabled selected>Selecione uma opção</option>
+                    <option value="Solteiro">Solteiro</option>
+                    <option value="Casado">Casado</option>
+                    <option value="Separado">Separado</option>
+                    <option value="Divorciado">Divorciado</option>
+                    <option value="Viúvo">Viúvo</option>
+                    <option value="Prefiro não informar">Não informado</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="education_level">Escolaridade</label>
+                <select class="form-control" name="education_level" id="education_level">
+                    <option value="" disabled selected>Selecione uma opção</option>
+                    <option value="Ensino fundamental completo">Ensino fundamental completo</option>
+                    <option value="Ensino médio completo">Ensino médio completo</option>
+                    <option value="Superior completo">Superior completo</option>
+                    <option value="Pós-graduação">Pós-graduação</option>
+                    <option value="Mestrado">Mestrado</option>
+                    <option value="Doutorado">Doutorado</option>
+                    <option value="Pós-Doutorado">Pós-Doutorado</option>
+                    <option value="Não informado">Não informado</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="social_program_access">Acesso a Programas Sociais oferecidos pelo Governo Brasileiro:</label>
+                <input type="text" class="form-control" name="social_program_access" id="social_program_access"  placeholder=" Programas Sociais oferecidos pelo Governo Brasileiro" > 
+            </div>
+            <div class="form-group">
+                <label for="status_migratory">Status Migratório</label>
+                <input type="text" class="form-control" id="status_migratory" name="status_migratory" placeholder="Status Migratório">
+            </div>
 
             <div class="form-group">
                 <label for="is_pcd">PcD (Pessoa com Deficiência)*</label>
@@ -63,6 +121,7 @@
                     <option value="false">Não</option>
                 </select>
             </div>
+
             <br>
             <hr>
             <h3 class="mt-5 mb-3">Endereço</h3>
@@ -80,20 +139,20 @@
             </div>
             <button type="button" id="btnBuscarEndereco" class="btn btn-primary mb-2">Buscar Endereço</button>
             <div class="form-group">
-                <label for="street">Logradouro</label>
-                <input type="text" class="form-control" id="street" name="street" placeholder="Logradouro" aria-label="Logradouro">
+                <label for="street">Logradouro*</label>
+                <input type="text" class="form-control" id="street" name="street" placeholder="Logradouro" aria-label="Logradouro" required>
             </div>
             <div class="form-group">
-                <label for="neighborhood">Bairro</label>
-                <input type="text" class="form-control" id="neighborhood" name="neighborhood" placeholder="Bairro" aria-label="Bairro">
+                <label for="neighborhood">Bairro*</label>
+                <input type="text" class="form-control" id="neighborhood" name="neighborhood" placeholder="Bairro" aria-label="Bairro" required>
             </div>
             <div class="form-group">
-                <label for="city">Cidade</label>
-                <input type="text" class="form-control" id="city" name="city" placeholder="Cidade" aria-label="Cidade">
+                <label for="city">Cidade*</label>
+                <input type="text" class="form-control" id="city" name="city" placeholder="Cidade" aria-label="Cidade" required>
             </div>
             <div class="form-group">
-                <label for="state">Estado</label>
-                <input type="text" class="form-control" id="state" name="state" placeholder="Estado" aria-label="Estado">
+                <label for="state">Estado*</label>
+                <input type="text" class="form-control" id="state" name="state" placeholder="Estado" aria-label="Estado" required>
             </div>
             <div class="form-group">
                 <label for="numero">Número*</label>
@@ -106,10 +165,11 @@
             <div class="alert alert-warning" role="alert">
                 Caso a busca pelo endereço não retorne resultados, preencha os campos acima manualmente.
             </div>
-            
+
             <br>
             <hr>
-            <h3 class="mt-5 mb-3">Senha</h3>
+            <h3 class="mt-5 mb-3">Senha do migrante</h3>
+            <p>Esta senha será usada juntamente com o e-mail cadastrado para acessar o aplicativo <strong>RAMB  </strong>.</p>
             <div class="form-group">
                 <label for="password">Senha*</label>
                 <input type="password" class="form-control" id="password" name="password" placeholder="Senha" required>
@@ -122,107 +182,14 @@
                 <input type="checkbox" class="form-check-input" id="terms" name="authorized" required>
                 <label class="form-check-label" for="terms"> O migrante aceita os <a href="">Termos e Condições</a></label>
             </div>
+
+            
+        <!-- Alerta para validação -->
+        <div id="alert" class="alert alert-danger d-none" role="alert"></div>
             <button type="submit" class="btn btn-success">Cadastrar Migrante</button>
-            <a href="/admin/migrants" class="btn btn-secondary">Cancelar</a>
         </form>
     </div>
-    <script>
-        function formatPhone(input) {
-            const value = input.value.replace(/\D/g, '');
-            const formattedValue = value.length > 10
-                ? value.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3')
-                : value.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
-            input.value = formattedValue;
-        }
-
-        document.getElementById('btnBuscarEndereco').addEventListener('click', function() {
-            const cep = document.getElementById('cep').value.replace(/\D/g, '');
-            if (cep.length === 8) {
-                fetch(`https://viacep.com.br/ws/${cep}/json/`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (!data.erro) {
-                            document.getElementById('street').value = data.logradouro;
-                            document.getElementById('neighborhood').value = data.bairro;
-                            document.getElementById('city').value = data.localidade;
-                            document.getElementById('state').value = data.estado;
-                        } else {
-                            alert('CEP não encontrado. Por favor, verifique o número inserido.');
-                        }
-                    })  
-                    .catch(error => {
-                        console.error('Erro ao buscar endereço:', error);
-                        alert('Erro ao buscar endereço. Tente novamente mais tarde.');
-                    });
-            } else {
-                alert('Por favor, insira um CEP válido.');
-            }
-        });
-
-    function validateForm() {
-        const requiredFields = [
-            'full_name',
-            'email',
-            'phone',
-            'whatsapp',
-            'document_type',
-            'document_identification',
-            'date_birth',
-            'preferred_language',
-            'entry_date',
-            'migrant_reason',
-            'gender',
-            'nationality',
-            'marital_status',
-            'is_pcd',
-            'cep',
-            'numero',
-            'password',
-            'confirm_password'
-        ];
-
-        let isValid = true;
-        let errorMessage = '';
-        
-        // Verifica se todos os campos obrigatórios estão preenchidos
-        requiredFields.forEach(field => {
-            const input = document.getElementById(field);
-            if (input && !input.value.trim()) {
-                isValid = false;
-                errorMessage += `O campo "${input.previousElementSibling.innerText}" é obrigatório. Por favor, preencha-o.\n`;
-            }
-        });
-
-        // Verifica se as senhas são iguais
-        const password = document.getElementById('password').value;
-        const confirmPassword = document.getElementById('confirm_password').value;
-
-        if (password !== confirmPassword) {
-            isValid = false;
-            errorMessage += 'As senhas não coincidem. Por favor, verifique.\n';
-        }
-
-        // Verifica se o checkbox está marcado
-        const checkbox = document.getElementById('terms'); // Altere para o ID correto
-        if (!checkbox.checked) {
-            isValid = false;
-            errorMessage += 'O migrante deve aceitar os termos e condições.\n';
-        }
-
-        if (!isValid) {
-            const alertBox = document.getElementById('alert');
-            alertBox.classList.remove('d-none');
-            alertBox.innerText = errorMessage;
-
-            // Rola a página até o alerta
-            alertBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            
-            return false; // Não submeter o formulário
-        }
-
-        return true; // Submeter o formulário
-    }
-</script>
-
+    <script src="/js/scriptMigrantCreate.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>
 <%- include("../partials/footer.ejs") %>
