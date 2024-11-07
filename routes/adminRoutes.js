@@ -1,27 +1,37 @@
 import { Router } from "express";
-import adminController from '../controller/adminController.js';
 import migrantController from '../controller/migrantController.js';
 import institutionController from '../controller/institutionController.js'
 import termController from "../controller/termController.js";
 import checkAuth from "../middlewares/checkAuth.js";
+import adminController from "../controller/adminController.js";
 
 const router = Router();
 
 // Rotas do Painel Administrativo
 
+router.get('/home', checkAuth.auth, adminController.getHome);
+
+
 // Rotas migrantes
 router.post('/migrants/check-email', checkAuth.auth, migrantController.checkEmail);
 router.post('/migrants/delete', checkAuth.auth, migrantController.deleteMigrant);
 router.get('/migrants', checkAuth.auth, migrantController.getMigrants);
-router.post('/migrant/create', migrantController.createMigrant);
-router.get('/migrant/register', migrantController.getRegisterMigrant);
-router.get('/migrants/search', migrantController.searchMigrant);
-router.post('/migrants/edit', migrantController.getEditMigrantForm);
-router.post('/migrants/update', migrantController.updateMigrant); 
-router.post('/migrants/details', migrantController.getMigrantById);
-router.post('/migrants', migrantController.createMigrant);
-router.post('/migrants/change-password', migrantController.getUpdatePassword);
-router.post('/migrants/updatePassword', migrantController.updatePassword);
+
+router.post('/migrant/create', checkAuth.auth, migrantController.createMigrant);
+router.get('/migrant/register', checkAuth.auth, migrantController.getRegisterMigrant);
+router.post('/migrants', checkAuth.auth, migrantController.createMigrant);
+
+router.get('/migrants/search', checkAuth.auth, migrantController.searchMigrant);
+
+router.post('/migrants/edit', checkAuth.auth, migrantController.getEditMigrantForm);
+router.post('/migrants/update', checkAuth.auth, migrantController.updateMigrant); 
+router.post('/migrants/details', checkAuth.auth, migrantController.getMigrantById);
+
+
+router.post('/migrants/change-password', checkAuth.auth, migrantController.getUpdatePassword);
+router.post('/migrants/updatePassword', checkAuth.auth, migrantController.updatePassword);
+
+
 
 // Rotas instituições
 router.get('/institutions', checkAuth.auth, institutionController.getInstitutions);
@@ -37,14 +47,12 @@ router.get('/institution/register', checkAuth.auth, institutionController.getReg
 // Rotas Termos
 
 // Rota para exibir a página de edição dos termos
-router.get('/edit-terms/:type', termController.editTermsPage);
+router.get('/edit-terms/:type', checkAuth.auth, termController.editTermsPage);
 
-router.get('/terms/:type', termController.getTermsPage);
+router.get('/terms/:type', checkAuth.auth, termController.getTermsPage);
 
 // Rota para salvar ou atualizar os termos
-router.post('/save-terms', termController.saveTermsPage);
+router.post('/save-terms', checkAuth.auth, termController.saveTermsPage);
 
-// Rotas admin
-router.post('/login', adminController.login);
 
 export default router;

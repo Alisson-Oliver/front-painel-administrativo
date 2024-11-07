@@ -50,9 +50,14 @@ const getLogin = (req, res) => {
     res.render('login');
 }
 
+const getHome = async (req, res) => {
+    res.render('home');
+};
+
 export default {
     login,
     logout,
-    getLogin
+    getLogin,
+    getHome,
 }
 

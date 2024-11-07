@@ -3,14 +3,13 @@
     <%- include("../partials/navbar.ejs") %>
     <br>
     <div class="container mt-5 mb-4">
-        <h1 class="mt-4 mb-3">Editar Migrante</h1>
+        <br>
+        <h1 class="mt-3 mb-3 text-primary">Editar Migrante</h1>
         <!-- Alerta para validação -->
         <div id="alert" class="alert alert-danger d-none" role="alert"></div>
         
-        <form action="/admin/migrants/update" method="POST" novalidate>
-            <input type="hidden" name="_method" value="PUT">
-            
-            <!-- Campos do Migrante -->
+        <!-- Formulário para Editar Migrante -->
+        <form action="/admin/migrants/update" method="POST" >
             <div class="form-group">
                 <label for="full_name">Nome Completo*</label>
                 <input type="text" class="form-control" id="full_name" name="full_name" required value="<%= migrant.full_name %>" placeholder="Digite o Nome Completo">
@@ -127,7 +126,7 @@
             </div>
 
             <!-- Seção de Endereço -->
-            <h3 class="mt-4">Endereço</h3>
+            <h3 class="mt-4 text-primary">Endereço</h3>
             <div class="form-group">
                 <label for="cep">CEP*</label>
                 <input type="text" class="form-control" id="cep" name="cep" required value="<%= migrant.Address && migrant.Address.cep %>" placeholder="Digite o CEP">
@@ -136,23 +135,23 @@
 
             <div class="form-group">
                 <label for="street">Logradouro*</label>
-                <input type="text" class="form-control" id="street" name="street" value="<%= migrant.Address && migrant.Address.street %>" placeholder="Digite o Logradouro">
+                <input type="text" class="form-control" id="street" name="street" value="<%= migrant.Address && migrant.Address.street %>" placeholder="Digite o Logradouro" required>
             </div>
             <div class="form-group">
                 <label for="neighborhood">Bairro*</label>
-                <input type="text" class="form-control" id="neighborhood" name="neighborhood" value="<%= migrant.Address && migrant.Address.neighborhood %>" placeholder="Digite o Bairro">
+                <input type="text" class="form-control" id="neighborhood" name="neighborhood" value="<%= migrant.Address && migrant.Address.neighborhood %>" placeholder="Digite o Bairro" required>
             </div>
             <div class="form-group">
                 <label for="city">Cidade*</label>
-                <input type="text" class="form-control" id="city" name="city" value="<%= migrant.Address && migrant.Address.city %>" placeholder="Digite a Cidade">
+                <input type="text" class="form-control" id="city" name="city" value="<%= migrant.Address && migrant.Address.city %>" placeholder="Digite a Cidade" required>
             </div>
             <div class="form-group">
                 <label for="state">Estado*</label>
-                <input type="text" class="form-control" id="state" name="state" value="<%= migrant.Address && migrant.Address.state %>" placeholder="Digite o Estado">
+                <input type="text" class="form-control" id="state" name="state" value="<%= migrant.Address && migrant.Address.state %>" placeholder="Digite o Estado" required>
             </div>
             <div class="form-group">
                 <label for="numero">Número do Endereço*</label>
-                <input type="text" class="form-control" id="numero" name="numero" required value="<%= migrant.Address && migrant.address_number %>" placeholder="Digite o Número">
+                <input type="text" class="form-control" id="numero" name="numero" required value="<%= migrant.Address && migrant.address_number %>" placeholder="Digite o Número" required>
             </div>
             <div class="form-group">
                 <label for="complemento">Complemento (opcional)</label>
@@ -164,13 +163,16 @@
             </div>
 
             <input type="hidden" name="migrant_id" value="<%= migrant.id %>">
-            <button type="submit" class="btn btn-success">Salvar Alterações</button>
-            <a href="/admin/migrants" class="btn btn-secondary">Cancelar</a>
+            <button type="submit" class="btn btn-success">
+                <i class="bi bi-person"></i> Salvar Alterações
+            </button>
+            <a href="/admin/migrants" class="btn btn-secondary">
+                <i class="bi bi-x-lg"></i> Cancelar
+            </a>
         </form>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/js/scriptMigrantEdit.js"></script>
-
 </body>
 <%- include("../partials/footer.ejs") %>

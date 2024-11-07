@@ -16,48 +16,60 @@ function formatDate(dateStr) {
     return date.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric" });
 }
 
-function validateForm() {
-    const requiredFields = [
-        'newPassword',
-        'confirmPassword'
-    ];
-    
-    let isValid = true;
-    let errorMessage = '';
-    
-    // Verifica se todos os campos obrigatórios estão preenchidos
-    requiredFields.forEach(field => {
-        const input = document.getElementById(field);
-        if (input && !input.value.trim()) {
-            isValid = false;
-            errorMessage += `O campo "${input.previousElementSibling.innerText}" é obrigatório. Por favor, preencha-o.\n`;
-        }
-    });
-
-    // Verifica se as senhas são iguais
+// Função para validar a senha
+function validatePasswords() {
     const password = document.getElementById('newPassword').value;
     const confirmPassword = document.getElementById('confirmPassword').value;
-    
+    const alertDiv = document.getElementById('alert');
+
+    // Verifica se as senhas são iguais e têm mais de 6 caracteres
     if (password !== confirmPassword) {
-        isValid = false;
-        errorMessage += 'As senhas não coincidem. Por favor, verifique.\n';
+        alertDiv.textContent = 'As senhas não coincidem!';
+        alertDiv.classList.remove('d-none');
+        return false;
+    } else if (password.length < 6) {
+        alertDiv.textContent = 'A senha deve ter pelo menos 6 caracteres!';
+        alertDiv.classList.remove('d-none');
+        return false;
+    } else {
+        alertDiv.classList.add('d-none');
+        return true;
     }
-    
-    if(password.length < 6){
-        isValid = false;
-        errorMessage += 'A senha deve conter 6 dígitos ou mais. \n'
+}
+
+// Adiciona o evento de validação ao enviar o formulário
+document.querySelector('form').addEventListener('submit', function(event) {
+    if (!validatePasswords()) {
+        event.preventDefault(); // Impede o envio do formulário se a validação falhar
     }
-    
-    if (!isValid) {
-        const alertBox = document.getElementById('alert');
-        alertBox.classList.remove('d-none');
-        alertBox.innerText = errorMessage;
-    
-        // Rola a página até o alerta
-        alertBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        
-        return false; // Não submeter o formulário
+});
+
+// Alternar visibilidade da senha
+document.getElementById("togglePassword").addEventListener("click", function() {
+    const passwordField = document.getElementById("newPassword");
+    const eyeIcon = document.getElementById("eyeIcon");
+    if (passwordField.type === "password") {
+        passwordField.type = "text"; // Torna a senha visível
+        eyeIcon.classList.remove("bi-eye-slash");
+        eyeIcon.classList.add("bi-eye");
+    } else {
+        passwordField.type = "password"; // Torna a senha oculta
+        eyeIcon.classList.remove("bi-eye");
+        eyeIcon.classList.add("bi-eye-slash");
     }
-    
-    return true; // Submeter o formulário
-};
+});
+
+// Alternar visibilidade da confirmação da senha
+document.getElementById("toggleConfirmPassword").addEventListener("click", function() {
+    const confirmPasswordField = document.getElementById("confirmPassword");
+    const eyeIconConfirm = document.getElementById("eyeIconConfirm");
+    if (confirmPasswordField.type === "password") {
+        confirmPasswordField.type = "text"; // Torna a confirmação visível
+        eyeIconConfirm.classList.remove("bi-eye-slash");
+        eyeIconConfirm.classList.add("bi-eye");
+    } else {
+        confirmPasswordField.type = "password"; // Torna a confirmação oculta
+        eyeIconConfirm.classList.remove("bi-eye");
+        eyeIconConfirm.classList.add("bi-eye-slash");
+    }
+});

@@ -37,6 +37,11 @@ app.use(express.static('public')); // Serve arquivos estáticos da pasta 'public
 app.use("/admin", adminRoutes);
 app.use("/", loginRoutes, publicRoutes);
 
+// Middleware para capturar páginas não encontradas (404)
+app.use((req, res, next) => {
+    res.status(404).render('404');
+});
+
 // Inicia o servidor
 app.listen(config.port, () => {
     console.log(`Servidor rodando na porta ${config.port}`);

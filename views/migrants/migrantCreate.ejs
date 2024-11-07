@@ -3,7 +3,11 @@
     <%- include("../partials/navbar.ejs") %>
     <div class="container mt-5 mb-4">
         <br>
+
+        <!-- Título da Página -->
         <h1 class="mt-4 mb-3 text-primary">Cadastrar Migrante</h1>
+
+        <!-- Formulário de Cadastro -->
         <form action="/admin/migrant/create" method="POST" >
             <input type="hidden" name="_method" value="POST">
 
@@ -11,10 +15,12 @@
                 <label for="full_name">Nome Completo*</label>
                 <input type="text" class="form-control" id="full_name" name="full_name" placeholder="Nome Completo" required>
             </div>
+
             <div class="form-group">
                 <label for="social_name">Nome Social</label>
                 <input type="text" class="form-control" id="social_name" name="social_name" placeholder="Nome Social">
             </div>
+
             <div class="form-group">
                 <label for="gender">Gênero*</label>
                 <select class="form-control" id="gender" name="gender" required onchange="toggleOtherGenderInput()">
@@ -31,15 +37,18 @@
                 </select>
                 <input type="text" class="form-control d-none" id="other_gender" name="other_gender" placeholder="Especifique o gênero" aria-label="Especifique o gênero">
             </div>
+
             <div class="form-group">
                 <label for="email">Email*</label>
                 <input type="email" class="form-control" id="email" name="email" placeholder="Email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
                 <div id="emailFeedback"></div>
             </div>
+
             <div class="form-group">
                 <label for="phone">Telefone*</label>
                 <input type="text" class="form-control" id="phone" name="phone" maxlength="15" required oninput="formatPhone(this)" placeholder="Telefone">
             </div>
+
             <div class="form-group">
                 <label for="whatsapp_number">Número do WhatsApp?*</label>
                 <select class="form-control" id="whatsapp_number" name="whatsapp_number" required>
@@ -48,34 +57,42 @@
                     <option value="false">Não</option>
                 </select>
             </div>
+
             <div class="form-group">
                 <label for="document_type">Tipo de Documento*</label>
                 <input type="text" class="form-control" id="document_type" name="document_type" placeholder="Tipo de Documento" required>
             </div>
+
             <div class="form-group">
                 <label for="document_identification">Número do Documento*</label>
                 <input type="text" class="form-control" id="document_identification" name="document_identification" placeholder="Número do Documento" required>
             </div>
+
             <div class="form-group">
                 <label for="date_birth">Data de Nascimento*</label>
                 <input type="date" class="form-control" id="date_birth" name="date_birth" required>
             </div>
+
             <div class="form-group">
                 <label for="preferred_language">Idioma Preferido*</label>
                 <input type="text" class="form-control" id="preferred_language" name="preferred_language" placeholder="Idioma Preferido" required>
             </div>
+
             <div class="form-group">
                 <label for="entry_date">Data de Entrada no Brasil*</label>
                 <input type="date" class="form-control" id="entry_date" name="entry_date" required>
             </div>
+
             <div class="form-group">
                 <label for="migrant_reason">Razão de Imigração*</label>
                 <input type="text" class="form-control" id="migrant_reason" name="migrant_reason" placeholder="Razão de Imigração" required>
             </div>
+
             <div class="form-group">
                 <label for="nationality">Nacionalidade*</label>
                 <input type="text" class="form-control" id="nationality" name="nationality" placeholder="Nacionalidade" required>
             </div>
+
             <div class="form-group">
                 <label for="gender">Estado Civil*</label>
                 <select class="form-control" id="marital_status" name="marital_status" required>
@@ -88,6 +105,7 @@
                     <option value="Prefiro não informar">Não informado</option>
                 </select>
             </div>
+
             <div class="form-group">
                 <label for="education_level">Escolaridade</label>
                 <select class="form-control" name="education_level" id="education_level">
@@ -102,10 +120,12 @@
                     <option value="Não informado">Não informado</option>
                 </select>
             </div>
+
             <div class="form-group">
                 <label for="social_program_access">Acesso a Programas Sociais oferecidos pelo Governo Brasileiro:</label>
                 <input type="text" class="form-control" name="social_program_access" id="social_program_access"  placeholder=" Programas Sociais oferecidos pelo Governo Brasileiro" > 
             </div>
+
             <div class="form-group">
                 <label for="status_migratory">Status Migratório</label>
                 <input type="text" class="form-control" id="status_migratory" name="status_migratory" placeholder="Status Migratório">
@@ -138,34 +158,40 @@
                 >
             </div>
             <button type="button" id="btnBuscarEndereco" class="btn btn-primary mb-2">Buscar Endereço</button>
+
             <div class="form-group">
                 <label for="street">Logradouro*</label>
                 <input type="text" class="form-control" id="street" name="street" placeholder="Logradouro" aria-label="Logradouro" required>
             </div>
+
             <div class="form-group">
                 <label for="neighborhood">Bairro*</label>
                 <input type="text" class="form-control" id="neighborhood" name="neighborhood" placeholder="Bairro" aria-label="Bairro" required>
             </div>
+
             <div class="form-group">
                 <label for="city">Cidade*</label>
                 <input type="text" class="form-control" id="city" name="city" placeholder="Cidade" aria-label="Cidade" required>
             </div>
+
             <div class="form-group">
                 <label for="state">Estado*</label>
                 <input type="text" class="form-control" id="state" name="state" placeholder="Estado" aria-label="Estado" required>
             </div>
+
             <div class="form-group">
                 <label for="numero">Número*</label>
                 <input type="text" class="form-control" id="numero" name="numero" placeholder="Número" aria-label="Número" required>
             </div>
+
             <div class="form-group">
                 <label for="complemento">Complemento (opcional)</label>
                 <input type="text" class="form-control" id="complemento" name="complemento" placeholder="Complemento" aria-label="Complemento">
             </div>
+
             <div class="alert alert-warning" role="alert">
                 <i class="bi bi-exclamation-circle"></i> Caso a busca pelo endereço não retorne resultados, preencha os campos acima manualmente.
             </div>
-
             <br>
             <hr>
             <h3 class="mt-5 mb-3 text-primary">
@@ -182,6 +208,7 @@
                     </button>
                 </div>
             </div>
+
             <div class="form-group">
                 <label for="confirm_password">Confirme a Senha*</label>
                 <div class="input-group">
@@ -197,9 +224,9 @@
                 <label class="form-check-label" for="terms"> O migrante aceita os <a target="_blank" href="/terms/migrante">Termos e Condições</a></label>
             </div>
 
+            <!-- Alerta para validação -->
+            <div id="alert" class="alert alert-danger d-none" role="alert"></div>
             
-        <!-- Alerta para validação -->
-        <div id="alert" class="alert alert-danger d-none" role="alert"></div>
             <button type="submit" class="btn btn-success">
                 <i class="bi bi-person"></i> Cadastrar Migrante
             </button> 
@@ -208,6 +235,7 @@
             </a>
         </form>
     </div>
+
     <script src="/js/scriptMigrantCreate.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>
