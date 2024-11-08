@@ -3,12 +3,12 @@
     <%- include("../partials/navbar.ejs") %>
 
     <div class="container mt-5 mb-3">
-       <!-- Título da Página -->
+        <!-- Título da Página -->
         <div class="text-center mb-4">
+            <hr>
             <br>
-            <!-- Adicionando um ícone antes do título -->
             <h3 class="text-primary text-uppercase">
-                <i class="bi bi-person-circle me-2"></i><strong> Informações do Migrante</strong>
+                <i class="bi bi-person-circle me-2"></i><strong> Informações do migrante</strong>
             </h3>
             <hr class="my-4" style="width: 50%; margin: 0 auto;">
         </div>
@@ -79,16 +79,16 @@
 
         <!-- Botões de Ação -->
         <div class="d-flex justify-content-start mt-3">
-            <a href="/admin/migrants" class="btn btn-secondary me-2 mr-2">
+            <a href="/dashboard/migrants" class="btn btn-secondary me-2 mr-2">
                 <i class="bi bi-arrow-left"></i> Voltar
             </a>
-            <form action="/admin/migrants/edit" method="POST" class="me-2">
+            <form action="/dashboard/migrants/edit" method="POST" class="me-2">
                 <input type="hidden" name="migrant_id" value="<%= migrant.id %>">
                 <button type="submit" class="btn btn-primary mr-2">
                     <i class="bi bi-pencil"></i> Editar
                 </button>
             </form>
-            <form action="/admin/migrants/change-password" method="POST" class="me-2">
+            <form action="/dashboard/migrants/change-password" method="POST" class="me-2">
                 <input type="hidden" name="migrant" value='<%= JSON.stringify(migrant) %>'>
                 <button type="submit" class="btn btn-success mr-2">
                     <i class="bi bi-lock"></i> Atualizar Senha
@@ -115,7 +115,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <form method="POST" id="deleteForm" action="/admin/migrants/delete">
+                    <form method="POST" id="deleteForm" action="/dashboard/migrants/delete">
                         <input type="hidden" name="_method" value="delete">
                         <input type="hidden" name="migrant_id" id="migrant_id">
                         <button type="submit" class="btn btn-danger" id="confirmDeleteButton">Deletar</button>

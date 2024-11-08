@@ -7,7 +7,7 @@ const getMigrants = async (req, res) => {
         const migrants = response.data.migrants;
 
          // Renderiza a lista de migrantes
-        res.render('migrants/migrantsList', { migrants })
+        res.render('migrants/migrantsList', { migrants });
     } catch (error) {
         console.error('Erro ao buscar migrantes:', error);
         res.status(500).render('error', { message: 'Erro ao buscar migrantes' });
@@ -22,7 +22,7 @@ const deleteMigrant = async (req, res) => {
         await api.delete(`/migrants/${migrantId}`);
         
         // Redireciona após a deleção com uma mensagem de sucesso
-        res.redirect('/admin/migrants'); 
+        res.redirect('/dashboard/migrants'); 
     } catch (error) {
         console.error(error);
         res.status(500).send({ message: 'Erro ao deletar o migrante.' });
@@ -215,6 +215,11 @@ const searchMigrant = async (req, res) => {
         const response = await api.get(`/migrants/search?q=${query}`);
         const migrants = response.data.migrants;
 
+
+        if(!migrants || migrants.length === 0){
+            res.render('migrants/migrantsList', { error: 'Nenhum resultado foi encontrado', migrants })
+        }
+
         // Renderiza página de listagem com o migrante encontrado
         res.render('migrants/migrantsList', { migrants });
     } catch (error) {
@@ -260,7 +265,7 @@ const updatePassword = async (req, res) => {
         api.patch(`/migrants/change-password/${migrantId}`, {password: confirmPassword} );
 
         // Renderiza página com mensagem de sucesso  
-        res.render('migrants/migrantUpdatePassword', { success: 'Senha atualizada com sucesso.'});
+        res.render('migrants/migrantUpdatePassword', { success: 'Senha atualizada com sucesso.' } );
     } catch (error) {
         console.error('Erro ao buscar alterar senhar:', error);
         return res.render('migrants/migrantUpdatePassword', { error: 'Erro ao atualizar senha do migrante.' });

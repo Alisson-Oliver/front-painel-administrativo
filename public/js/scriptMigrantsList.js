@@ -30,10 +30,16 @@ function renderTable() {
                 <td>${migrant.phone || 'Não disponível'}</td> <!-- Telefone, se existir -->
                 <td>${migrant.MigrantDocument?.document_identification || 'Não disponível'}</td> <!-- Documento de identificação, se existir -->
                 <td>
-                    <form action="/admin/migrants/details" method="POST">
-                        <input type="hidden" name="migrant_id" value="${migrant.id}">
-                        <button type="submit" class="btn btn-info btn-sm">Detalhes</button>
-                    </form>
+                    <div class="d-flex">
+                        <form action="/dashboard/migrants/details" method="POST" class='mr-2'>
+                            <input type="hidden" name="migrant_id" value="${migrant.id}">
+                            <button type="submit" class="btn btn-info btn-sm">Detalhes</button>
+                        </form>
+                        <form action="/dashboard/migrants/edit" method="POST">
+                            <input type="hidden" name="migrant_id" value="${migrant.id}">
+                            <button type="submit" class="btn btn-info btn-sm">Editar</button>
+                        </form>
+                    </div>
                 </td>
             </tr>`;
         // Insere a linha na tabela

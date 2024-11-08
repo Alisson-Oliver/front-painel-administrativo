@@ -13,53 +13,17 @@ const getInstitutions = async (req, res) => {
 
 const createInstitution = async (req, res) => {
     const {
-        name,
-        cnpj,
-        email,
-        main_phone,
-        secondary_phone,
-        website,
-        institution_category,
-        instagram,
-        main_language,
-        second_language,
-        link_maps,
-        description_pt,
-        description_en,
-        description_fr,
-        description_es,
-        service_hours_pt,
-        service_hours_en,
-        service_hours_fr,
-        service_hours_es,
-        target_populations_pt,
-        target_populations_en,
-        target_populations_fr,
-        target_populations_es,
-        requirements_restrictions_pt,
-        requirements_restrictions_en,
-        requirements_restrictions_fr,
-        requirements_restrictions_es,
-        services_offered_pt,
-        services_offered_en,
-        services_offered_fr,
-        services_offered_es,
-        service_costs_pt,
-        service_costs_en,
-        service_costs_fr,
-        service_costs_es,
-        cep,
-        street,
-        neighborhood,
-        city,
-        state,
-        numero,
-        complemento,
-        authorized,
-        responsible_role,
-        responsible_sector,
-        responsible_position,
-        responsible_name,
+        name, cnpj, email, main_phone, secondary_phone, website,
+        institution_category, instagram, main_language, second_language,
+        link_maps, description_pt, description_en, description_fr,
+        description_es, service_hours_pt, service_hours_en, service_hours_fr,
+        service_hours_es, target_populations_pt, target_populations_en,
+        target_populations_fr, target_populations_es, requirements_restrictions_pt,
+        requirements_restrictions_en, requirements_restrictions_fr, requirements_restrictions_es,
+        services_offered_pt, services_offered_en, services_offered_fr, services_offered_es,
+        service_costs_pt, service_costs_en, service_costs_fr, service_costs_es, cep,
+        street, neighborhood, city, state, numero, complemento, authorized,
+        responsible_role,  responsible_sector, responsible_position, responsible_name,
     } = req.body;
 
     // Função para garantir que os campos sejam null se não forem informados
@@ -67,19 +31,11 @@ const createInstitution = async (req, res) => {
 
     // Cria um objeto instituição, substituindo valores não informados por null
     const institution = {
-        name: ensureNull(name),
-        cnpj: ensureNull(cnpj),
-        email: ensureNull(email),
-        main_phone: ensureNull(main_phone),
-        secondary_phone: ensureNull(secondary_phone),
-        site: ensureNull(website),
-        instagram: ensureNull(instagram),
-        main_language: ensureNull(main_language),
-        second_language: ensureNull(second_language),
-        link_maps: ensureNull(link_maps),
-        address_number: ensureNull(numero),
-        address_complement: ensureNull(complemento),
-        category_id: ensureNull(institution_category),
+        name: ensureNull(name),  cnpj: ensureNull(cnpj), email: ensureNull(email),
+        main_phone: ensureNull(main_phone), secondary_phone: ensureNull(secondary_phone),
+        site: ensureNull(website),  instagram: ensureNull(instagram), main_language: ensureNull(main_language),
+        second_language: ensureNull(second_language), link_maps: ensureNull(link_maps), address_number: ensureNull(numero),
+        address_complement: ensureNull(complemento), category_id: ensureNull(institution_category),
         authorized: authorized === "on" ? true : false,
     };
 
@@ -141,15 +97,9 @@ const createInstitution = async (req, res) => {
     }
 
     const newData = {
-        institution,
-        address,
-        institution_descriptions,
-        service_hours,
-        target_population,
-        requirements_restrictions,
-        services_offered,
-        service_cost,
-        responsible_user
+        institution, address, institution_descriptions,
+        service_hours, target_population, requirements_restrictions,
+        services_offered, service_cost, responsible_user
     };
 
 
@@ -178,6 +128,10 @@ const searchInstitutions = async (req, res) => {
         const query = req.query.query; 
         const response = await api.get(`/institutions/search?q=${query}`);
         const institutions = response.data.institutions;
+
+        if(!institutions || institutions.length === 0){
+            res.render('institutions/institutionList', { error: 'Nenhum resultado foi encontrado', institutions })
+        }
         res.render('institutions/institutionList', { institutions });
     } catch (error) {
         console.error('Erro ao buscar instituições:', error);
@@ -214,7 +168,7 @@ const getInstitutionById = async (req, res) => {
 
 
 const getEditInstitutionForm = async (req, res) => {
-    const institutionId = req.body.institution_id; // Obtém o ID do instituição da rota
+    const institutionId = req.body.institution_id; 
 
     try {
         // Busca o instituição pelo ID
@@ -242,53 +196,17 @@ const updateInstitution = async (req, res) => {
     const institutionId = req.body.institution_id
 
     const {
-        name,
-        cnpj,
-        email,
-        main_phone,
-        secondary_phone,
-        website,
-        institution_category,
-        instagram,
-        main_language,
-        second_language,
-        link_maps,
-        description_pt,
-        description_en,
-        description_fr,
-        description_es,
-        service_hours_pt,
-        service_hours_en,
-        service_hours_fr,
-        service_hours_es,
-        target_populations_pt,
-        target_populations_en,
-        target_populations_fr,
-        target_populations_es,
-        requirements_restrictions_pt,
-        requirements_restrictions_en,
-        requirements_restrictions_fr,
-        requirements_restrictions_es,
-        services_offered_pt,
-        services_offered_en,
-        services_offered_fr,
-        services_offered_es,
-        service_costs_pt,
-        service_costs_en,
-        service_costs_fr,
-        service_costs_es,
-        cep,
-        street,
-        neighborhood,
-        city,
-        state,
-        numero,
-        complemento,
-        category_name,
-        responsible_name,
-        responsible_position,
-        responsible_sector,
-        responsible_role,
+        name, cnpj, email, main_phone, secondary_phone, website,
+        institution_category, instagram, main_language, second_language,
+        link_maps, description_pt, description_en, description_fr,
+        description_es, service_hours_pt, service_hours_en,  service_hours_fr,
+        service_hours_es, target_populations_pt, target_populations_en,
+        target_populations_fr,  target_populations_es,  requirements_restrictions_pt,
+        requirements_restrictions_en,  requirements_restrictions_fr, requirements_restrictions_es,
+        services_offered_pt, services_offered_en, services_offered_fr, services_offered_es,
+        service_costs_pt, service_costs_en, service_costs_fr, service_costs_es, cep,
+        street, neighborhood, city,  state, numero,  complemento, responsible_name,
+        responsible_position, responsible_sector,  responsible_role,
     } = req.body;
 
     // Função para garantir que os campos sejam null se não forem informados
@@ -296,19 +214,12 @@ const updateInstitution = async (req, res) => {
 
     // Cria um objeto migrante, substituindo valores não informados por null
     const institution = {
-        name: ensureNull(name),
-        cnpj: ensureNull(cnpj),
-        email: ensureNull(email),
-        main_phone: ensureNull(main_phone),
-        secondary_phone: ensureNull(secondary_phone),
-        website: ensureNull(website),
-        institution_category: ensureNull(institution_category),
-        instagram: ensureNull(instagram),
-        main_language: ensureNull(main_language),
-        second_language: ensureNull(second_language),
-        link_maps: ensureNull(link_maps),
-        address_number: ensureNull(numero),
-        address_complement: ensureNull(complemento),
+        name: ensureNull(name), cnpj: ensureNull(cnpj),  email: ensureNull(email),
+        main_phone: ensureNull(main_phone),  secondary_phone: ensureNull(secondary_phone),
+        website: ensureNull(website), institution_category: ensureNull(institution_category),
+        instagram: ensureNull(instagram), main_language: ensureNull(main_language),
+        second_language: ensureNull(second_language), link_maps: ensureNull(link_maps),
+        address_number: ensureNull(numero), address_complement: ensureNull(complemento),
         category_id: ensureNull(institution_category),
     };
 
@@ -370,15 +281,9 @@ const updateInstitution = async (req, res) => {
     };
 
     const newData = {
-        institution,
-        address,
-        InstitutionDescription,
-        ServiceHour,
-        TargetPopulation,
-        RequirementRestriction,
-        ServicesOffered,
-        ServiceCost,
-        ResponsibleUser
+        institution, address, InstitutionDescription,
+        ServiceHour, TargetPopulation, RequirementRestriction,
+        ServicesOffered, ServiceCost, ResponsibleUser
     };
 
 
@@ -409,7 +314,7 @@ const deleteInstitution = async (req, res) => {
     try {
         await api.delete(`/institutions/${institutiontId}`);
         
-        res.redirect('/admin/institutions'); 
+        res.redirect('/dashboard/institutions'); 
     } catch (error) {
         console.error(error);
         res.status(500).send({ message: 'Erro ao deletar o migrante.' });
@@ -421,7 +326,7 @@ const getRegisterInstitution = async (req, res) => {
     try {
         const responseCategories = await api.get('/categories');
         const categories = responseCategories.data.categories;
-        res.render('institutions/institutionCreate', {categories}); 
+        res.render('institutions/institutionCreate', { categories }); 
     } catch (error) {
         console.error(error);
         res.status(500).send({ message: 'Erro no servidor.' });

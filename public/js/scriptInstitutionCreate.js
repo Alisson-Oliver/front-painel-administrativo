@@ -33,13 +33,6 @@ function formatCNPJ(input) {
     // Remove todos os caracteres que não são dígitos
     const value = input.value.replace(/\D/g, '');
 
-    // Verifica se o comprimento do valor é 14 (um CNPJ válido tem 14 dígitos)
-    if (value.length > 14) {
-        alert('CNPJ deve ter exatamente 14 dígitos.');
-        input.value = ''; // Limpa o campo em caso de erro
-        return;
-    }
-
     // Formata o CNPJ
     const formattedValue = value.replace(
         /(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/,

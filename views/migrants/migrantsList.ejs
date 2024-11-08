@@ -2,17 +2,17 @@
 <body>
     <%- include("../partials/navbar.ejs") %>
     <div class="container mt-4">
-        <hr class="mb-5">
-        <h1 class="mt-5">Migrantes Cadastrados</h1>
-        <hr>
-        <a href="/admin/migrant/register" class="btn btn-primary mb-3">
-            <i class="bi bi-plus-lg me-2"></i> Cadastrar Migrante
+        <br>
+        <h1 class="mt-5"><strong>Gestão de Migrantes</strong></h1>
+        <br>
+        <a href="/dashboard/migrant/register" class="btn btn-primary mb-3">
+            <i class="bi bi-person-fill"></i> Cadastrar Migrante
         </a>
 
         <!-- Formulário de Busca -->
-        <form action="/admin/migrants/search" method="GET" class="mb-4">
+        <form action="/dashboard/migrants/search" method="GET" class="mb-4">
             <div class="input-group">
-                <input type="text" class="form-control" name="query" placeholder="Buscar por email, telefone ou documento" aria-label="Buscar" required>
+                <input type="text" class="form-control" name="query" placeholder="Buscar por email, telefone ou documento" aria-label="Buscar" required maxlength="100">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="submit">
                         <i class="bi bi-search"></i> Buscar
@@ -36,11 +36,11 @@
                 </button>
             </div>
         </div>
-
         <!-- Tabela para exibir os migrantes -->
         <table class="table table-striped mt-3">
             <thead>
                 <tr>
+                    
                     <th scope="col">Nome Completo</th>
                     <th scope="col">Nome Social</th>
                     <th scope="col">Email</th>
@@ -52,7 +52,13 @@
             <tbody id="migrantTable">
                 <!-- Aqui o JavaScript insere as linhas da tabela com base na página atual -->
             </tbody>
+            <!-- Avisos em caso de erro ou sucesso -->
         </table>
+        <% if (typeof error !== 'undefined' && error) { %>
+            <div class="alert alert-danger">
+                <%= error %>
+            </div>
+        <% } %>
     </div>
 
     <%- include("../partials/footer.ejs") %>

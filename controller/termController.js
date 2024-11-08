@@ -62,8 +62,10 @@ const saveTermsPage = async (req, res) => {
 
         // Verifique a resposta da API
         if (response.status === 200) {
+
+            req.flash("successMessage", "Alteração feita com sucesso!");
             // Redireciona para a página de edição dos termos com a mensagem de sucesso
-            return res.redirect(`/terms/${type}`)
+            return res.redirect(`/dashboard/edit-terms/${type}`)
         } else {
             res.status(500).render('error', { message: 'Falha ao salvar os termos' });
         }

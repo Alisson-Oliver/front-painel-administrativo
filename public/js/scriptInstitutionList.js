@@ -17,10 +17,16 @@ function renderTable() {
                 <td>${institution.email}</td>
                 <td>${institution.main_phone || 'Não disponível'}</td>
                 <td>
-                    <form action="/admin/institutions/details" method="POST">
-                        <input type="hidden" name="institution_id" value="${institution.id}">
-                        <button type="submit" class="btn btn-info btn-sm">Detalhes</button>
-                    </form>
+                    <div class="d-flex">
+                        <form action="/dashboard/institutions/details" method="POST" class='mr-2'>
+                            <input type="hidden" name="institution_id" value="${institution.id}">
+                            <button type="submit" class="btn btn-info btn-sm">Detalhes</button>
+                        </form>
+                        <form action="/dashboard/institutions/edit" method="POST">
+                            <input type="hidden" name="institution_id" value="${institution.id}">
+                            <button type="submit" class="btn btn-info btn-sm">Editar</button>
+                        </form>
+                    </div>
                 </td>
             </tr>`;
         tableBody.insertAdjacentHTML('beforeend', row);

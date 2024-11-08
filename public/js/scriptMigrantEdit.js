@@ -82,7 +82,7 @@ const handleEmailBlur = async (originalEmail) => {
 
 const checkEmailAvailability = async (email) => {
     try {
-        const response = await fetch('/admin/migrants/check-email', {
+        const response = await fetch('/dashboard/migrants/check-email', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email: email })
@@ -124,3 +124,24 @@ const handleEmailError = (error) => {
     feedbackElement.textContent = 'Erro ao verificar o email.';
     feedbackElement.style.color = 'orange';
 };
+
+
+function formatCEP(input) {
+    // Remove qualquer caractere que não seja número
+    const value = input.value.replace(/\D/g, '');
+
+    // Aplica a máscara de formatação do CEP
+    const formattedValue = value.replace(/(\d{5})(\d{3})/, '$1-$2');
+
+    // Atualiza o valor do campo com o CEP formatado
+    input.value = formattedValue;
+}
+
+
+function formatPhone(input) {
+    const value = input.value.replace(/\D/g, '');
+    const formattedValue = value.length > 10
+        ? value.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3')
+        : value.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
+    input.value = formattedValue;
+}

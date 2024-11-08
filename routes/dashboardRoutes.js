@@ -3,13 +3,14 @@ import migrantController from '../controller/migrantController.js';
 import institutionController from '../controller/institutionController.js'
 import termController from "../controller/termController.js";
 import checkAuth from "../middlewares/checkAuth.js";
-import adminController from "../controller/adminController.js";
+import dashboardController from "../controller/dashboardController.js";
+import checkAuthAdmin from '../middlewares/checkAuthAdmin.js';
 
 const router = Router();
 
 // Rotas do Painel Administrativo
 
-router.get('/home', checkAuth.auth, adminController.getHome);
+router.get('/home', checkAuth.auth, dashboardController.getHome);
 
 
 // Rotas migrantes
@@ -47,12 +48,15 @@ router.get('/institution/register', checkAuth.auth, institutionController.getReg
 // Rotas Termos
 
 // Rota para exibir a página de edição dos termos
-router.get('/edit-terms/:type', checkAuth.auth, termController.editTermsPage);
+router.get('/edit-terms/:type', checkAuthAdmin.isAdmin, termController.editTermsPage);
 
 router.get('/terms/:type', checkAuth.auth, termController.getTermsPage);
 
 // Rota para salvar ou atualizar os termos
 router.post('/save-terms', checkAuth.auth, termController.saveTermsPage);
+
+// Rotas Forms
+router.get('/forms/migrants', checkAuth.auth, dashboardController.getForms);
 
 
 export default router;

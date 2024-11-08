@@ -13,6 +13,18 @@ function toggleOtherGenderInput() {
     }
 }
 
+function formatCEP(input) {
+    // Remove qualquer caractere que não seja número
+    const value = input.value.replace(/\D/g, '');
+
+    // Aplica a máscara de formatação do CEP
+    const formattedValue = value.replace(/(\d{5})(\d{3})/, '$1-$2');
+
+    // Atualiza o valor do campo com o CEP formatado
+    input.value = formattedValue;
+}
+
+
 function formatPhone(input) {
     const value = input.value.replace(/\D/g, '');
     const formattedValue = value.length > 10
@@ -124,7 +136,7 @@ const handleEmailBlur = async () => {
 
 const checkEmailAvailability = async (email) => {
     try {
-        const response = await fetch('/admin/migrants/check-email', {
+        const response = await fetch('/dashboard/migrants/check-email', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email: email })

@@ -2,27 +2,38 @@
 <body>
     <%- include("../partials/navbar.ejs") %>
     <div class="container mt-4">
-        <hr class="mb-5">
-        <h1 class="mt-5">Instituições Cadastradas</h1>
-        <hr>
-        <a href="/admin/institution/register" class="btn btn-primary mb-3">Cadastrar Instituição</a>
+        <br>
+        <h1 class="mt-5"><strong>Gestão de Instituições</strong></h1>
+        <br>
+        <a href="/dashboard/institution/register" class="btn btn-primary mb-3">
+            <i class="bi bi-building-fill"></i>  Cadastrar Instituição
+        </a>
 
         <!-- Formulário de Busca -->
-        <form action="/admin/institutions/search" method="GET" class="mb-4">
+        <form action="/dashboard/institutions/search" method="GET" class="mb-4">
             <div class="input-group">
-                <input type="text" class="form-control" name="query" placeholder="Buscar por email, telefone ou CNPJ" aria-label="Buscar" required>
+                <input type="text" class="form-control" name="query" placeholder="Buscar por email, telefone ou CNPJ" aria-label="Buscar" required maxlength="100"> 
                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+                    <button class="btn btn-outline-secondary" type="submit">
+                        <i class="bi bi-search"></i> Buscar
+                    </button>
                 </div>
             </div>
         </form>
 
-        <!-- Contador de Registros e Paginação -->
-        <div class="d-flex justify-content-between">
+         <!-- Contador de Registros e Paginação -->
+         <div class="d-flex justify-content-between">
             <span id="contador"></span>
             <div>
-                <button id="prevPage" class="btn btn-secondary btn-sm" disabled>Anterior</button>
-                <button id="nextPage" class="btn btn-secondary btn-sm">Próximo</button>
+                 <!-- Botão "Anterior" com ícone de seta para a esquerda -->
+                <button id="prevPage" class="btn btn-secondary btn-sm" disabled>
+                    <i class="bi bi-arrow-left"></i> Anterior
+                </button>
+                
+                <!-- Botão "Próximo" com ícone à direita -->
+                <button id="nextPage" class="btn btn-secondary btn-sm">
+                    Próximo <i class="bi bi-arrow-right ms-2"></i>
+                </button>
             </div>
         </div>
 
@@ -41,8 +52,12 @@
                 <!-- Aqui o JavaScript insere as linhas da tabela com base na página atual -->
             </tbody>
         </table>
+        <% if (typeof error !== 'undefined' && error) { %>
+            <div class="alert alert-danger">
+                <%= error %>
+            </div>
+        <% } %>
     </div>
-
     <%- include("../partials/footer.ejs") %>
 </body>
 <script>

@@ -1,24 +1,24 @@
 <%- include("../partials/header.ejs") %>
 <body>
     <%- include("../partials/navbar.ejs") %>
+    <br><br>
     <div class="container mt-5 mb-4">
-        <br>
-
         <!-- Título da Página -->
-        <h1 class="mt-4 mb-3 text-primary">Cadastrar Migrante</h1>
-
+        <h1 class="mt-4 mb-3 text-primary">
+            <i class="bi bi-person-plus-fill"></i> Cadastrar Migrante
+        </h1>
         <!-- Formulário de Cadastro -->
-        <form action="/admin/migrant/create" method="POST" >
+        <form action="/dashboard/migrant/create" method="POST" >
             <input type="hidden" name="_method" value="POST">
 
             <div class="form-group">
                 <label for="full_name">Nome Completo*</label>
-                <input type="text" class="form-control" id="full_name" name="full_name" placeholder="Nome Completo" required>
+                <input type="text" class="form-control" id="full_name" name="full_name" placeholder="Nome Completo" required maxlength="150">
             </div>
 
             <div class="form-group">
                 <label for="social_name">Nome Social</label>
-                <input type="text" class="form-control" id="social_name" name="social_name" placeholder="Nome Social">
+                <input type="text" class="form-control" id="social_name" name="social_name" placeholder="Nome Social" maxlength="150">
             </div>
 
             <div class="form-group">
@@ -35,18 +35,18 @@
                     <option value="Prefiro não informar">Prefiro não informar</option>
                     <option value="Outro">Outro</option>
                 </select>
-                <input type="text" class="form-control d-none" id="other_gender" name="other_gender" placeholder="Especifique o gênero" aria-label="Especifique o gênero">
+                <input type="text" class="form-control d-none" id="other_gender" name="other_gender" placeholder="Especifique o gênero" aria-label="Especifique o gênero" maxlength="80">
             </div>
 
             <div class="form-group">
                 <label for="email">Email*</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                <input type="email" class="form-control" id="email" name="email" placeholder="Email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" maxlength="100">
                 <div id="emailFeedback"></div>
             </div>
 
             <div class="form-group">
                 <label for="phone">Telefone*</label>
-                <input type="text" class="form-control" id="phone" name="phone" maxlength="15" required oninput="formatPhone(this)" placeholder="Telefone">
+                <input type="text" class="form-control" id="phone" name="phone" maxlength="15" required oninput="formatPhone(this)" placeholder="Telefone" >
             </div>
 
             <div class="form-group">
@@ -60,12 +60,12 @@
 
             <div class="form-group">
                 <label for="document_type">Tipo de Documento*</label>
-                <input type="text" class="form-control" id="document_type" name="document_type" placeholder="Tipo de Documento" required>
+                <input type="text" class="form-control" id="document_type" name="document_type" placeholder="Tipo de Documento" required maxlength="120">
             </div>
 
             <div class="form-group">
                 <label for="document_identification">Número do Documento*</label>
-                <input type="text" class="form-control" id="document_identification" name="document_identification" placeholder="Número do Documento" required>
+                <input type="text" class="form-control" id="document_identification" name="document_identification" placeholder="Número do Documento" required maxlength="120">
             </div>
 
             <div class="form-group">
@@ -75,7 +75,7 @@
 
             <div class="form-group">
                 <label for="preferred_language">Idioma Preferido*</label>
-                <input type="text" class="form-control" id="preferred_language" name="preferred_language" placeholder="Idioma Preferido" required>
+                <input type="text" class="form-control" id="preferred_language" name="preferred_language" placeholder="Idioma Preferido" required maxlength="100">
             </div>
 
             <div class="form-group">
@@ -85,12 +85,12 @@
 
             <div class="form-group">
                 <label for="migrant_reason">Razão de Imigração*</label>
-                <input type="text" class="form-control" id="migrant_reason" name="migrant_reason" placeholder="Razão de Imigração" required>
+                <input type="text" class="form-control" id="migrant_reason" name="migrant_reason" placeholder="Razão de Imigração" required maxlength="240">
             </div>
 
             <div class="form-group">
                 <label for="nationality">Nacionalidade*</label>
-                <input type="text" class="form-control" id="nationality" name="nationality" placeholder="Nacionalidade" required>
+                <input type="text" class="form-control" id="nationality" name="nationality" placeholder="Nacionalidade" required maxlength="120">
             </div>
 
             <div class="form-group">
@@ -123,12 +123,12 @@
 
             <div class="form-group">
                 <label for="social_program_access">Acesso a Programas Sociais oferecidos pelo Governo Brasileiro:</label>
-                <input type="text" class="form-control" name="social_program_access" id="social_program_access"  placeholder=" Programas Sociais oferecidos pelo Governo Brasileiro" > 
+                <input type="text" class="form-control" name="social_program_access" id="social_program_access"  placeholder=" Programas Sociais oferecidos pelo Governo Brasileiro" maxlength="240"> 
             </div>
 
             <div class="form-group">
                 <label for="status_migratory">Status Migratório</label>
-                <input type="text" class="form-control" id="status_migratory" name="status_migratory" placeholder="Status Migratório">
+                <input type="text" class="form-control" id="status_migratory" name="status_migratory" placeholder="Status Migratório" maxlength="200">
             </div>
 
             <div class="form-group">
@@ -143,10 +143,10 @@
             <br>
             <hr>
             <h3 class="mt-5 mb-3 text-primary">
-                <i class="bi bi-geo-alt"></i> Endereço
+                <i class="bi bi-geo-alt-fill"></i> Endereço
             </h3>
             <div class="form-group">
-                <label for="cep">CEP*</label>
+                <label for="cep" >CEP*</label>
                 <input 
                     type="text" 
                     class="form-control" 
@@ -155,38 +155,40 @@
                     placeholder="Digite o CEP" 
                     aria-label="CEP" 
                     required
+                    oninput="formatCEP(this)"
+                    maxlength="9"
                 >
             </div>
             <button type="button" id="btnBuscarEndereco" class="btn btn-primary mb-2">Buscar Endereço</button>
 
             <div class="form-group">
                 <label for="street">Logradouro*</label>
-                <input type="text" class="form-control" id="street" name="street" placeholder="Logradouro" aria-label="Logradouro" required>
+                <input type="text" class="form-control" id="street" name="street" placeholder="Logradouro" aria-label="Logradouro" required maxlength="255">
             </div>
 
             <div class="form-group">
                 <label for="neighborhood">Bairro*</label>
-                <input type="text" class="form-control" id="neighborhood" name="neighborhood" placeholder="Bairro" aria-label="Bairro" required>
+                <input type="text" class="form-control" id="neighborhood" name="neighborhood" placeholder="Bairro" aria-label="Bairro" required maxlength="255">
             </div>
 
             <div class="form-group">
                 <label for="city">Cidade*</label>
-                <input type="text" class="form-control" id="city" name="city" placeholder="Cidade" aria-label="Cidade" required>
+                <input type="text" class="form-control" id="city" name="city" placeholder="Cidade" aria-label="Cidade" required maxlength="150">
             </div>
 
             <div class="form-group">
                 <label for="state">Estado*</label>
-                <input type="text" class="form-control" id="state" name="state" placeholder="Estado" aria-label="Estado" required>
+                <input type="text" class="form-control" id="state" name="state" placeholder="Estado" aria-label="Estado" required maxlength="150">
             </div>
 
             <div class="form-group">
                 <label for="numero">Número*</label>
-                <input type="text" class="form-control" id="numero" name="numero" placeholder="Número" aria-label="Número" required>
+                <input type="text" class="form-control" id="numero" name="numero" placeholder="Número" aria-label="Número" required maxlength="10">
             </div>
 
             <div class="form-group">
                 <label for="complemento">Complemento (opcional)</label>
-                <input type="text" class="form-control" id="complemento" name="complemento" placeholder="Complemento" aria-label="Complemento">
+                <input type="text" class="form-control" id="complemento" name="complemento" placeholder="Complemento" aria-label="Complemento" maxlength="240">
             </div>
 
             <div class="alert alert-warning" role="alert">
@@ -195,14 +197,14 @@
             <br>
             <hr>
             <h3 class="mt-5 mb-3 text-primary">
-                <i class="bi bi-lock"></i> Senha do migrante
+                <i class="bi bi-lock-fill"></i> Senha do migrante
             </h3>
             <p>Esta senha será usada juntamente com o e-mail cadastrado para acessar o aplicativo <strong>RAMB</strong>.</p>
             
             <div class="form-group">
                 <label for="password">Senha*</label>
                 <div class="input-group">
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Senha" required>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Senha" required maxlength="20">
                     <button class="btn btn-outline-secondary" type="button" id="togglePassword">
                         <i class="bi bi-eye-slash" id="eyeIcon"></i>
                     </button>
@@ -212,7 +214,7 @@
             <div class="form-group">
                 <label for="confirm_password">Confirme a Senha*</label>
                 <div class="input-group">
-                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirme a Senha" required>
+                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirme a Senha" required maxlength="20">
                     <button class="btn btn-outline-secondary" type="button" id="toggleConfirmPassword">
                         <i class="bi bi-eye-slash" id="eyeIconConfirm"></i>
                     </button>
@@ -230,7 +232,7 @@
             <button type="submit" class="btn btn-success">
                 <i class="bi bi-person"></i> Cadastrar Migrante
             </button> 
-            <a href="/admin/migrants" class="btn btn-secondary">
+            <a href="/dashboard/migrants" class="btn btn-secondary">
                 <i class="bi bi-x-lg"></i> Cancelar
             </a>
         </form>
