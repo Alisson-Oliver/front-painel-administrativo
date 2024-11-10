@@ -142,10 +142,6 @@ const searchInstitutions = async (req, res) => {
 const getInstitutionById = async (req, res) => {
 
     const institutionId =  req.body.institution_id;
-
-    console.log('ID da instituição recebido:', institutionId);
-    console.log('Corpo da requisição (req.body):', req.body);
-
     if (!institutionId) {
         console.error('ID da instituição não foi fornecido.');
         return res.status(400).send({ message: 'ID da instituição não fornecido.' });

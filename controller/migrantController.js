@@ -272,16 +272,77 @@ const updatePassword = async (req, res) => {
     }
 };
 
+const getForms = async (req, res) => {
+    try {
+        const response = await api.get("/forms");
+        const forms = response.data.forms;
+        if(!forms || forms.length === 0){
+            res.render('forms/formsList', { error: 'Nenhum resultado foi encontrado', forms })
+        }
+        res.render('forms/formsList', { forms, selectedStatus: "" });
+    } catch (error) {
+        console.error('Erro ao buscar formulários:', error);
+        res.status(500).render('error', { message: 'Erro ao buscar formulários' });
+    }
+}
+
+const getFormsByStatus = async (req, res) => {
+    try {
+        const status = req.query.status;
+        const response = await api.get(`/forms/status/${status}`);
+        const forms = response.data.forms;
+        if (!forms || forms.length === 0) {
+            return res.render('forms/formsList', { error: 'Nenhum resultado foi encontrado', forms: [] });
+        }
+        res.render('forms/formsList', { forms, selectedStatus: status  });
+    } catch (error) {
+        console.error('Erro ao buscar formulários: ', error);
+        res.status(500).render('error', { message: 'Erro ao buscar formulários' });
+    }
+};
+
+const formRead = async (req, res) => {
+    try {
+        const { form_id } = req.body;
+        await api.put(`/forms/${form_id}`, { status: 'read'});
+        req.flash('successMessage', 'Formulário marcado como "lido".')
+        res.redirect('/dashboard/forms/migrants');
+    } catch (error) {
+        console.error('Erro ao atualizar status do formulário: ', error);
+        res.status(500).render('error', { message: 'Erro ao atualiar formulário' })
+    }
+};
+
+const formResolved = async (req, res) => {
+    try {
+        const { form_id } = req.body;
+        await api.put(`/forms/${form_id}`, { status: 'resolved'});
+        req.flash('successMessage', 'Formulário marcado como "resolvido".')
+        res.redirect('/dashboard/forms/migrants');
+    } catch (error) {
+        console.error('Erro ao atualizar status do formulário: ', error);
+        res.status(500).render('error', { message: 'Erro ao atualiar formulário' })
+    }
+};
+
+const deleteForms = async (req, res) => {
+    const { form_id } = req.body; 
+    console.log(form_id);
+    
+    try {
+        await api.delete(`/forms/${form_id}`);
+        
+        req.flash('successMessage', 'Formulário deletado com sucesso.')
+        res.redirect('/dashboard/forms/migrants'); 
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({ message: 'Erro ao deletar o formulário.' });
+    }
+};
+ 
 export default {
-    getMigrants,
-    getMigrantById,
-    createMigrant,
-    updateMigrant,
-    deleteMigrant,
-    searchMigrant,
-    getEditMigrantForm,
-    getRegisterMigrant,
-    checkEmail,
-    getUpdatePassword,
-    updatePassword,
+    getMigrants, getMigrantById, createMigrant, updateMigrant,
+    deleteMigrant, searchMigrant, getEditMigrantForm, getRegisterMigrant,
+    checkEmail, getUpdatePassword, updatePassword, getForms, getFormsByStatus,
+    formRead, formResolved, deleteForms,
 }

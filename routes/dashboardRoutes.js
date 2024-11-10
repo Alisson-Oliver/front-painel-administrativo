@@ -48,15 +48,20 @@ router.get('/institution/register', checkAuth.auth, institutionController.getReg
 // Rotas Termos
 
 // Rota para exibir a página de edição dos termos
+router.get('/terms', checkAuth.auth, termController.getAllTerms);
 router.get('/edit-terms/:type', checkAuthAdmin.isAdmin, termController.editTermsPage);
 
 router.get('/terms/:type', checkAuth.auth, termController.getTermsPage);
 
 // Rota para salvar ou atualizar os termos
-router.post('/save-terms', checkAuth.auth, termController.saveTermsPage);
+router.post('/save-terms', checkAuthAdmin.isAdmin, termController.saveTermsPage);
 
 // Rotas Forms
-router.get('/forms/migrants', checkAuth.auth, dashboardController.getForms);
+router.get('/forms/migrants', checkAuth.auth, migrantController.getForms);
+router.get('/forms/status', checkAuth.auth, migrantController.getFormsByStatus);
 
+router.post('/forms/read', checkAuth.auth, migrantController.formRead);
+router.post('/forms/resolved', checkAuth.auth, migrantController.formResolved);
+router.post('/forms/delete', checkAuth.auth, migrantController.deleteForms);
 
 export default router;

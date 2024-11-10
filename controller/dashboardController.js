@@ -30,7 +30,11 @@ const login = async (req, res) => {
         // Caso não tenha token ou esteja inválido, retorna para a página de login
         return res.render('login', { error: "Token inválido. Tente novamente." });
     } catch (error) {
-        return res.render('login', { error: 'Erro na autenticação.' });
+        if(error.status === 401){
+        return res.render('login', { error: 'Credenciais inválidas' });
+
+        }                    
+        return res.render('login', { error: 'Ocorreu um erro na autenticação. Tente novamente mais tarde.' });
     }
 };
 
@@ -56,22 +60,10 @@ const getHome = async (req, res) => {
     res.render('home');
 };
 
-const getForms = async (req, res) => {
-    try {
-        const response = await api.get("/forms");
-        const forms = response.data.forms;
-        res.render('forms/formsList', { forms });
-    } catch (error) {
-        console.error('Erro ao buscar instituições:', error);
-        res.status(500).render('error', { message: 'Erro ao buscar instituições' });
-    }
-}
-
 export default {
     login,
     logout,
     getLogin,
     getHome,
-    getForms,
 }
 

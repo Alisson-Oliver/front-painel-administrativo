@@ -26,7 +26,6 @@
         <form action="/dashboard/save-terms" method="POST">
             <div class="mb-3">
                 <label for="content" class="form-label">Conteúdo dos Termos e Condições</label>
-                <!-- Editor Quill -->
                 <div id="editor" style="height: 400px;"></div>
             </div>
             <!-- Campo oculto para o conteúdo que será enviado -->
@@ -40,11 +39,14 @@
             <!-- Exibe mensagens de erro -->
             <% if (errorMessage && errorMessage != "") { %>
                 <div class="alert alert-danger"><%= errorMessage %></div>
-            <% } %>
+                <% } %>
+                <a href="/dashboard/terms" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Voltar
+                </a>
             <button type="submit" class="btn btn-primary">
                 <i class="bi bi-save"></i> Salvar
             </button>
-            <a href="/dashboard/migrants" class="btn btn-secondary">
+            <a href="/dashboard/terms" class="btn btn-secondary">
                 <i class="bi bi-x-lg"></i> Cancelar
             </a>
         </form>
