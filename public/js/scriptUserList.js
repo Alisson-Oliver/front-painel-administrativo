@@ -47,6 +47,9 @@ function renderTable() {
     document.getElementById('nextPage').disabled = end >= users.length;
 };
 
+/*
+* Event listeners para os botões de paginação
+*/
 document.getElementById('prevPage').addEventListener('click', () => {
     if (currentPage > 1) {
         currentPage--;

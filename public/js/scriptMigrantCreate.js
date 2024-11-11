@@ -1,4 +1,3 @@
-
 /* 
 * Função para verificar se o select de gênero é 'Outro' e exibir o campo de texto
 * para inserir outro gênero

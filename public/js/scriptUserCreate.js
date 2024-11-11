@@ -62,3 +62,85 @@ document.getElementById("toggleConfirmPassword").addEventListener("click", funct
         eyeIconConfirm.classList.add("bi-eye-slash");
     };
 });
+
+/*
+* Configura o evento 'blur' no campo de email ao carregar a página
+*/
+document.addEventListener('DOMContentLoaded', () => {
+    const emailInput = document.getElementById('email');
+    emailInput.addEventListener('blur', handleEmailBlur);
+});
+
+/* 
+* Função chamada ao sair do campo de email
+*/
+const handleEmailBlur = async () => {
+    const email = document.getElementById('email').value;
+    if (!email) {
+        clearEmailFeedback();
+        return;
+    };
+    try {
+        const data = await checkEmailAvailability(email);
+        
+        displayEmailFeedback(data.exists);
+    } catch (error) {
+        handleEmailError(error);
+    };
+};
+
+/*
+* Função para verificar a disponibilidade do email
+*/
+const checkEmailAvailability = async (email) => {
+    try {
+        const response = await fetch('/dashboard/users/check-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email })
+        });
+
+        if (!response.ok) {
+            console.error('Erro na requisição:', response.statusText);
+            throw new Error('Erro na requisição');
+        };
+        
+        const data = await response.json();
+
+        return data;
+    } catch (error) {
+        console.error('Erro ao verificar o e-mail:', error);
+    };
+};
+
+
+/* 
+* Função para exibir feedback baseado na disponibilidade do email
+*/
+const displayEmailFeedback = (emailExists) => {
+    const feedbackElement = document.getElementById('emailFeedback');
+    if (emailExists) {
+        feedbackElement.textContent = 'Este email já está cadastrado.';
+        feedbackElement.style.color = 'red';
+    } else {
+        feedbackElement.textContent = '';
+    }
+};
+
+/* 
+* Função para limpar o feedback do campo de email
+*/
+const clearEmailFeedback = () => {
+    const feedbackElement = document.getElementById('emailFeedback');
+    feedbackElement.textContent = '';
+};
+
+/* 
+* Função para tratar erros na verificação do email
+*/
+const handleEmailError = (error) => {
+    console.error('Erro ao verificar o email:', error);
+    const feedbackElement = document.getElementById('emailFeedback');
+    feedbackElement.textContent = 'Erro ao verificar o email.';
+    feedbackElement.style.color = 'orange';
+};

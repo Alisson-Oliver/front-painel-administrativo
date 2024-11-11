@@ -238,22 +238,19 @@ const searchMigrant = async (req, res) => {
 const checkEmail = async (req, res) => {
     try {
         const email = req.body.email;
-        
-        // Enviar o email no corpo da requisição para a API
         const emailExistResponse = await api.post('/migrants/check-email', { email });
-
         const exists = emailExistResponse.data.exists;
         
         if (exists) {
             return res.status(200).json({ exists: true });
         } else {
             return res.status(200).json({ exists: false });
-        }
+        };
     } catch (error) {
         console.error(error); 
         res.status(500).render('error', { message: 'Erro ao verifiacar email.' });
     };
-}
+};
 
 /*
 *   Função para renderizar a página de atualização de senha do migrante.

@@ -34,3 +34,9 @@ document.querySelector('#togglePassword').addEventListener('click', function() {
         icon.classList.add('fa-eye');
     };
 });
+
+
+document.querySelector('.forgot-password').addEventListener('click', function(event) {
+    event.preventDefault(); 
+    $('#forgotPasswordModal').modal('show'); 
+});

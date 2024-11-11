@@ -7,15 +7,21 @@ import flash from 'connect-flash';
 import publicRoutes from './routes/publicRoutes.js';
 const app = express();
 
-// Configuração do middleware para processar dados do corpo
+/* 
+* Configuração do middleware para processar dados do corpo
+*/
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: true }));
 
-// Configuração do EJS
+/* 
+* Configuração do EJS
+*/
 app.set('view engine', 'ejs');
 app.use(express.static('public')); 
 
-// Configuração do middleware para sessão
+/* 
+* Configuração do middleware para sessão
+*/
 app.use(session({
     secret: process.env.KEY_SECRET,
     resave: false,
@@ -25,7 +31,9 @@ app.use(session({
     sameSite: 'Strict'  
 }));
 
-// Configuração do middleware para flash messages
+/* 
+* Configuração do middleware para flash messages
+*/
 app.use(flash());
 
 app.use((req, res, next) => {
@@ -40,7 +48,9 @@ app.use((req, res, next) => {
     next();
 });
 
-// Middleware para verificar se o usuário está logado
+/* 
+* Middleware para verificar se o usuário está logado
+*/
 app.use((req, res, next) => {
     if (!req.session.user && req.originalUrl !== '/login' && req.originalUrl !== '/register') {
         req.session.returnTo = req.originalUrl; 
@@ -48,16 +58,22 @@ app.use((req, res, next) => {
     next();
 });
 
-// Configuração das rotas
+/*
+* Configuração das rotas
+*/
 app.use("/dashboard", dashboardRoutes);
 app.use("/", loginRoutes, publicRoutes);
 
-// Middleware para capturar páginas não encontradas (404)
+/* 
+* Middleware para capturar páginas não encontradas (404)
+*/
 app.use((req, res, next) => {
     res.status(404).render('404');
 });
 
-// Inicia o servidor
+/* 
+* Inicia o servidor
+*/
 app.listen(config.port, () => {
     console.log(`Servidor rodando na porta ${config.port}`);
 });

@@ -74,7 +74,7 @@ const saveTermsPage = async (req, res) => {
 
     if (!content || !type) {
         return res.status(400).render('error', { message: 'Conteúdo ou tipo faltando' });
-    }
+    };
 
     try {
         const response = await api.put('/terms', { content, type });
@@ -84,11 +84,11 @@ const saveTermsPage = async (req, res) => {
             return res.redirect(`/dashboard/edit-terms/${type}`)
         } else {
             res.status(500).render('error', { message: 'Falha ao salvar os termos' });
-        }
+        };
     } catch (error) {
         console.error('Erro ao salvar os termos:', error);
         res.status(500).render('error', { message: 'Erro ao salvar os termos' });
-    }
+    };
 };
 
 export default {

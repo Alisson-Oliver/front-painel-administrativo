@@ -16,7 +16,6 @@ const router = Router();
 // Rota principal do painel administrativo
 router.get('/home', checkAuth.auth, dashboardController.getHome);
 
-
 // Rotas migrantes
 router.post('/migrants/check-email', checkAuth.auth, migrantController.checkEmail);
 router.post('/migrants/delete', checkAuth.auth, migrantController.deleteMigrant);
@@ -32,6 +31,7 @@ router.post('/migrants/change-password', checkAuth.auth, migrantController.getUp
 router.post('/migrants/updatePassword', checkAuth.auth, migrantController.updatePassword);
 
 // Rotas usuários
+router.post('/users/check-email', checkAuth.auth, userController.checkEmail);
 router.get('/users', checkAuth.auth, checkAuthAdmin.isAdmin, userController.getUsers);
 router.post('/users/delete', checkAuth.auth, checkAuthAdmin.isAdmin, userController.deleteUser);
 router.post('/users/edit', checkAuth.auth, checkAuthAdmin.isAdmin, userController.getEditUserForm);
@@ -42,6 +42,7 @@ router.post('/users/change-password', checkAuth.auth, checkAuthAdmin.isAdmin, us
 router.post('/users/updatePassword', checkAuth.auth, checkAuthAdmin.isAdmin, userController.updatePassword);
 
 // Rotas instituições
+router.post('/institutions/check-email', checkAuth.auth, institutionController.checkEmail);
 router.get('/institutions', checkAuth.auth, institutionController.getInstitutions);
 router.get('/institutions/search', checkAuth.auth, institutionController.searchInstitutions);
 router.post('/institutions/details', checkAuth.auth, institutionController.getInstitutionById);

@@ -6,7 +6,6 @@ import jwt from 'jsonwebtoken';
 */
 const login = async (req, res) => {
     const { username, password } = req.body;
-
     try {
         const response = await api.post('/login', { username, password });
         const authHeader = response.headers['authorization'];
@@ -18,18 +17,19 @@ const login = async (req, res) => {
                 req.session.user = decodedToken;
                 req.session.token = token;
 
-                const redirectUrl = req.session.returnTo || '/dashboard/migrants'; 
+                const redirectUrl = req.session.returnTo || '/dashboard/home'; 
                 delete req.session.returnTo; 
 
                 return res.redirect(redirectUrl); 
-            }
-        }
+            };
+        };
         return res.render('login', { error: "Token inválido. Tente novamente." });
     } catch (error) {
+
         if(error.status === 401){
         return res.render('login', { error: 'Credenciais inválidas' });
+        };         
 
-        }                    
         return res.render('login', { error: 'Ocorreu um erro na autenticação. Tente novamente mais tarde.' });
     };
 };
@@ -40,7 +40,7 @@ const login = async (req, res) => {
 const logout = (req, res) => {
     req.session.destroy((err) => {
         if (err) {
-            return res.redirect('/dashboard/migrants');
+            return res.redirect('/dashboard/home');
         }
         res.clearCookie('connect.sid'); 
         res.redirect('/login');
@@ -48,32 +48,58 @@ const logout = (req, res) => {
 };
 
 /*
-*   Função que renderiza a página de login.
+*   Função que renderiza a página de login. Caso o usuário já esteja logado, redireciona para a página inicial.
 */
 const getLogin = (req, res) => {
     if(req.session && req.session.token){
-        return res.redirect('/dashboard/migrants')
+        return res.redirect('/dashboard/home');
     }
     res.render('login');
 };
 
 /*
-*   Função que renderiza a página inicial.
+*  Função que renderiza a página inicial com a quantidade de instituições e migrantes cadastrados, e a quantidade de
+*  formulários pendentes de leitura.
 */
 const getHome = async (req, res) => {
-    res.render('home');
+    try {
+        const institutionResponse = await api.get('/institutions-count');
+        const institutionCount = institutionResponse.data.count;
+
+        const migrantResponse = await api.get('/migrants-count');
+        const migrantCount = migrantResponse.data.count;
+
+        const pendingFormsResponse = await api.get('/forms-count/unread');
+        const pendingFormsCount = pendingFormsResponse.data.count;
+
+        const userCountResponse = await api.get('/users-count');
+        const userCount = userCountResponse.data.count;
+
+        res.render('home', { institutionCount, migrantCount, pendingFormsCount, userCount });
+    } catch (error) {
+        console.error('Erro ao buscar informações:', error);
+        res.status(500).render('error', { message: 'Erro ao buscar informações' });
+    }
 };
 
+/*
+*  Função que renderiza a página do manual do migrante.
+*/
 const getManual = async (req, res) => {
     try {
         const response = await api.get('/pdfs');
         const pdfs = response.data.pdfs;
+
         res.render('manual', { pdfs });
     } catch (error) {
         console.error('Erro ao buscar o manual:', error);
         res.status(500).render('error', { message: 'Erro ao carregar o manual' });        
     }
 };
+
+/*
+*  Função que atualiza o manual do migrante. 
+*/
 const updateManual = async (req, res) => {
     try {
         const { pdf_id } = req.body;
@@ -83,7 +109,6 @@ const updateManual = async (req, res) => {
         const url = req.body[`url_${pdf_id}`]; 
         const language = req.body.language;
         const updatePdf = { name, description, url, language };
-
 
         await api.put(`/pdfs/${pdf_id}`, updatePdf);
 

@@ -3,7 +3,9 @@ import termController from "../controller/termController.js";
 
 const router = Router();
 
-// Rotas publicas
+/* 
+* Rotas publicas
+*/
 
 // Rota de termos
 router.get('/terms/:type', termController.getTermsPage);

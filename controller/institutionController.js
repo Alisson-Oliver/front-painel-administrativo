@@ -49,42 +49,41 @@ const createInstitution = async (req, res) => {
         description_en: ensureNull(description_en),
         description_fr: ensureNull(description_fr),
         description_es: ensureNull(description_es),
-    }
-
+    };;
     const service_hours = {
         service_hours_pt: ensureNull(service_hours_pt),
         service_hours_en: ensureNull(service_hours_en),
         service_hours_fr: ensureNull(service_hours_fr),
         service_hours_es: ensureNull(service_hours_es),
-    }
+    };
 
     const target_population = {
         target_populations_pt: ensureNull(target_populations_pt),
         target_populations_en: ensureNull(target_populations_en),
         target_populations_fr: ensureNull(target_populations_fr),
         target_populations_es: ensureNull(target_populations_es),
-    }
+    };
 
     const requirements_restrictions = {
         requirements_restrictions_pt: ensureNull(requirements_restrictions_pt),
         requirements_restrictions_en: ensureNull(requirements_restrictions_en),
         requirements_restrictions_fr: ensureNull(requirements_restrictions_fr),
         requirements_restrictions_es: ensureNull(requirements_restrictions_es),
-    }
+    };
 
     const services_offered = {
         services_offered_pt: ensureNull(services_offered_pt),
         services_offered_en: ensureNull(services_offered_en),
         services_offered_fr: ensureNull(services_offered_fr),
         services_offered_es: ensureNull(services_offered_es),
-    }
+    };
 
     const service_cost = {
         services_costs_pt: ensureNull(service_costs_pt),
         services_costs_en: ensureNull(service_costs_en),
         services_costs_fr: ensureNull(service_costs_fr),
         services_costs_es: ensureNull(service_costs_es),
-    }
+    };
 
     const address = {
         cep: ensureNull(cep),
@@ -99,7 +98,7 @@ const createInstitution = async (req, res) => {
         position: ensureNull(responsible_position),
         sector: ensureNull(responsible_sector),
         role: ensureNull(responsible_role),
-    }
+    };
 
     const newData = {
         institution, address, institution_descriptions,
@@ -110,20 +109,18 @@ const createInstitution = async (req, res) => {
 
     try {
         const { data } = await api.post(`/institutions`, newData); 
-        const institutionId = data.institution.id
+        const institutionId = data.institution.id;
 
         res.render('institutions/redirect', { institutionId });
     } catch (error) {
         console.error(error);
-
-        if (error.response && error.response.data) {
-            return res.status(400).send({ message: error.response.data.message });
-        };
-
         res.status(500).render('error', { message: 'Erro ao criar a instituição.' });
     };
 };
 
+/*
+*   Função que busca instituições pelo nome, CNPJ ou telefone e renderiza a página de listagem de instituições.
+*/
 const searchInstitutions = async (req, res) => {
     try {
         const query = req.query.query; 
@@ -132,7 +129,7 @@ const searchInstitutions = async (req, res) => {
 
         if(!institutions || institutions.length === 0){
             res.render('institutions/institutionList', { error: 'Nenhum resultado foi encontrado', institutions })
-        }
+        };
         res.render('institutions/institutionList', { institutions });
     } catch (error) {
         console.error('Erro ao buscar instituições:', error);
@@ -290,16 +287,10 @@ const updateInstitution = async (req, res) => {
 
     try {
         await api.put(`/institutions/${institutionId}`, newData); 
-
        
-       res.render('institutions/redirect', { institutionId });
+        res.render('institutions/redirect', { institutionId });
     } catch (error) {
         console.error(error);
-
-        if (error.response && error.response.data) {
-            return res.status(400).send({ message: error.response.data.message });
-        };
-
         res.status(500).render('error', { message: 'Erro ao atualizar a instituição.' });
     };
 };
@@ -334,8 +325,28 @@ const getRegisterInstitution = async (req, res) => {
     };
 };
 
+/*
+*   Função para verificar se um email já está cadastrado no banco de dados.
+*/
+const checkEmail = async (req, res) => {
+    try {
+        const email = req.body.email;
+        const emailExistResponse = await api.post('/institutions/check-email', { email });
+        const exists = emailExistResponse.data.exists;
+        
+        if (exists) {
+            return res.status(200).json({ exists: true });
+        } else {
+            return res.status(200).json({ exists: false });
+        };
+    } catch (error) {
+        console.error(error); 
+        res.status(500).render('error', { message: 'Erro ao verifiacar email.' });
+    };
+};
+
 export default {
     getInstitutions,searchInstitutions, getInstitutionById,
     getEditInstitutionForm,updateInstitution,deleteInstitution,
-    getRegisterInstitution,createInstitution,
+    getRegisterInstitution,createInstitution, checkEmail
 };

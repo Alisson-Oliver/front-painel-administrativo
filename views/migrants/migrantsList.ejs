@@ -3,7 +3,7 @@
     <%- include("../partials/navbar.ejs") %>
     <div class="container mt-4">
         <br><br>
-        <h1 class="mt-4"><strong>Gestão de Migrantes</strong></h1>
+        <h1 class="mt-4"><strong>Administração de Migrantes</strong></h1>
         <br>
         <a href="/dashboard/migrant/register" class="btn btn-primary mb-3">
             <i class="bi bi-person-fill"></i> Cadastrar Migrante
@@ -50,9 +50,10 @@
         <% } %>
     </div>
     <%- include("../partials/footer.ejs") %>
-</body>
-<script>
-    const migrants = <%- JSON.stringify(migrants) %>;
-</script>
+    <script>
+        const migrants = <%- JSON.stringify(migrants) %>;
+    </script>
 <script src="/js/scriptMigrantsList.js"></script>
+</body>
+</html>
 

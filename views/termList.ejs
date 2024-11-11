@@ -3,8 +3,7 @@
     <div class="container my-5">
         <%- include("./partials/navbar.ejs") %>
         <br>
-        <h1 class="mb-4 mt-2 text-center"><strong>Gerenciar Termos de Migração e Instituições</strong></h1>
-
+        <h1 class="mb-4 mt-2 text-center"><strong>Termos e Condições</strong></h1>
         <div id="copy-success-alert" class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;">
             <strong>Link copiado!</strong> O link foi copiado para a área de transferência.
         </div>
@@ -15,9 +14,9 @@
                         <div class="card-header bg-primary text-white">
                             <h5 class="card-title mt-2">
                                 <% if(term.type === 'migrante') { %> 
-                                    Termos e Condições de Migrante
+                                    Termos e Condições para Migrantes
                                 <% } else if(term.type === 'instituicao') { %>
-                                    Termos e Condições de Instituição
+                                    Termos e Condições para Instituições
                                 <% } else { %>
                                     <%= term.type.charAt(0).toUpperCase() + term.type.slice(1) %>
                                 <% } %>

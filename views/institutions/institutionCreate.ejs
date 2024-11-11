@@ -14,32 +14,27 @@
                 <label for="name">Nome da Instituição*</label>
                 <input type="text" class="form-control" id="name" name="name" required maxlength="200" placeholder="Nome da Instituição" maxlength="200">
             </div>
-
             <div class="form-group">
                 <label for="cnpj">CNPJ*</label>
                 <input type="text" class="form-control" id="cnpj" name="cnpj" required pattern="\\d{17}" maxlength="18" oninput="formatCNPJ(this)" placeholder="CNPJ">
             </div>
-
             <div class="form-group">
                 <label for="email">Email*</label>
                 <input type="email" class="form-control" id="email" name="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$" maxlength="100" placeholder="Email">
+                <div id="emailFeedback"></div>
             </div>
-
             <div class="form-group">
                 <label for="main_phone">Telefone Principal*</label>
                 <input type="text" class="form-control" id="main_phone" name="main_phone" oninput="formatPhone(this)" maxlength="15" placeholder="Telefone Principal">
             </div>
-
             <div class="form-group">
                 <label for="secondary_phone">Telefone Secundário</label>
                 <input type="text" class="form-control" id="secondary_phone" name="secondary_phone" oninput="formatPhone(this)" maxlength="15" placeholder="Telefone Secundário">
             </div>
-
             <div class="form-group">
                 <label for="website">Site</label>
                 <input type="text" class="form-control" id="website" name="website" maxlength="500" placeholder="Site">
             </div>
-
             <div class="form-group">
                 <label for="institution_category">Categoria*</label>
                 <select class="form-control" id="institution_category" name="institution_category" required>
@@ -51,27 +46,22 @@
                     <% }); %>
                 </select>
             </div>
-
             <div class="form-group">
                 <label for="instagram">Instagram</label>
                 <input type="text" class="form-control" id="instagram" name="instagram" required oninput="formatInstagramUsername(this)" maxlength="70" placeholder="Instagram">
             </div>
-
             <div class="form-group">
                 <label for="main_language">Idioma Principal*</label>
                 <input type="text" class="form-control" id="main_language" name="main_language" maxlength="80" required placeholder="Idioma Principal">
             </div>
-
             <div class="form-group">
                 <label for="second_language">Idioma Secundário*</label>
                 <input type="text" class="form-control" id="second_language" name="second_language" maxlength="80" required placeholder="Idioma Secundário">
             </div>
-
             <div class="form-group">
                 <label for="link_maps">Link do Maps:</label>
                 <input type="text" class="form-control" id="link_maps" name="link_maps" maxlength="2000" placeholder="Link do Maps">
             </div><br><hr>
-            
             <h3 class="mt-4 text-primary" text-primary>
                 <i class="bi bi-postcard-fill"></i> Descrição da Instituição
             </h3>
@@ -91,7 +81,6 @@
                 <label for="description_es">Descrição (Espanhol)*</label>
                 <textarea class="form-control" id="description_es" name="description_es" rows="3" maxlength="1000" placeholder="Descripción de la institución en español..."></textarea>
             </div><br><hr>
-
             <h3 class="mt-4 text-primary">
                 <i class="bi bi-clock-fill"></i> Dias e Horários de Funcionamento
             </h3>
@@ -111,7 +100,6 @@
                 <label for="service_hours_es">Dias e Horários de Funcionamento (Espanhol)*</label>
                 <textarea class="form-control" id="service_hours_es" name="service_hours_es" rows="3" maxlength="450" placeholder="Horario de atención en español..."></textarea>
             </div><br><hr>
-
             <h3 class="mt-4 text-primary">
                 <i class="bi bi-people-fill"></i> População Alvo
             </h3>
@@ -151,7 +139,6 @@
                 <label for="requirements_restrictions_es">Requisitos e Restrições (Espanhol)*</label>
                 <textarea class="form-control" id="requirements_restrictions_es" name="requirements_restrictions_es" rows="3" maxlength="450" placeholder="Requisitos y restricciones en español..."></textarea>
             </div><br><hr>
-
             <h3 class="mt-4 text-primary">
                 <i class="bi bi-box-fill"></i> Serviços Oferecidos
             </h3>
@@ -171,7 +158,6 @@
                 <label for="services_offered_es">Serviços Oferecidos (Espanhol)*</label>
                 <textarea class="form-control" id="services_offered_es" name="services_offered_es" rows="3" maxlength="450" placeholder="Servicios ofrecidos en español..."></textarea>
             </div><br><hr>
-
             <h3 class="mt-4 text-primary">
                 <i class="bi bi-currency-dollar"></i> Custos dos Serviços
             </h3>
@@ -200,7 +186,6 @@
                 <input type="text" class="form-control" id="cep" name="cep" oninput="formatCEP(this)" maxlength="9" placeholder="Digite o CEP">
                 <button type="button" id="btnBuscarEndereco" class="btn btn-primary mt-2">Buscar Endereço</button>
             </div>
-
             <div class="form-group">
                 <label for="street">Logradouro*</label>
                 <input type="text" class="form-control" id="street" name="street" placeholder="Digite o Logradouro" maxlength="255">
@@ -225,11 +210,9 @@
                 <label for="complemento">Complemento (opcional)</label>
                 <input type="text" class="form-control" id="complemento" name="complemento" placeholder="Digite o Complemento" maxlength="240">
             </div>
-
             <div class="alert alert-warning" role="alert">
                 Caso a busca pelo endereço não retorne resultados, preencha os campos acima manualmente.
             </div><br><hr>
-
             <h3 class="mt-4 text-primary">
                 <i class="bi bi-person-fill"></i> Responsável Pelo Cadastro
             </h3>
@@ -237,17 +220,14 @@
                 <label for="responsible_name">Nome do Responsável*</label>
                 <input type="text" class="form-control" id="responsible_name" name="responsible_name" required placeholder="Digite o nome do responsável" maxlength="255">
             </div>
-
             <div class="form-group">
                 <label for="responsible_position">Posição*</label>
                 <input type="text" class="form-control" id="responsible_position" name="responsible_position" placeholder="Digite a posição do responsável" maxlength="80">
             </div>
-
             <div class="form-group">
                 <label for="responsible_sector">Setor*</label>
                 <input type="text" class="form-control" id="responsible_sector" name="responsible_sector" placeholder="Digite o setor do responsável" maxlength="80">
             </div>
-
             <div class="form-group">
                 <label for="responsible_role">Função*</label>
                 <input type="text" class="form-control" id="responsible_role" name="responsible_role" placeholder="Digite a função do responsável" maxlength="80">
@@ -265,7 +245,9 @@
             </a>
         </form>
     </div>
-</body>
+<%- include("../partials/footer.ejs") %>
 <script src="/js/scriptInstitutionCreate.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<%- include("../partials/footer.ejs") %>
+</body>
+</html>
+
