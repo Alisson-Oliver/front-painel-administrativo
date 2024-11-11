@@ -1,57 +1,60 @@
 import { api } from '../config/config.js';
 
-// Função para obter todos os migrantes e renderizar a lista
+/*
+*   Função para buscar todos os migrantes cadastrados na API e renderizar a página de listagem.
+*/
 const getMigrants = async (req, res) => {
     try {
         const response = await api.get("/migrants");
         const migrants = response.data.migrants;
 
-         // Renderiza a lista de migrantes
         res.render('migrants/migrantsList', { migrants });
     } catch (error) {
         console.error('Erro ao buscar migrantes:', error);
         res.status(500).render('error', { message: 'Erro ao buscar migrantes' });
-    }
+    };
 };
 
-// Função para deletar um migrante pelo ID
+/*
+*   Função para deletar um migrante.
+*/
 const deleteMigrant = async (req, res) => {
     const migrantId = req.body.migrant_id; 
     try {
-        // Chama a API para deletar o migrante
         await api.delete(`/migrants/${migrantId}`);
         
-        // Redireciona após a deleção com uma mensagem de sucesso
         res.redirect('/dashboard/migrants'); 
     } catch (error) {
         console.error(error);
-        res.status(500).send({ message: 'Erro ao deletar o migrante.' });
-    }
+        res.status(500).render('error', { message: 'Erro ao deletar o migrante' })
+    };
 };
 
-// Função para buscar um migrante por ID e exibir os detalhes
+/*
+*   Função para buscar um migrante pelo ID e renderizar a página de detalhes.
+*/
 const getMigrantById = async (req, res) => {
     const migrantId = req.body.migrant_id; 
 
     try {
-        // Chama a API para procurar o migrante pelo ID
         const response = await api.get(`/migrants/${migrantId}`);
         const migrant = response.data.migrant;
 
         if (!migrant) {
             return res.status(404).send({ message: 'Migrante não encontrado.' });
-        }
+        };
 
-        // Renderiza os detalhes do migrante
         res.render('migrants/migrantDetails', { migrant });
     } catch (error) {
         console.error(error);
-        res.status(500).send({ message: 'Erro ao obter os detalhes do migrante.' });
-    }
+        res.status(500).render('error', { message: 'Erro ao obter os detalhes do migrante' });
+    };
 };
 
 
-// Função para criar um novo migrante
+/*
+*   Função para criar um novo migrante.
+*/
 const createMigrant = async (req, res) => {
     const {
         full_name, social_name, email, phone, whatsapp_number,
@@ -66,7 +69,6 @@ const createMigrant = async (req, res) => {
     // Função para garantir que os campos sejam null se não forem informados
     const ensureNull = (value) => (value === undefined || value === null || value === '') ? null : value;
 
-    // Cria um objeto migrante, substituindo valores não informados por null
     const migrant = {
         full_name: ensureNull(full_name), social_name: ensureNull(social_name),
         email: ensureNull(email), phone: ensureNull(phone),
@@ -101,55 +103,60 @@ const createMigrant = async (req, res) => {
     };
 
     try {
-        // Faz a requisição para criar o novo migrante na API
         const { data } = await api.post('/migrants', newData);
         const migrantId = data.migrant.id
 
-        // Redireciona para a página de detalhes do migrante recém-criado
         res.render('migrants/redirect', { migrantId });
     } catch (error) {
         console.error(error);
         if (error.response && error.response.data) {
             return res.status(400).send({ message: error.response.data.message });
         }
-        res.status(500).send({ message: 'Erro ao cadastrar o migrante.' });
-    }
+        res.status(500).render('error', { message: 'Erro ao cadastrar o migrante' });
+
+    };
 };
 
-// Função para renderizar página de edição com os dados do migrante
+/*
+*   Função para renderizar a página de edição de um migrante.
+*/
 const getEditMigrantForm = async (req, res) => {
     const migrantId = req.body.migrant_id; 
 
     try {
-        // Busca o migrante pelo ID
         const response = await api.get(`/migrants/${migrantId}`);
         const migrant = response.data.migrant;
 
         if (!migrant) {
             return res.status(404).send({ message: 'Migrante não encontrado.' });
-        }
+        };
 
-        // Renderiza a página de edição do migrante
         res.render('migrants/migrantEdit', { migrant });
     } catch (error) {
         console.error(error);
-        res.status(500).send({ message: 'Erro ao obter os detalhes do migrante para edição.' });
-    }
+        res.status(500).render('error', { message: 'Erro ao obter os detalhes do migrante para edição.' });
+    };
 };
 
 
-// Função para renderizar página de cadastro de migrante
+/*
+*   Função para renderizar a página de cadastro de um novo migrante.
+*/
 const getRegisterMigrant = async (req, res) => {
     try {
      res.render('migrants/migrantCreate'); 
     } catch (error) {
         res.render('error', { error });
-    }
+        res.status(500).render('error', { message: 'Erro ao acessar a página de cadastro.' });
+
+    };
 };
 
-// Função para atualizar dados do migrante
+/*
+*   Função para atualizar um migrante.
+*/
 const updateMigrant = async (req, res) => {
-    const migrantId = req.body.migrant_id
+    const migrantId = req.body.migrant_id;
 
     const {
         full_name, social_name, email, phone, whatsapp_number, document_type,
@@ -162,7 +169,6 @@ const updateMigrant = async (req, res) => {
     // Função para garantir que os campos sejam null se não forem informados
     const ensureNull = (value) => (value === undefined || value === null || value === '') ? null : value;
 
-    // Cria um objeto migrante, substituindo valores não informados por null
     const migrant = {
         full_name: ensureNull(full_name), social_name: ensureNull(social_name), email: ensureNull(email),
         phone: ensureNull(phone), whatsapp_number: ensureNull(whatsapp_number) || false,
@@ -192,44 +198,44 @@ const updateMigrant = async (req, res) => {
     };
 
     try {
-        // Faz a requisição para atualizar o migrante na API
         await api.put(`/migrants/${migrantId}`, newData); 
 
-        // Redireciona para a página de detalhes do migrante recém-atualizado
         res.render('migrants/redirect', { migrantId });
     } catch (error) {
         console.error(error);
 
         if (error.response && error.response.data) {
             return res.status(400).send({ message: error.response.data.message });
-        }
+        };
 
-        res.status(500).send({ message: 'Erro ao cadastrar o migrante.' });
-    }
+        res.status(500).render('error', { message: 'Erro ao atualizar o migrante.' });
+    };
 };
 
-// Função para pesquisar migrante por email, documento ou telefone
+/*
+*   Função para buscar um migrante pelo telefone, email ou documento e renderizar a página de listagem.
+*/
 const searchMigrant = async (req, res) => {
     try {
         const query = req.query.query; 
         const response = await api.get(`/migrants/search?q=${query}`);
         const migrants = response.data.migrants;
 
-
         if(!migrants || migrants.length === 0){
             res.render('migrants/migrantsList', { error: 'Nenhum resultado foi encontrado', migrants })
-        }
+        };
 
-        // Renderiza página de listagem com o migrante encontrado
         res.render('migrants/migrantsList', { migrants });
     } catch (error) {
         console.error('Erro ao buscar migrantes:', error);
-        res.status(500).send('Erro ao buscar migrantes');
-    }
+        res.status(500).render('error', { message: 'Erro ao buscar o migrante.' });
+    };
 };
 
 
-// Função para verificar se email digitado já está cadastrado
+/*
+*   Função para verificar se um email já está cadastrado no banco de dados.
+*/
 const checkEmail = async (req, res) => {
     try {
         const email = req.body.email;
@@ -246,25 +252,33 @@ const checkEmail = async (req, res) => {
         }
     } catch (error) {
         console.error(error); 
-        return res.status(500).json({ message: "Erro interno no servidor. Tente novamente mais tarde." });
-    }
+        res.status(500).render('error', { message: 'Erro ao verifiacar email.' });
+    };
 }
 
-// Função para renderizar página de atualização de senha
+/*
+*   Função para renderizar a página de atualização de senha do migrante.
+*/
 const getUpdatePassword = async (req, res) => {
-    const migrantData = req.body.migrant;
-    const migrant = JSON.parse(migrantData); 
-    res.render('migrants/migrantUpdatePassword', { migrant });
+    try {
+        const migrantData = req.body.migrant;
+        const migrant = JSON.parse(migrantData); 
+        res.render('migrants/migrantUpdatePassword', { migrant });
+    } catch (error) {
+        console.error(error);
+        res.status(500).render('error', { message: 'Erro ao carregar página de atualização de senha.' });
+    };
 };
 
-// Função para atualizar senha do migrante
+/*
+*   Função para atualizar a senha do migrante.
+*/
 const updatePassword = async (req, res) => {
     try {
         const { confirmPassword } = req.body;
         const migrantId = req.body.migrant_id;
         api.patch(`/migrants/change-password/${migrantId}`, {password: confirmPassword} );
 
-        // Renderiza página com mensagem de sucesso  
         res.render('migrants/migrantUpdatePassword', { success: 'Senha atualizada com sucesso.' } );
     } catch (error) {
         console.error('Erro ao buscar alterar senhar:', error);
@@ -272,20 +286,28 @@ const updatePassword = async (req, res) => {
     }
 };
 
+/*
+*   Função para buscar todos os formulários cadastrados na API e renderizar a página de listagem.
+*/
 const getForms = async (req, res) => {
     try {
         const response = await api.get("/forms");
         const forms = response.data.forms;
+
         if(!forms || forms.length === 0){
             res.render('forms/formsList', { error: 'Nenhum resultado foi encontrado', forms })
-        }
+        };
+
         res.render('forms/formsList', { forms, selectedStatus: "" });
     } catch (error) {
         console.error('Erro ao buscar formulários:', error);
         res.status(500).render('error', { message: 'Erro ao buscar formulários' });
-    }
-}
+    };
+};
 
+/*
+*   Função para buscar formulários por status.
+*/
 const getFormsByStatus = async (req, res) => {
     try {
         const status = req.query.status;
@@ -301,6 +323,9 @@ const getFormsByStatus = async (req, res) => {
     }
 };
 
+/*
+*   Função para marcar um formulário como "lido".
+*/
 const formRead = async (req, res) => {
     try {
         const { form_id } = req.body;
@@ -309,10 +334,13 @@ const formRead = async (req, res) => {
         res.redirect('/dashboard/forms/migrants');
     } catch (error) {
         console.error('Erro ao atualizar status do formulário: ', error);
-        res.status(500).render('error', { message: 'Erro ao atualiar formulário' })
-    }
+        res.status(500).render('error', { message: 'Erro ao atualizar formulário' })
+    };
 };
 
+/*
+*   Função para marcar um formulário como "resolvido".
+*/
 const formResolved = async (req, res) => {
     try {
         const { form_id } = req.body;
@@ -321,14 +349,15 @@ const formResolved = async (req, res) => {
         res.redirect('/dashboard/forms/migrants');
     } catch (error) {
         console.error('Erro ao atualizar status do formulário: ', error);
-        res.status(500).render('error', { message: 'Erro ao atualiar formulário' })
-    }
+        res.status(500).render('error', { message: 'Erro ao atualizar formulário' })
+    };
 };
 
+/*
+*   Função para deletar um formulário.
+*/
 const deleteForms = async (req, res) => {
     const { form_id } = req.body; 
-    console.log(form_id);
-    
     try {
         await api.delete(`/forms/${form_id}`);
         
@@ -337,7 +366,7 @@ const deleteForms = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).send({ message: 'Erro ao deletar o formulário.' });
-    }
+    };
 };
  
 export default {

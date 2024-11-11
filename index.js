@@ -5,16 +5,17 @@ import config from './config/config.js';
 import session from 'express-session';
 import flash from 'connect-flash';
 import publicRoutes from './routes/publicRoutes.js';
-
 const app = express();
 
 // Configuração do middleware para processar dados do corpo
-app.use(express.json()); // Para processar JSON
-app.use(express.urlencoded({ extended: true })); // Para processar dados de formulários
+app.use(express.json()); 
+app.use(express.urlencoded({ extended: true }));
 
+// Configuração do EJS
 app.set('view engine', 'ejs');
-app.use(express.static('public')); // Serve arquivos estáticos da pasta 'public'
+app.use(express.static('public')); 
 
+// Configuração do middleware para sessão
 app.use(session({
     secret: process.env.KEY_SECRET,
     resave: false,
@@ -24,10 +25,11 @@ app.use(session({
     sameSite: 'Strict'  
 }));
 
+// Configuração do middleware para flash messages
 app.use(flash());
 
 app.use((req, res, next) => {
-    res.locals.user = req.session.user || null; // Define user como null se não estiver logado
+    res.locals.user = req.session.user || null; 
     next();
 });
 
@@ -38,16 +40,13 @@ app.use((req, res, next) => {
     next();
 });
 
-
+// Middleware para verificar se o usuário está logado
 app.use((req, res, next) => {
     if (!req.session.user && req.originalUrl !== '/login' && req.originalUrl !== '/register') {
-        req.session.returnTo = req.originalUrl; // Salva a URL que o usuário estava tentando acessar
+        req.session.returnTo = req.originalUrl; 
     }
     next();
 });
-
-
-
 
 // Configuração das rotas
 app.use("/dashboard", dashboardRoutes);

@@ -3,7 +3,6 @@
     <%- include("../partials/navbar.ejs") %>
 
     <div class="container mt-5 mb-3">
-        <!-- Título da Página -->
         <div class="text-center mb-4">
             <hr>
             <br>
@@ -12,9 +11,6 @@
             </h3>
             <hr class="my-4" style="width: 50%; margin: 0 auto;">
         </div>
-
-
-        <!-- Card para Principais Informações -->
         <div class="card shadow rounded mb-4">
             <div class="card-header bg-primary text-white">
                 <i class="bi bi-card-checklist me-2"></i><strong> Principais Informações</strong>
@@ -42,8 +38,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Card para Endereço -->
         <div class="card shadow rounded mb-4">
             <div class="card-header bg-primary text-white">
                 <i class="bi bi-geo-alt me-2"></i><strong> Endereço</strong>
@@ -56,10 +50,7 @@
                     <i class="bi bi-map"></i> Ver no Mapa
                 </a>
             </div>
-             <!-- Botão de "Ver no Mapa" -->
         </div>
-
-        <!-- Card para Outras Informações -->
         <div class="card shadow rounded mb-4">
             <div class="card-header bg-primary text-white">
                 <i class="bi bi-info-circle me-2"></i><strong> Outras Informações</strong>
@@ -76,8 +67,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Botões de Ação -->
         <div class="d-flex justify-content-start mt-3">
             <a href="/dashboard/migrants" class="btn btn-secondary me-2 mr-2">
                 <i class="bi bi-arrow-left"></i> Voltar
@@ -99,8 +88,6 @@
             </button>
         </div>
     </div>
-
-    <!-- Modal de Confirmação de Deleção -->
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -124,9 +111,7 @@
             </div>
         </div>
     </div>
-
     <%- include("../partials/footer.ejs") %>
-
     <script>
         const migrantBirthDate = "<%= migrant.date_birth %>";
         const migrantEntryDate = "<%= migrant.entry_date %>";

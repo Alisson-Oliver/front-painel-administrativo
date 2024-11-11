@@ -1,3 +1,6 @@
+/* 
+* Função verificar se os campos de usuário e senha estão preenchidos
+*/
 document.querySelector('#buttonLogin').addEventListener('click', function(event) {
     event.preventDefault(); 
 
@@ -14,6 +17,9 @@ document.querySelector('#buttonLogin').addEventListener('click', function(event)
     form.submit();
 });
 
+/* 
+* Função para alternar a visibilidade da senha 
+*/
 document.querySelector('#togglePassword').addEventListener('click', function() {
     const passwordField = document.querySelector('#password');
     const icon = document.querySelector('#togglePassword i');
@@ -26,5 +32,5 @@ document.querySelector('#togglePassword').addEventListener('click', function() {
         passwordField.type = 'password';
         icon.classList.remove('fa-eye-slash');
         icon.classList.add('fa-eye');
-    }
+    };
 });

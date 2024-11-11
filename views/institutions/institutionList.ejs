@@ -8,8 +8,6 @@
         <a href="/dashboard/institution/register" class="btn btn-primary mb-3">
             <i class="bi bi-building-fill"></i>  Cadastrar Instituição
         </a>
-
-        <!-- Formulário de Busca -->
         <form action="/dashboard/institutions/search" method="GET" class="mb-4">
             <div class="input-group">
                 <input type="text" class="form-control" name="query" placeholder="Buscar por email, telefone ou CNPJ" aria-label="Buscar" required maxlength="100"> 
@@ -20,24 +18,17 @@
                 </div>
             </div>
         </form>
-
-         <!-- Contador de Registros e Paginação -->
          <div class="d-flex justify-content-between">
             <span id="contador"></span>
             <div>
-                 <!-- Botão "Anterior" com ícone de seta para a esquerda -->
                 <button id="prevPage" class="btn btn-secondary btn-sm" disabled>
                     <i class="bi bi-arrow-left"></i> Anterior
                 </button>
-                
-                <!-- Botão "Próximo" com ícone à direita -->
                 <button id="nextPage" class="btn btn-secondary btn-sm">
                     Próximo <i class="bi bi-arrow-right ms-2"></i>
                 </button>
             </div>
         </div>
-
-        <!-- Tabela para exibir os instituições -->
         <table class="table table-striped mt-3">
             <thead>
                 <tr>
@@ -49,7 +40,6 @@
                 </tr>
             </thead>
             <tbody id="institutionTable">
-                <!-- Aqui o JavaScript insere as linhas da tabela com base na página atual -->
             </tbody>
         </table>
         <% if (typeof error !== 'undefined' && error) { %>
@@ -61,7 +51,6 @@
     <%- include("../partials/footer.ejs") %>
 </body>
 <script>
-    // Variáveis para controle da página e limites
     const institutions = <%- JSON.stringify(institutions) %>;
 </script>
 <script src="/js/scriptInstitutionList.js"></script>

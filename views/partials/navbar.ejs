@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
     <a class="navbar-brand" href="/admin">
-        <img src="/img/logo-navbar.svg" height="23px" style="margin-bottom: 4.5px;" class="mr-1">NomeApp
+        <img src="/img/logo-navbar.svg" height="23px" style="margin-bottom: 4.5px;" class="mr-1">RAMB - Admin
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -23,17 +23,20 @@
                     Gerenciar Formulários
                 </a>
             </li>
-
             <li class="nav-item">
                 <a class="nav-link" href="/dashboard/terms">
                     Termos e Condições
                 </a>
             </li>
-            
             <% if (user.role === 'admin') { %>
                 <li class="nav-item">
                     <a class="nav-link" href="/dashboard/users">
                         Relações Internacionais
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/dashboard/terms">
+                        Manual do Migrante
                     </a>
                 </li>
             <% } %>

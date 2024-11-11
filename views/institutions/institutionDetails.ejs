@@ -3,7 +3,6 @@
     <%- include("../partials/navbar.ejs") %>
 
     <div class="container mt-5 mb-3">
-        <!-- Título da Página -->
         <div class="text-center mb-4">
             <hr>
             <br>
@@ -12,8 +11,6 @@
             </h3>
             <hr class="my-4" style="width: 50%; margin: 0 auto;">
         </div>
-
-        <!-- Card para Principais Informações -->
         <div class="card shadow rounded mb-4">
             <div class="card-header bg-primary text-white">
                 <i class="bi bi-card-checklist me-2"></i><strong> Principais Informações</strong>
@@ -46,8 +43,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Card para Endereço -->
         <div class="card shadow rounded mb-4">
             <div class="card-header bg-primary text-white">
                 <i class="bi bi-geo-alt me-2"></i><strong> Endereço</strong>
@@ -59,8 +54,6 @@
                 </a>
             </div>
         </div>
-
-        <!-- Card para Outras Informações -->
         <div class="card shadow rounded mb-4">
             <div class="card-header bg-primary text-white">
                 <i class="bi bi-info-circle me-2"></i><strong> Outras Informações</strong>
@@ -74,8 +67,6 @@
                 <p><strong>Custo dos Serviços:</strong> <%= institution.ServiceCost?.services_costs_pt || 'Não disponível' %></p>
             </div>
         </div>
-
-        <!-- Card para Responsável pelo Cadastro -->
         <div class="card shadow rounded mb-4">
             <div class="card-header bg-primary text-white">
                 <i class="bi bi-person-check me-2"></i><strong> Responsável pelo Cadastro</strong>
@@ -87,20 +78,16 @@
                 <p><strong>Função:</strong> <%= institution.ResponsibleUser?.role || 'Não disponível' %></p>
             </div>
         </div>
-
-        <!-- Botões de Ação alinhados à esquerda -->
         <div class="text-left mt-3">
             <a href="/dashboard/institutions" class="btn btn-secondary mr-2">
                 <i class="bi bi-arrow-left"></i> Voltar
             </a>
-            <!-- Botão Editar como Formulário para enviar o ID no body -->
             <form action="/dashboard/institutions/edit" method="POST" style="display: inline;">
                 <input type="hidden" name="institution_id" value="<%= institution.id %>">
                 <button type="submit" class="btn btn-primary mr-2">
                     <i class="bi bi-pencil"></i> Editar
                 </button>
             </form>
-            <!-- Botão Deletar para abrir o modal de confirmação -->
             <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" onclick="confirmDelete('<%= institution.name %>', '<%= institution.id %>')">
                 <i class="bi bi-trash"></i> Deletar
             </button>

@@ -2,7 +2,6 @@
 <body>
     <div class="container my-5">
         <%- include("../partials/navbar.ejs") %>
-        
         <br>
         <br>
         <h1 class="mb-4 text-center">Gerenciar Formulários Enviados</h1>
@@ -32,6 +31,8 @@
                 <%= error %>
             </div>
         <% } %>
+
+        <!-- Exibe mensagens de Sucesso -->
         <% if (successMessage && successMessage != "") { %>
             <div class="alert alert-success"><%= successMessage %></div>
         <% } %>
@@ -42,7 +43,6 @@
         <% } %>
         <div class="row">
             <% forms.forEach(form => { %>
-                <!-- Cada formulário será representado por um cartão ocupando uma linha inteira -->
                 <div class="col-12 mb-4">
                     <div class="card shadow-sm">
                         <div class="card-header d-flex justify-content-between align-items-center">
@@ -66,7 +66,7 @@
                             </p>
                         </div>
                         <div class="card-footer d-flex justify-content-between align-items-center">
-                            <!-- Botão Ver Detalhes (lado esquerdo) -->
+                            <!-- Botão Ver Detalhes -->
                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#detailsModal<%= form.id %>">Ver Detalhes</button>
 
                             <div class="d-flex">
@@ -140,7 +140,6 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                <!-- O botão "Confirmar" agora chama uma função para submeter o formulário -->
                                 <button type="button" class="btn btn-primary" onclick="submitMarkAsReadForm(<%= form.id %>)">Confirmar</button>
                             </div>
                         </div>

@@ -3,7 +3,7 @@ import adminController from '../controller/dashboardController.js';
 
 const router = Router();
 
-// Rotas admin
+// Rotas de Login e Logout
 router.get('/login', adminController.getLogin);
 router.post('/login', adminController.login);
 router.get('/logout', adminController.logout);

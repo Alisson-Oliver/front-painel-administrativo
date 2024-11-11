@@ -88,17 +88,15 @@
             }
         });
 
-        // Carregar conteúdo nos termos, se houver
         <% if (content) { %>
             // Usando 'dangerouslyPasteHTML' para inserir HTML no Quill
             quill.clipboard.dangerouslyPasteHTML('<%- content.replace(/&quot;/g, "\"").replace(/&lt;/g, "<").replace(/&gt;/g, ">") %>');
         <% } %>
 
-        // Antes de enviar o formulário, copie o conteúdo formatado para o campo oculto
         $('form').on('submit', function() {
             var contentValue = quill.root.innerHTML;
-            console.log(contentValue);  // Verifique se o conteúdo está sendo capturado corretamente
-            $('#content').val(contentValue);  // Atribui o conteúdo ao campo oculto
+            console.log(contentValue);
+            $('#content').val(contentValue); 
         });
     </script>
 </body>

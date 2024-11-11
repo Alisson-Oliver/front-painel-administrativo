@@ -1,5 +1,8 @@
 import { api } from '../config/config.js';
 
+/*
+*   Função que busca todas as instituições cadastradas na API e renderiza a página de listagem de instituições.
+*/
 const getInstitutions = async (req, res) => {
     try {
         const response = await api.get("/institutions");
@@ -8,9 +11,12 @@ const getInstitutions = async (req, res) => {
     } catch (error) {
         console.error('Erro ao buscar instituições:', error);
         res.status(500).render('error', { message: 'Erro ao buscar instituições' });
-    }
+    };
 };
 
+/*
+*   Função que cria uma nova instituição usando a API com a operação POST.
+*/
 const createInstitution = async (req, res) => {
     const {
         name, cnpj, email, main_phone, secondary_phone, website,
@@ -29,7 +35,6 @@ const createInstitution = async (req, res) => {
     // Função para garantir que os campos sejam null se não forem informados
     const ensureNull = (value) => (value === undefined || value === null || value === '') ? null : value;
 
-    // Cria um objeto instituição, substituindo valores não informados por null
     const institution = {
         name: ensureNull(name),  cnpj: ensureNull(cnpj), email: ensureNull(email),
         main_phone: ensureNull(main_phone), secondary_phone: ensureNull(secondary_phone),
@@ -104,23 +109,19 @@ const createInstitution = async (req, res) => {
 
 
     try {
-        // Faz a requisição para criar instituição na API
         const { data } = await api.post(`/institutions`, newData); 
         const institutionId = data.institution.id
 
-        // Renderiza uma página que contém um formulário para redirecionar
         res.render('institutions/redirect', { institutionId });
     } catch (error) {
         console.error(error);
 
-        // Verifica se há um erro específico retornado pela API
         if (error.response && error.response.data) {
             return res.status(400).send({ message: error.response.data.message });
-        }
+        };
 
-        // Em caso de erro desconhecido, retorna um erro genérico
-        res.status(500).send({ message: 'Erro ao criar a instituição.' });
-    }
+        res.status(500).render('error', { message: 'Erro ao criar a instituição.' });
+    };
 };
 
 const searchInstitutions = async (req, res) => {
@@ -135,17 +136,20 @@ const searchInstitutions = async (req, res) => {
         res.render('institutions/institutionList', { institutions });
     } catch (error) {
         console.error('Erro ao buscar instituições:', error);
-        res.status(500).send('Erro ao buscar instituições');
-    }
+        res.status(500).render('error', { message: 'Erro ao buscar a instituição.' });
+    };
 };
 
+/*
+*   Função que busca uma instituição pelo ID e renderiza a página de detalhes da instituição.
+*/
 const getInstitutionById = async (req, res) => {
 
     const institutionId =  req.body.institution_id;
     if (!institutionId) {
         console.error('ID da instituição não foi fornecido.');
         return res.status(400).send({ message: 'ID da instituição não fornecido.' });
-    }
+    };
 
     try {
         const response = await api.get(`/institutions/${institutionId}`);
@@ -153,21 +157,22 @@ const getInstitutionById = async (req, res) => {
         const institution = response.data.institution;
         if (!institution) {
             return res.status(404).send({ message: 'Instituição não encontrada.' });
-        }
+        };
 
         res.render('institutions/institutionDetails', { institution });
     } catch (error) {
         console.error('Erro ao buscar detalhes da instituição:', error.message);
-        res.status(500).send({ message: 'Erro ao obter os detalhes da instituição.' });
-    }
+        res.status(500).render('error', { message: 'Erro ao obter os detalhes da instituição.' });
+    };
 };
 
-
+/*
+*   Função que busca uma instituição pelo ID e renderiza a página de edição da instituição.
+*/
 const getEditInstitutionForm = async (req, res) => {
     const institutionId = req.body.institution_id; 
 
     try {
-        // Busca o instituição pelo ID
         const response = await api.get(`/institutions/${institutionId}`);
         const responseCategories = await api.get('/categories');
 
@@ -177,19 +182,20 @@ const getEditInstitutionForm = async (req, res) => {
 
         if (!institution) {
             return res.status(404).send({ message: 'Instituição não encontrado.' });
-        }
+        };
 
-        // Renderiza a página de edição da instituição
         res.render('institutions/institutionEdit', { institution, categories }); 
     } catch (error) {
         console.error(error);
-        res.status(500).send({ message: 'Erro ao obter os detalhes da instituição para edição.' });
-    }
+        res.status(500).render('error', { message: 'Erro ao obter os detalhes da instituição para edição.' });
+    };
 };
 
+/*
+*   Função que atualiza uma instituição pelo ID usando a API com a operação PUT.
+*/
 const updateInstitution = async (req, res) => {
-    // Extrai os dados do migrante do corpo da requisição
-    const institutionId = req.body.institution_id
+    const institutionId = req.body.institution_id;
 
     const {
         name, cnpj, email, main_phone, secondary_phone, website,
@@ -208,7 +214,6 @@ const updateInstitution = async (req, res) => {
     // Função para garantir que os campos sejam null se não forem informados
     const ensureNull = (value) => (value === undefined || value === null || value === '') ? null : value;
 
-    // Cria um objeto migrante, substituindo valores não informados por null
     const institution = {
         name: ensureNull(name), cnpj: ensureNull(cnpj),  email: ensureNull(email),
         main_phone: ensureNull(main_phone),  secondary_phone: ensureNull(secondary_phone),
@@ -224,42 +229,42 @@ const updateInstitution = async (req, res) => {
         description_en: ensureNull(description_en),
         description_fr: ensureNull(description_fr),
         description_es: ensureNull(description_es),
-    }
+    };
 
     const ServiceHour = {
         service_hours_pt: ensureNull(service_hours_pt),
         service_hours_en: ensureNull(service_hours_en),
         service_hours_fr: ensureNull(service_hours_fr),
         service_hours_es: ensureNull(service_hours_es),
-    }
+    };
 
     const TargetPopulation = {
         target_populations_pt: ensureNull(target_populations_pt),
         target_populations_en: ensureNull(target_populations_en),
         target_populations_fr: ensureNull(target_populations_fr),
         target_populations_es: ensureNull(target_populations_es),
-    }
+    };
 
     const RequirementRestriction = {
         requirements_restrictions_pt: ensureNull(requirements_restrictions_pt),
         requirements_restrictions_en: ensureNull(requirements_restrictions_en),
         requirements_restrictions_fr: ensureNull(requirements_restrictions_fr),
         requirements_restrictions_es: ensureNull(requirements_restrictions_es),
-    }
+    };
 
     const ServicesOffered = {
         services_offered_pt: ensureNull(services_offered_pt),
         services_offered_en: ensureNull(services_offered_en),
         services_offered_fr: ensureNull(services_offered_fr),
         services_offered_es: ensureNull(services_offered_es),
-    }
+    };
 
     const ServiceCost = {
         services_costs_pt: ensureNull(service_costs_pt),
         services_costs_en: ensureNull(service_costs_en),
         services_costs_fr: ensureNull(service_costs_fr),
         services_costs_es: ensureNull(service_costs_es),
-    }
+    };
 
     const address = {
         cep: ensureNull(cep),
@@ -284,40 +289,39 @@ const updateInstitution = async (req, res) => {
 
 
     try {
-        // Faz a requisição para atualizar o migrante na API
-        await api.put(`/institutions/${institutionId}`, newData); // Corrigido para enviar o id no URL
+        await api.put(`/institutions/${institutionId}`, newData); 
 
-        // Redireciona para a página de detalhes do migrante recém-atualizado
        
-       // Renderiza uma página que contém um formulário para redirecionar
        res.render('institutions/redirect', { institutionId });
     } catch (error) {
         console.error(error);
 
-        // Verifica se há um erro específico retornado pela API
         if (error.response && error.response.data) {
             return res.status(400).send({ message: error.response.data.message });
-        }
+        };
 
-        // Em caso de erro desconhecido, retorna um erro genérico
-        res.status(500).send({ message: 'Erro ao atualizar a instituição.' });
-    }
+        res.status(500).render('error', { message: 'Erro ao atualizar a instituição.' });
+    };
 };
 
+/*
+*   Função que deleta uma instituição pelo ID usando a API com a operação DELETE.
+*/
 const deleteInstitution = async (req, res) => {
-    const institutiontId = req.body.institution_id; 
-
     try {
+        const institutiontId = req.body.institution_id; 
         await api.delete(`/institutions/${institutiontId}`);
         
         res.redirect('/dashboard/institutions'); 
     } catch (error) {
         console.error(error);
-        res.status(500).send({ message: 'Erro ao deletar o migrante.' });
-    }
+        res.status(500).render('error', { message: 'Erro ao deletar a instituição.' });
+    };
 };
 
-
+/*
+*   Função que renderiza a página de cadastro de instituição.
+*/
 const getRegisterInstitution = async (req, res) => {
     try {
         const responseCategories = await api.get('/categories');
@@ -325,17 +329,13 @@ const getRegisterInstitution = async (req, res) => {
         res.render('institutions/institutionCreate', { categories }); 
     } catch (error) {
         console.error(error);
-        res.status(500).send({ message: 'Erro no servidor.' });
-    }
-}
+        res.status(500).render('error', { message: 'Erro ao carregar a página de cadastro.' });
+
+    };
+};
 
 export default {
-    getInstitutions,
-    searchInstitutions,
-    getInstitutionById,
-    getEditInstitutionForm,
-    updateInstitution,
-    deleteInstitution,
-    getRegisterInstitution,
-    createInstitution,
-}
+    getInstitutions,searchInstitutions, getInstitutionById,
+    getEditInstitutionForm,updateInstitution,deleteInstitution,
+    getRegisterInstitution,createInstitution,
+};

@@ -1,6 +1,10 @@
 const limit = 50; // Número de instituições por página
-let currentPage = 1;
+let currentPage = 1; 
 
+/* 
+* Função para renderizar a tabela de instituições
+* de acordo com a página atual e o limite de instituições por página.
+*/
 function renderTable() {
     const start = (currentPage - 1) * limit;
     const end = start + limit;
@@ -33,12 +37,13 @@ function renderTable() {
     });
 
     document.getElementById('contador').textContent = `Exibindo ${start + 1} a ${Math.min(end, institutions.length)} de ${institutions.length} instituições`;
-
     document.getElementById('prevPage').disabled = currentPage === 1;
     document.getElementById('nextPage').disabled = end >= institutions.length;
 }
 
-
+/*
+* Event listeners para os botões de página anterior e próxima.
+*/
 document.getElementById('prevPage').addEventListener('click', () => {
     if (currentPage > 1) {
         currentPage--;
@@ -53,5 +58,4 @@ document.getElementById('nextPage').addEventListener('click', () => {
     }
 });
 
-// Renderizar a primeira página ao carregar
 renderTable();

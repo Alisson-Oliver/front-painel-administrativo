@@ -10,6 +10,7 @@ const router = Router();
 
 // Rotas do Painel Administrativo
 
+// Rota principal do painel administrativo
 router.get('/home', checkAuth.auth, dashboardController.getHome);
 
 
@@ -17,18 +18,13 @@ router.get('/home', checkAuth.auth, dashboardController.getHome);
 router.post('/migrants/check-email', checkAuth.auth, migrantController.checkEmail);
 router.post('/migrants/delete', checkAuth.auth, migrantController.deleteMigrant);
 router.get('/migrants', checkAuth.auth, migrantController.getMigrants);
-
 router.post('/migrant/create', checkAuth.auth, migrantController.createMigrant);
 router.get('/migrant/register', checkAuth.auth, migrantController.getRegisterMigrant);
 router.post('/migrants', checkAuth.auth, migrantController.createMigrant);
-
 router.get('/migrants/search', checkAuth.auth, migrantController.searchMigrant);
-
 router.post('/migrants/edit', checkAuth.auth, migrantController.getEditMigrantForm);
 router.post('/migrants/update', checkAuth.auth, migrantController.updateMigrant); 
 router.post('/migrants/details', checkAuth.auth, migrantController.getMigrantById);
-
-
 router.post('/migrants/change-password', checkAuth.auth, migrantController.getUpdatePassword);
 router.post('/migrants/updatePassword', checkAuth.auth, migrantController.updatePassword);
 
@@ -46,20 +42,14 @@ router.get('/institution/register', checkAuth.auth, institutionController.getReg
 
 
 // Rotas Termos
-
-// Rota para exibir a página de edição dos termos
 router.get('/terms', checkAuth.auth, termController.getAllTerms);
 router.get('/edit-terms/:type', checkAuthAdmin.isAdmin, termController.editTermsPage);
-
 router.get('/terms/:type', checkAuth.auth, termController.getTermsPage);
-
-// Rota para salvar ou atualizar os termos
 router.post('/save-terms', checkAuthAdmin.isAdmin, termController.saveTermsPage);
 
 // Rotas Forms
 router.get('/forms/migrants', checkAuth.auth, migrantController.getForms);
 router.get('/forms/status', checkAuth.auth, migrantController.getFormsByStatus);
-
 router.post('/forms/read', checkAuth.auth, migrantController.formRead);
 router.post('/forms/resolved', checkAuth.auth, migrantController.formResolved);
 router.post('/forms/delete', checkAuth.auth, migrantController.deleteForms);

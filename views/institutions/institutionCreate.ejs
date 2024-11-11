@@ -3,7 +3,6 @@
     <%- include("../partials/navbar.ejs") %>
     <br><br>
     <div class="container mt-5 mb-4">
-        <!-- Título da Página -->
         <h1 class="mt-4 mb-3 text-primary">
             <i class="bi bi-building-add"></i> Cadastrar Instituição
         </h1>
@@ -11,7 +10,6 @@
         <div id="alert" class="alert alert-danger d-none" role="alert"></div>
 
         <form action="/dashboard/institution/create" method="POST" >
-            <!-- Campos Individuais -->
             <div class="form-group">
                 <label for="name">Nome da Instituição*</label>
                 <input type="text" class="form-control" id="name" name="name" required maxlength="200" placeholder="Nome da Instituição" maxlength="200">
@@ -74,7 +72,6 @@
                 <input type="text" class="form-control" id="link_maps" name="link_maps" maxlength="2000" placeholder="Link do Maps">
             </div><br><hr>
             
-            <!-- Descrição da Instituição -->
             <h3 class="mt-4 text-primary" text-primary>
                 <i class="bi bi-postcard-fill"></i> Descrição da Instituição
             </h3>
@@ -95,7 +92,6 @@
                 <textarea class="form-control" id="description_es" name="description_es" rows="3" maxlength="1000" placeholder="Descripción de la institución en español..."></textarea>
             </div><br><hr>
 
-            <!-- Horário de Atendimento -->
             <h3 class="mt-4 text-primary">
                 <i class="bi bi-clock-fill"></i> Dias e Horários de Funcionamento
             </h3>
@@ -116,7 +112,6 @@
                 <textarea class="form-control" id="service_hours_es" name="service_hours_es" rows="3" maxlength="450" placeholder="Horario de atención en español..."></textarea>
             </div><br><hr>
 
-            <!-- População Alvo -->
             <h3 class="mt-4 text-primary">
                 <i class="bi bi-people-fill"></i> População Alvo
             </h3>
@@ -137,7 +132,6 @@
                 <textarea class="form-control" id="target_populations_es" name="target_populations_es" rows="3" maxlength="450" placeholder="Población objetivo en español..."></textarea>
             </div><br><hr>
 
-            <!-- Requisitos e Restrições -->
             <h3 class="mt-4 text-primary">
                 <i class="bi bi-check-circle-fill"></i> Requisitos e Restrições
             </h3>
@@ -158,7 +152,6 @@
                 <textarea class="form-control" id="requirements_restrictions_es" name="requirements_restrictions_es" rows="3" maxlength="450" placeholder="Requisitos y restricciones en español..."></textarea>
             </div><br><hr>
 
-            <!-- Serviços Oferecidos -->
             <h3 class="mt-4 text-primary">
                 <i class="bi bi-box-fill"></i> Serviços Oferecidos
             </h3>
@@ -179,7 +172,6 @@
                 <textarea class="form-control" id="services_offered_es" name="services_offered_es" rows="3" maxlength="450" placeholder="Servicios ofrecidos en español..."></textarea>
             </div><br><hr>
 
-            <!-- Custos dos Serviços -->
             <h3 class="mt-4 text-primary">
                 <i class="bi bi-currency-dollar"></i> Custos dos Serviços
             </h3>
@@ -200,7 +192,6 @@
                 <textarea class="form-control" id="service_costs_es" name="service_costs_es" rows="3" maxlength="450"  placeholder="Costos de los servicios en español..."></textarea>
             </div><br><hr>
 
-            <!-- Seção de Endereço -->
             <h3 class="mt-4 text-primary"> 
                 <i class="bi bi-geo-alt-fill"></i> Endereço
             </h3>
@@ -239,7 +230,6 @@
                 Caso a busca pelo endereço não retorne resultados, preencha os campos acima manualmente.
             </div><br><hr>
 
-            <!-- Seção de Responsável -->
             <h3 class="mt-4 text-primary">
                 <i class="bi bi-person-fill"></i> Responsável Pelo Cadastro
             </h3>
