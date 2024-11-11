@@ -1,11 +1,10 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
     <a class="navbar-brand" href="/admin">
-        <img src="/img/logo-navbar.svg" height="23px" style="margin-bottom: 4.5px;" class="mr-1">RAMB - Admin
+        <img src="/img/logo-navbar.svg" height="23px" style="margin-bottom: 4.5px;" class="mr-1">RAMB - Painel Admin
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
@@ -30,19 +29,18 @@
             </li>
             <% if (user.role === 'admin') { %>
                 <li class="nav-item">
-                    <a class="nav-link" href="/dashboard/users">
-                        Relações Internacionais
+                    <a class="nav-link" href="/dashboard/manual-migrante">
+                        Manual do Migrante
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/dashboard/terms">
-                        Manual do Migrante
+                    <a class="nav-link" href="/dashboard/users">
+                        Gestão de Usuários
                     </a>
                 </li>
             <% } %>
         </ul>
         <ul class="navbar-nav">
-            <!-- Botão "Minha Conta" -->
             <li class="nav-item mr-2">
                 <button class="btn btn-outline-light rounded-pill d-flex align-items-center me-3" data-toggle="modal" data-target="#accountModal">
                     <i class="bi bi-person-circle ms-3 mr-2"></i> Minha Conta
@@ -87,7 +85,6 @@
                 </div>
                 
                 <% if(user.role === 'user') { %>
-                <!-- Aviso sobre alterações ou exclusão -->
                 <div class="alert alert-warning mt-4" role="alert">
                     <strong>Atenção!</strong> Para alterar ou excluir os dados, contate o responsável pelos usuários administradores.
                 </div>
@@ -124,36 +121,5 @@
         </div>
     </div>
 </div>
-
-<!-- Script para logout -->
-<script>
-    function logout() {
-        // Redireciona para a rota de logout
-        window.location.href = "/logout";
-    }
-</script>
-
-<style>
-    /* Estilização do botão de logout */
-    .navbar-nav .nav-link {
-        text-decoration: none; /* Remover sublinhado no estado normal */
-        color: white; /* Cor do texto padrão */
-    }
-
-    .navbar-nav .nav-link:hover {
-        text-decoration: none; /* Remover sublinhado no estado hover */
-        color: #fff; /* Cor do texto ao passar o mouse */
-    }
-
-    /* Estilização adicional do botão de logout */
-    .btn-outline-light {
-        border-radius: 50px; /* Borda arredondada */
-        padding: 8px 20px; /* Espaçamento interno */
-        border: 2px solid white; /* Borda branca */
-    }
-
-    .btn-outline-light:hover {
-        background-color: #fff; /* Cor de fundo ao passar o mouse */
-        color: #007bff; /* Cor do texto ao passar o mouse */
-    }
-</style>
+<script src="/js/navbar.js"></script>
+<link rel="stylesheet" href="/css/navbar.css">

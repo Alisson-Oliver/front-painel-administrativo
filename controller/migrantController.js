@@ -148,7 +148,6 @@ const getRegisterMigrant = async (req, res) => {
     } catch (error) {
         res.render('error', { error });
         res.status(500).render('error', { message: 'Erro ao acessar a página de cadastro.' });
-
     };
 };
 

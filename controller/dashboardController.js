@@ -1,7 +1,6 @@
 import { api } from '../config/config.js';
 import jwt from 'jsonwebtoken';
 
-
 /*
 *  Função de login, que autentica o usuário e redireciona para a página de dashboard.
 */
@@ -65,8 +64,41 @@ const getHome = async (req, res) => {
     res.render('home');
 };
 
+const getManual = async (req, res) => {
+    try {
+        const response = await api.get('/pdfs');
+        const pdfs = response.data.pdfs;
+        res.render('manual', { pdfs });
+    } catch (error) {
+        console.error('Erro ao buscar o manual:', error);
+        res.status(500).render('error', { message: 'Erro ao carregar o manual' });        
+    }
+};
+const updateManual = async (req, res) => {
+    try {
+        const { pdf_id } = req.body;
+        
+        const name = req.body[`name_${pdf_id}`]; 
+        const description = req.body[`description_${pdf_id}`];
+        const url = req.body[`url_${pdf_id}`]; 
+        const language = req.body.language;
+        const updatePdf = { name, description, url, language };
+
+
+        await api.put(`/pdfs/${pdf_id}`, updatePdf);
+
+        req.flash('successMessage', 'Manual do Migrante atualizado com sucesso!');
+        res.redirect('/dashboard/manual-migrante');  
+    } catch (error) {
+        console.error('Erro ao atualizar o manual:', error);
+        req.flash('errorMessage', 'Erro ao atualizar o manual. Tente novamente mais tarde.');
+        res.redirect('/dashboard/manual-migrante');
+    };
+};
+
 export default {
     login, logout,
     getLogin, getHome,
+    getManual,updateManual
 }
 

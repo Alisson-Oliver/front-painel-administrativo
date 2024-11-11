@@ -1,4 +1,3 @@
-
 /*
 * Função que verifica se o usuário é um administrador.
 */

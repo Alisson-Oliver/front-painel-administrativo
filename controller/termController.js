@@ -49,8 +49,6 @@ const getTermsPage = async (req, res) => {
 const getAllTerms = async (req, res) => {
     try {
         const response = await api.get('/terms');
-        console.log(response.data);
-        
         const terms = response.data.terms;
 
         if (terms.length === 0) {

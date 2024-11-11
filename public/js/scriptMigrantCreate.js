@@ -113,7 +113,6 @@ function toggleOtherGenderInput() {
     };
 };
 
-
 /*
 * Configura o evento 'blur' no campo de email ao carregar a página
 */
