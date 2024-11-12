@@ -306,18 +306,32 @@ const getForms = async (req, res) => {
 */
 const getFormsByStatus = async (req, res) => {
     try {
-        const status = req.query.status;
+        const status = req.query.status || ""; 
         const response = await api.get(`/forms/status/${status}`);
         const forms = response.data.forms;
+
         if (!forms || forms.length === 0) {
-            return res.render('forms/formsList', { error: 'Nenhum resultado foi encontrado', forms: [] });
+            return res.render('forms/formsList', { 
+                error: 'Nenhum resultado foi encontrado', 
+                forms: [], 
+                selectedStatus: status 
+            });
         }
-        res.render('forms/formsList', { forms, selectedStatus: status  });
+
+        res.render('forms/formsList', { 
+            forms, 
+            selectedStatus: status 
+        });
     } catch (error) {
-        console.error('Erro ao buscar formulários: ', error);
-        res.status(500).render('error', { message: 'Erro ao buscar formulários' });
+        console.error('Erro ao buscar formulários: ', error.message);
+        res.status(500).render('forms/formsList', { 
+            error: 'Erro ao buscar formulários. Tente novamente mais tarde.', 
+            forms: [], 
+            selectedStatus: req.query.status 
+        });
     }
 };
+
 
 /*
 *   Função para marcar um formulário como "lido".

@@ -5,6 +5,10 @@ import config from './config/config.js';
 import session from 'express-session';
 import flash from 'connect-flash';
 import publicRoutes from './routes/publicRoutes.js';
+import PgSession from 'connect-pg-simple';
+import sequelize from './config/sequelize.js';
+import pgPool from './config/pgPool.js';
+
 const app = express();
 
 /* 
@@ -22,14 +26,24 @@ app.use(express.static('public'));
 /* 
 * Configuração do middleware para sessão
 */
+
+const pgSessionStore = new (PgSession(session))({
+    pool: pgPool,
+    tableName: 'sessions',
+});
+
 app.use(session({
+    store: pgSessionStore,
     secret: process.env.KEY_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 } ,
-    secure: true,
-    sameSite: 'Strict'  
+    cookie: { 
+        maxAge: 1000 * 60 * 60 * 24, 
+        secure: true,               
+        sameSite: 'Strict',
+    },
 }));
+
 
 /* 
 * Configuração do middleware para flash messages

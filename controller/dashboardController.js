@@ -12,17 +12,20 @@ const login = async (req, res) => {
         const token = authHeader && authHeader.split(' ')[1];
 
         if (token) {
-            const decodedToken = jwt.decode(token);
-            if (decodedToken) {
+            try {
+                const decodedToken = jwt.verify(token, process.env.JWT_SECRET); 
                 req.session.user = decodedToken;
                 req.session.token = token;
-
+        
                 const redirectUrl = req.session.returnTo || '/dashboard/home'; 
-                delete req.session.returnTo; 
-
+                delete req.session.returnTo;
+        
                 return res.redirect(redirectUrl); 
-            };
+            } catch (err) {
+                return res.render('login', { error: "Token inválido. Tente novamente." });
+            }
         };
+
         return res.render('login', { error: "Token inválido. Tente novamente." });
     } catch (error) {
 
