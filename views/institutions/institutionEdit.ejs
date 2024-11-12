@@ -11,29 +11,29 @@
             <form action="/dashboard/institutions/update" method="POST">
                 <div class="form-group">
                     <label for="name">Nome da Instituição*</label>
-                    <input type="text" class="form-control" id="name" name="name" required value="<%= institution.name %>" maxlength="200">
+                    <input type="text" class="form-control" id="name" name="name" required placeholder="Nome da Instituição" value="<%= institution.name %>" maxlength="200">
                 </div>
                 <div class="form-group">
                     <label for="cnpj">CNPJ*</label>
-                    <input type="text" class="form-control" id="cnpj" oninput="formatCNPJ(this)" name="cnpj" required pattern="\d{14}" value="<%= institution.cnpj %>" maxlength="18">
+                    <input type="text" class="form-control" id="cnpj" oninput="formatCNPJ(this)" name="cnpj" required placeholder="CNPJ" pattern="\d{14}" value="<%= institution.cnpj %>" maxlength="18">
                 </div>
                 <div class="form-group">
                     <label for="email">Email*</label>
-                    <input type="email" class="form-control" id="email" name="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" value="<%= institution.email %>" maxlength="100"> 
+                    <input type="email" class="form-control" id="email" name="email" required placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" value="<%= institution.email %>" maxlength="100"> 
                     <div id="emailFeedback"></div>
                 </div>
 
                 <div class="form-group">
                     <label for="main_phone">Telefone Principal*</label>
-                    <input type="text" class="form-control" id="main_phone" oninput="formatPhone(this)" name="main_phone" value="<%= institution.main_phone %>" maxlength="15">
+                    <input type="text" class="form-control" id="main_phone" placeholder="Telefone Principal" oninput="formatPhone(this)" name="main_phone" value="<%= institution.main_phone %>" maxlength="15">
                 </div>
                 <div class="form-group">
                     <label for="secondary_phone">Telefone Secundário</label>
-                    <input type="text" class="form-control" id="secondary_phone" oninput="formatPhone(this)" name="secondary_phone" value="<%= institution.secondary_phone %>" maxlength="15">
+                    <input type="text" class="form-control" id="secondary_phone" oninput="formatPhone(this)" placeholder="Telefone Secundário" name="secondary_phone" value="<%= institution.secondary_phone %>" maxlength="15">
                 </div>
                 <div class="form-group">
                     <label for="website">Site</label>
-                    <input type="text" class="form-control" id="website" name="website" value="<%= institution.site %>" maxlength="500">
+                    <input type="text" class="form-control" id="website" name="website" placeholder="Site" value="<%= institution.site %>" maxlength="500">
                 </div>
                 <div class="form-group">
                     <label for="institution_category">Categoria*</label>
@@ -48,19 +48,19 @@
                 </div>
                 <div class="form-group">
                     <label for="instagram">Instagram</label>
-                    <input type="text" class="form-control" id="instagram" name="instagram" oninput="formatInstagramUsername(this)" required value="<%= institution.instagram %>" maxlength="70">
+                    <input type="text" class="form-control" id="instagram" name="instagram" placeholder="Instagram" oninput="formatInstagramUsername(this)" required value="<%= institution.instagram %>" maxlength="70">
                 </div>
                 <div class="form-group">
                     <label for="main_language">Idioma Principal</label>
-                    <input type="text" class="form-control" id="main_language" name="main_language" required value="<%= institution.main_language %>" maxlength="80">
+                    <input type="text" class="form-control" id="main_language" name="main_language" placeholder="Idioma Principal" required value="<%= institution.main_language %>" maxlength="80">
                 </div>
                 <div class="form-group">
                     <label for="second_language">Idioma Secundário</label>
-                    <input type="text" class="form-control" id="second_language" name="second_language" required value="<%= institution.second_language %>" maxlength="80">
+                    <input type="text" class="form-control" id="second_language" placeholder="Idioma Secundário" name="second_language" required value="<%= institution.second_language %>" maxlength="80">
                 </div>
                 <div class="form-group">
                     <label for="link_maps">Link do Maps</label>
-                    <input type="text" class="form-control" id="link_maps" name="link_maps" required value="<%= institution.link_maps %>" maxlength="2000">
+                    <input type="text" class="form-control" id="link_maps" placeholder="Link do Maps" name="link_maps" required value="<%= institution.link_maps %>" maxlength="2000">
                 </div><br><hr>
                 <h3 class="mt-4 text-primary">
                     <i class="bi bi-postcard-fill"></i> Descrição da Instituição
