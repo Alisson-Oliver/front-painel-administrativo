@@ -9,6 +9,7 @@ dotenv.config();
 
 const { Pool } = pkg;
 
+
 /* 
 * Criação do Pool de Conexão PostgreSQL
 */
@@ -40,7 +41,7 @@ const sessionMiddleware = session({
     saveUninitialized: false,
     cookie: {
         maxAge: 1000 * 60 * 60 * 24,  
-        secure: process.env.NODE_ENV === 'production',
+        secure: true,
         sameSite: 'Strict',
     },
 });
