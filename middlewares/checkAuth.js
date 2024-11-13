@@ -21,6 +21,16 @@ const auth = (req, res, next) => {
     };
 };
 
+const noAuth = (req, res, next) => {
+    const token = req.session.token;
+    if (token) {
+        return res.redirect('/dashboard/home');
+    };
+
+    next();
+};
+
 export default {
     auth,
+    noAuth,
 };

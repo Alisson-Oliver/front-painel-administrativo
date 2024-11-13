@@ -35,7 +35,7 @@
             </div>
             <div class="form-group">
                 <label for="email">Email*</label>
-                <input type="email" class="form-control" id="email" maxlength="100" name="email" placeholder="Email" value="<%= migrant.email %>" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                <input type="email" class="form-control" id="email" maxlength="100" required name="email" placeholder="Email" value="<%= migrant.email %>">
                 <div id="emailFeedback"></div>
             </div>
             <div class="form-group">
@@ -91,7 +91,7 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="education_level">Escolaridade</label>
+                <label for="education_level">Escolaridade*</label>
                 <select class="form-control" name="education_level" id="education_level" required>
                     <option value="" disabled <%= !migrant.education_level ? 'selected' : '' %>>Selecione uma opção</option>
                     <option value="Ensino fundamental completo" <%= migrant.education_level === 'Ensino fundamental completo' ? 'selected' : '' %>>Ensino fundamental completo</option>

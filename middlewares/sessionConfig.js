@@ -1,4 +1,3 @@
-import express from 'express';
 import session from 'express-session';
 import PgSession from 'connect-pg-simple';
 import pkg from 'pg';
@@ -8,7 +7,6 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const { Pool } = pkg;
-
 
 /* 
 * Criação do Pool de Conexão PostgreSQL
@@ -32,7 +30,7 @@ const pgSessionStore = new PgSession(session);
 const sessionMiddleware = session({
     store: new pgSessionStore({
         pool: pgPool,  
-        tableName: 'sessions',  
+        tableName: 'session',  
         ttl: 60 * 60 * 24,  
         cleanInterval: 60 * 60 * 1000,  
     }),
@@ -41,7 +39,7 @@ const sessionMiddleware = session({
     saveUninitialized: false,
     cookie: {
         maxAge: 1000 * 60 * 60 * 24,  
-        secure: true,
+        secure: false,
         sameSite: 'Strict',
     },
 });

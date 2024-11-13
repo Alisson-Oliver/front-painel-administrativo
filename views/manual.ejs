@@ -30,15 +30,15 @@
                                 <input type="hidden" name="language" value="<%= pdf.language %>">
                                 <div class="mb-3">
                                     <label for="name_<%= pdf.id %>" class="form-label">Nome</label>
-                                    <input type="text" id="name_<%= pdf.id %>" name="name_<%= pdf.id %>" required maxlength="195" value="<%= pdf.name %>" class="form-control">
+                                    <input type="text" id="name_<%= pdf.id %>" name="name_<%= pdf.id %>" required maxlength="195" value="<%= pdf.name %>" class="form-control" placeholder="Nome">
                                 </div>
                                 <div class="mb-3">
                                     <label for="description_<%= pdf.id %>" class="form-label">Descrição</label>
-                                    <textarea id="description_<%= pdf.id %>" required name="description_<%= pdf.id %>" maxlength="990" class="form-control"><%= pdf.description %></textarea>
+                                    <textarea id="description_<%= pdf.id %>" required name="description_<%= pdf.id %>" maxlength="500"  placeholder="Descrição" class="form-control"><%= pdf.description %></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label for="url_<%= pdf.id %>" class="form-label">URL do PDF</label>
-                                    <input type="url" id="url_<%= pdf.id %>" required name="url_<%= pdf.id %>" maxlength="2000" value="<%= pdf.url %>" class="form-control">
+                                    <input type="url" id="url_<%= pdf.id %>" required name="url_<%= pdf.id %>" placeholder="URL" maxlength="1000" value="<%= pdf.url %>" class="form-control">
                                 </div>
                                 <div class="mb-3 d-flex justify-content-between">
                                     <a href="<%= pdf.url %>" target="_blank" class="btn btn-info">Abrir Manual</a>

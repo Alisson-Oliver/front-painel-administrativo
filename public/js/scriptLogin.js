@@ -45,3 +45,9 @@ document.querySelector('.forgot-password').addEventListener('click', function(ev
     event.preventDefault(); 
     $('#forgotPasswordModal').modal('show'); 
 });
+
+
+window.history.pushState(null, null, window.location.href);
+window.onpopstate = function() {
+    window.history.pushState(null, null, window.location.href);
+};

@@ -105,10 +105,13 @@ const createInstitution = async (req, res) => {
         service_hours, target_population, requirements_restrictions,
         services_offered, service_cost, responsible_user
     };
+    console.log(newData);
 
 
     try {
         const { data } = await api.post(`/institutions`, newData); 
+        
+    console.log("DATA: ", data);
         const institutionId = data.institution.id;
 
         res.render('institutions/redirect', { institutionId });

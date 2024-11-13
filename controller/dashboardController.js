@@ -55,7 +55,7 @@ const logout = (req, res) => {
 */
 const getLogin = (req, res) => {
     if(req.session && req.session.token){
-        return res.redirect('/dashboard/home');
+         res.redirect('/dashboard/home');
     }
     res.render('login');
 };

@@ -62,7 +62,7 @@ app.use((req, res, next) => {
 */
 app.use("/dashboard", dashboardRoutes);
 app.use("/", loginRoutes, publicRoutes);
-
+    
 app.get('/', (req, res) => {
     res.redirect('/login');
 });   

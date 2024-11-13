@@ -64,7 +64,6 @@ function formatInstagramUsername(input) {
 */
 function formatCEP(input) {
     const value = input.value.replace(/\D/g, '');
-    // Formata o CEP
     if (value.length > 5) {
         input.value = `${value.slice(0, 5)}-${value.slice(5, 8)}`;
     } else {
