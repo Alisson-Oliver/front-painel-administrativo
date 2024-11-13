@@ -5,6 +5,8 @@ import flash from 'connect-flash';
 import publicRoutes from './routes/publicRoutes.js';
 import sessionMiddleware from './middlewares/sessionConfig.js';
 import express from 'express';
+import path from 'path';
+
 
 const app = express();
 
@@ -18,7 +20,8 @@ app.use(express.urlencoded({ extended: true }));
 * Configuração do EJS
 */
 app.set('view engine', 'ejs');
-app.use(express.static('public')); 
+app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(path.join(__dirname, 'public')));
 app.set('trust proxy', 1);
 
 /* 
