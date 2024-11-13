@@ -16,11 +16,11 @@
             </div>
             <div class="form-group">
                 <label for="cnpj">CNPJ*</label>
-                <input type="text" class="form-control" id="cnpj" name="cnpj" required pattern="\\d{17}" maxlength="18" oninput="formatCNPJ(this)" placeholder="CNPJ">
+                <input type="text" class="form-control" id="cnpj" name="cnpj" required maxlength="18" oninput="formatCNPJ(this)" placeholder="CNPJ">
             </div>
             <div class="form-group">
                 <label for="email">Email*</label>
-                <input type="email" class="form-control" id="email" name="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$" maxlength="100" placeholder="Email">
+                <input type="email" class="form-control" id="email" name="email" required maxlength="100" placeholder="Email">
                 <div id="emailFeedback"></div>
             </div>
             <div class="form-group">
@@ -67,57 +67,57 @@
             </h3>
             <div class="form-group">
                 <label for="description_pt">Descrição (Português)*</label>
-                <textarea class="form-control" id="description_pt" name="description_pt" rows="3" maxlength="1000" placeholder="Descrição da instituição em português..."></textarea>
+                <textarea class="form-control" id="description_pt" name="description_pt" rows="3" maxlength="255" placeholder="Descrição da instituição em português..."></textarea>
             </div>
             <div class="form-group">
                 <label for="description_en">Descrição (Inglês)*</label>
-                <textarea class="form-control" id="description_en" name="description_en" rows="3" maxlength="1000" placeholder="Institution description in English..."></textarea>
+                <textarea class="form-control" id="description_en" name="description_en" rows="3" maxlength="255" placeholder="Institution description in English..."></textarea>
             </div>
             <div class="form-group">
                 <label for="description_fr">Descrição (Francês)*</label>
-                <textarea class="form-control" id="description_fr" name="description_fr" rows="3" maxlength="1000" placeholder="Description de l'institution en français..."></textarea>
+                <textarea class="form-control" id="description_fr" name="description_fr" rows="3" maxlength="255" placeholder="Description de l'institution en français..."></textarea>
             </div>
             <div class="form-group">
                 <label for="description_es">Descrição (Espanhol)*</label>
-                <textarea class="form-control" id="description_es" name="description_es" rows="3" maxlength="1000" placeholder="Descripción de la institución en español..."></textarea>
+                <textarea class="form-control" id="description_es" name="description_es" rows="3" maxlength="255" placeholder="Descripción de la institución en español..."></textarea>
             </div><br><hr>
             <h3 class="mt-4 text-primary">
                 <i class="bi bi-clock-fill"></i> Dias e Horários de Funcionamento
             </h3>
             <div class="form-group">
                 <label for="service_hours_pt">Dias e Horários de Funcionamento (Português)*</label>
-                <textarea class="form-control" id="service_hours_pt" name="service_hours_pt" rows="3" maxlength="450" placeholder="Dias e Horários em português..."></textarea>
+                <textarea class="form-control" id="service_hours_pt" name="service_hours_pt" rows="3" maxlength="255" placeholder="Dias e Horários em português..."></textarea>
             </div>
             <div class="form-group">
                 <label for="service_hours_en">Dias e Horários de Funcionamento (Inglês)*</label>
-                <textarea class="form-control" id="service_hours_en" name="service_hours_en" rows="3" maxlength="450" placeholder="Service hours in English..."></textarea>
+                <textarea class="form-control" id="service_hours_en" name="service_hours_en" rows="3" maxlength="255" placeholder="Service hours in English..."></textarea>
             </div>
             <div class="form-group">
                 <label for="service_hours_fr">Dias e Horários de Funcionamento (Francês)*</label>
-                <textarea class="form-control" id="service_hours_fr" name="service_hours_fr" rows="3" maxlength="450" placeholder="Horaires d'ouverture en français..."></textarea>
+                <textarea class="form-control" id="service_hours_fr" name="service_hours_fr" rows="3" maxlength="255" placeholder="Horaires d'ouverture en français..."></textarea>
             </div>
             <div class="form-group">
                 <label for="service_hours_es">Dias e Horários de Funcionamento (Espanhol)*</label>
-                <textarea class="form-control" id="service_hours_es" name="service_hours_es" rows="3" maxlength="450" placeholder="Horario de atención en español..."></textarea>
+                <textarea class="form-control" id="service_hours_es" name="service_hours_es" rows="3" maxlength="255" placeholder="Horario de atención en español..."></textarea>
             </div><br><hr>
             <h3 class="mt-4 text-primary">
                 <i class="bi bi-people-fill"></i> População Alvo
             </h3>
             <div class="form-group">
                 <label for="target_populations_pt">População Alvo (Português)*</label>
-                <textarea class="form-control" id="target_populations_pt" name="target_populations_pt" rows="3"  maxlength="450" placeholder="População alvo em português..."></textarea>
+                <textarea class="form-control" id="target_populations_pt" name="target_populations_pt" rows="3"  maxlength="255" placeholder="População alvo em português..."></textarea>
             </div>
             <div class="form-group">
                 <label for="target_populations_en">População Alvo (Inglês)*</label>
-                <textarea class="form-control" id="target_populations_en" name="target_populations_en" rows="3" maxlength="450" placeholder="Target population in English..."></textarea>
+                <textarea class="form-control" id="target_populations_en" name="target_populations_en" rows="3" maxlength="255" placeholder="Target population in English..."></textarea>
             </div>
             <div class="form-group">
                 <label for="target_populations_fr">População Alvo (Francês)*</label>
-                <textarea class="form-control" id="target_populations_fr" name="target_populations_fr" rows="3" maxlength="450" placeholder="Population cible en français..."></textarea>
+                <textarea class="form-control" id="target_populations_fr" name="target_populations_fr" rows="3" maxlength="255" placeholder="Population cible en français..."></textarea>
             </div>
             <div class="form-group">
                 <label for="target_populations_es">População Alvo (Espanhol)*</label>
-                <textarea class="form-control" id="target_populations_es" name="target_populations_es" rows="3" maxlength="450" placeholder="Población objetivo en español..."></textarea>
+                <textarea class="form-control" id="target_populations_es" name="target_populations_es" rows="3" maxlength="255" placeholder="Población objetivo en español..."></textarea>
             </div><br><hr>
 
             <h3 class="mt-4 text-primary">
@@ -125,57 +125,57 @@
             </h3>
             <div class="form-group">
                 <label for="requirements_restrictions_pt">Requisitos e Restrições (Português)*</label>
-                <textarea class="form-control" id="requirements_restrictions_pt" name="requirements_restrictions_pt" rows="3"maxlength="450"  placeholder="Requisitos e restrições em português..."></textarea>
+                <textarea class="form-control" id="requirements_restrictions_pt" name="requirements_restrictions_pt" rows="3"maxlength="255"  placeholder="Requisitos e restrições em português..."></textarea>
             </div>
             <div class="form-group">
                 <label for="requirements_restrictions_en">Requisitos e Restrições (Inglês)*</label>
-                <textarea class="form-control" id="requirements_restrictions_en" name="requirements_restrictions_en" rows="3" maxlength="450"placeholder="Requirements and restrictions in English..."></textarea>
+                <textarea class="form-control" id="requirements_restrictions_en" name="requirements_restrictions_en" rows="3" maxlength="255"placeholder="Requirements and restrictions in English..."></textarea>
             </div>
             <div class="form-group">
                 <label for="requirements_restrictions_fr">Requisitos e Restrições (Francês)*</label>
-                <textarea class="form-control" id="requirements_restrictions_fr" name="requirements_restrictions_fr" rows="3" maxlength="450" placeholder="Exigences et restrictions en français..."></textarea>
+                <textarea class="form-control" id="requirements_restrictions_fr" name="requirements_restrictions_fr" rows="3" maxlength="255" placeholder="Exigences et restrictions en français..."></textarea>
             </div>
             <div class="form-group">
                 <label for="requirements_restrictions_es">Requisitos e Restrições (Espanhol)*</label>
-                <textarea class="form-control" id="requirements_restrictions_es" name="requirements_restrictions_es" rows="3" maxlength="450" placeholder="Requisitos y restricciones en español..."></textarea>
+                <textarea class="form-control" id="requirements_restrictions_es" name="requirements_restrictions_es" rows="3" maxlength="255" placeholder="Requisitos y restricciones en español..."></textarea>
             </div><br><hr>
             <h3 class="mt-4 text-primary">
                 <i class="bi bi-box-fill"></i> Serviços Oferecidos
             </h3>
             <div class="form-group">
                 <label for="services_offered_pt">Serviços Oferecidos (Português)*</label>
-                <textarea class="form-control" id="services_offered_pt" name="services_offered_pt" rows="3" maxlength="450" placeholder="Serviços oferecidos em português..."></textarea>
+                <textarea class="form-control" id="services_offered_pt" name="services_offered_pt" rows="3" maxlength="255" placeholder="Serviços oferecidos em português..."></textarea>
             </div>
             <div class="form-group">
                 <label for="services_offered_en">Serviços Oferecidos (Inglês)*</label>
-                <textarea class="form-control" id="services_offered_en" name="services_offered_en" rows="3" maxlength="450" placeholder="Services offered in English..."></textarea>
+                <textarea class="form-control" id="services_offered_en" name="services_offered_en" rows="3" maxlength="255" placeholder="Services offered in English..."></textarea>
             </div>
             <div class="form-group">
                 <label for="services_offered_fr">Serviços Oferecidos (Francês)*</label>
-                <textarea class="form-control" id="services_offered_fr" name="services_offered_fr" rows="3" maxlength="450" placeholder="Services offerts en français..."></textarea>
+                <textarea class="form-control" id="services_offered_fr" name="services_offered_fr" rows="3" maxlength="255" placeholder="Services offerts en français..."></textarea>
             </div>
             <div class="form-group">
                 <label for="services_offered_es">Serviços Oferecidos (Espanhol)*</label>
-                <textarea class="form-control" id="services_offered_es" name="services_offered_es" rows="3" maxlength="450" placeholder="Servicios ofrecidos en español..."></textarea>
+                <textarea class="form-control" id="services_offered_es" name="services_offered_es" rows="3" maxlength="255" placeholder="Servicios ofrecidos en español..."></textarea>
             </div><br><hr>
             <h3 class="mt-4 text-primary">
                 <i class="bi bi-currency-dollar"></i> Custos dos Serviços
             </h3>
             <div class="form-group">
                 <label for="service_costs_pt">Custos dos Serviços (Português)*</label>
-                <textarea class="form-control" id="service_costs_pt" name="service_costs_pt" rows="3" maxlength="450"placeholder="Custos dos serviços em português..."></textarea>
+                <textarea class="form-control" id="service_costs_pt" name="service_costs_pt" rows="3" maxlength="255"placeholder="Custos dos serviços em português..."></textarea>
             </div>
             <div class="form-group">
                 <label for="service_costs_en">Custos dos Serviços (Inglês)*</label>
-                <textarea class="form-control" id="service_costs_en" name="service_costs_en" rows="3" maxlength="450" placeholder="Service costs in English..."></textarea>
+                <textarea class="form-control" id="service_costs_en" name="service_costs_en" rows="3" maxlength="255" placeholder="Service costs in English..."></textarea>
             </div>
             <div class="form-group">
                 <label for="service_costs_fr">Custos dos Serviços (Francês)*</label>
-                <textarea class="form-control" id="service_costs_fr" name="service_costs_fr" rows="3" maxlength="450" placeholder="Coûts des services en français..."></textarea>
+                <textarea class="form-control" id="service_costs_fr" name="service_costs_fr" rows="3" maxlength="255" placeholder="Coûts des services en français..."></textarea>
             </div>
             <div class="form-group">
                 <label for="service_costs_es">Custos dos Serviços (Espanhol)*</label>
-                <textarea class="form-control" id="service_costs_es" name="service_costs_es" rows="3" maxlength="450"  placeholder="Costos de los servicios en español..."></textarea>
+                <textarea class="form-control" id="service_costs_es" name="service_costs_es" rows="3" maxlength="255"  placeholder="Costos de los servicios en español..."></textarea>
             </div><br><hr>
 
             <h3 class="mt-4 text-primary"> 

@@ -4,6 +4,7 @@
 document.querySelector('#buttonLogin').addEventListener('click', function(event) {
     event.preventDefault(); 
 
+
     const username = document.querySelector('#username').value;
     const password = document.querySelector('#password').value;
 
@@ -13,6 +14,10 @@ document.querySelector('#buttonLogin').addEventListener('click', function(event)
     }
 
     document.getElementById('error-message').style.display = 'none';
+
+    const button = document.querySelector('#buttonLogin');
+    button.disabled = true;
+
     const form = document.querySelector('form');
     form.submit();
 });

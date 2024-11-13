@@ -20,7 +20,7 @@ app.set('views', path.join(path.resolve(), 'views'));
 app.set('view engine', 'ejs');
 
 /* Configuração dos arquivos estáticos */
-app.use(express.static(path.join(path.resolve(), 'public'))); // Caminho absoluto para a pasta public
+app.use(express.static(path.join(path.resolve(), 'public'))); 
 
 app.set('trust proxy', 1);
 
