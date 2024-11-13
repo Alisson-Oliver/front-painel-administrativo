@@ -15,12 +15,13 @@ const app = express();
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: true }));
 
-/* 
-* Configuração do EJS
-*/
+/* Configuração do EJS */
+app.set('views', path.join(path.resolve(), 'views'));
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-app.use(express.static(path.join(__dirname, 'public')));
+
+/* Configuração dos arquivos estáticos */
+app.use(express.static(path.join(path.resolve(), 'public'))); // Caminho absoluto para a pasta public
+
 app.set('trust proxy', 1);
 
 /* 
