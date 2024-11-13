@@ -61,7 +61,7 @@ app.use("/dashboard", dashboardRoutes);
 app.use("/", loginRoutes, publicRoutes);
 
 app.get('/', (req, res) => {
-    res.render('home');
+    res.redirect('/login');
 });   
 
 /* 
